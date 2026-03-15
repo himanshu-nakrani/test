@@ -1,0 +1,59 @@
+/* ===== Light Theme (default) ===== */
+:root,
+[data-theme='light'] {
+  --bg: #ffffff;
+  --bg-translucent: rgba(255, 255, 255, 0.85);
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --border: #e5e7eb;
+  --card-bg: #f9fafb;
+  --hover-bg: #f3f4f6;
+  --accent: #6366f1;
+  --section-alt-bg: #f8f9fc;
+  --shadow-color: rgba(0, 0, 0, 0.06);
+  --success-bg: #ecfdf5;
+  --success-text: #065f46;
+  --mono: ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
+}
+
+/* ===== Dark Theme ===== */
+[data-theme='dark'] {
+  --bg: #0f1117;
+  --bg-translucent: rgba(15, 17, 23, 0.85);
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --border: #1f2937;
+  --card-bg: #1a1d28;
+  --hover-bg: #1f2937;
+  --accent: #818cf8;
+  --section-alt-bg: #13151e;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --success-bg: #064e3b;
+  --success-text: #a7f3d0;
+}
+
+/* ===== Reset & Base ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s, color 0.3s;
+}
+
+#root {
+  min-height: 100vh;
+}
