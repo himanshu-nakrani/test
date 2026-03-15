@@ -1,158 +1,178 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import type { AIModel, FilterState } from './types'
+import { models } from './data/models'
+import Header from './components/Header'
+import Hero from './components/Hero'
+import Filters from './components/Filters'
+import ModelCard from './components/ModelCard'
+import ModelDetail from './components/ModelDetail'
 import './App.css'
 
-const features = [
-  {
-    icon: '⚡',
-    title: 'Lightning Fast',
-    description: 'Built with Vite for instant HMR and blazing-fast builds.',
-  },
-  {
-    icon: '🎨',
-    title: 'Modern Design',
-    description: 'Clean, responsive UI with smooth animations and dark mode.',
-  },
-  {
-    icon: '🔒',
-    title: 'Type Safe',
-    description: 'Full TypeScript support for robust, maintainable code.',
-  },
-  {
-    icon: '📦',
-    title: 'Component-Based',
-    description: 'Modular React components for easy reuse and testing.',
-  },
-]
+const defaultFilters: FilterState = {
+  search: '',
+  providers: [],
+  categories: [],
+  pricingTiers: [],
+  licenses: [],
+  sortBy: 'name',
+}
+
+const contextToNumber = (ctx: string): number => {
+  if (ctx === 'N/A') return 0
+  const match = ctx.match(/([\d.]+)\s*(M|K)/i)
+  if (!match) return 0
+  const num = parseFloat(match[1])
+  return match[2].toUpperCase() === 'M' ? num * 1_000_000 : num * 1_000
+}
+
+const priceTierOrder: Record<string, number> = {
+  free: 0,
+  low: 1,
+  medium: 2,
+  high: 3,
+  premium: 4,
+}
 
 function App() {
-  const [count, setCount] = useState(0)
   const [darkMode, setDarkMode] = useState(false)
-  const [email, setEmail] = useState('')
-  const [subscribed, setSubscribed] = useState(false)
+  const [filters, setFilters] = useState<FilterState>(defaultFilters)
+  const [selectedModel, setSelectedModel] = useState<AIModel | null>(null)
+  const [showFilters, setShowFilters] = useState(false)
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
+    document.documentElement.setAttribute(
+      'data-theme',
+      darkMode ? 'dark' : 'light',
+    )
   }, [darkMode])
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (email.trim()) {
-      setSubscribed(true)
-      setEmail('')
+  const filtered = useMemo(() => {
+    let result = [...models]
+
+    if (filters.search) {
+      const q = filters.search.toLowerCase()
+      result = result.filter(
+        (m) =>
+          m.name.toLowerCase().includes(q) ||
+          m.provider.toLowerCase().includes(q) ||
+          m.description.toLowerCase().includes(q) ||
+          m.categories.some((c) => c.includes(q)),
+      )
     }
+
+    if (filters.providers.length > 0) {
+      result = result.filter((m) => filters.providers.includes(m.provider))
+    }
+
+    if (filters.categories.length > 0) {
+      result = result.filter((m) =>
+        m.categories.some((c) => filters.categories.includes(c)),
+      )
+    }
+
+    if (filters.pricingTiers.length > 0) {
+      result = result.filter((m) => filters.pricingTiers.includes(m.pricingTier))
+    }
+
+    if (filters.licenses.length > 0) {
+      result = result.filter((m) => filters.licenses.includes(m.license))
+    }
+
+    result.sort((a, b) => {
+      switch (filters.sortBy) {
+        case 'name':
+          return a.name.localeCompare(b.name)
+        case 'provider':
+          return a.provider.localeCompare(b.provider) || a.name.localeCompare(b.name)
+        case 'date':
+          return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
+        case 'context':
+          return contextToNumber(b.contextWindow) - contextToNumber(a.contextWindow)
+        case 'price':
+          return priceTierOrder[a.pricingTier] - priceTierOrder[b.pricingTier]
+        default:
+          return 0
+      }
+    })
+
+    return result
+  }, [filters])
+
+  const handleModelClick = (model: AIModel) => {
+    setSelectedModel(model)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleBack = () => {
+    setSelectedModel(null)
+  }
+
+  const handleSearch = (value: string) => {
+    setFilters((f) => ({ ...f, search: value }))
+    if (selectedModel) setSelectedModel(null)
   }
 
   return (
     <div className="app">
-      <header className="header">
-        <div className="logo">
-          <span className="logo-icon">🚀</span>
-          <span className="logo-text">MyApp</span>
-        </div>
-        <nav className="nav">
-          <a href="#features">Features</a>
-          <a href="#demo">Demo</a>
-          <a href="#newsletter">Newsletter</a>
-          <button
-            className="theme-toggle"
-            onClick={() => setDarkMode(!darkMode)}
-            aria-label="Toggle theme"
-          >
-            {darkMode ? '☀️' : '🌙'}
-          </button>
-        </nav>
-      </header>
+      <Header
+        search={filters.search}
+        onSearchChange={handleSearch}
+        darkMode={darkMode}
+        onToggleDark={() => setDarkMode(!darkMode)}
+        onLogoClick={handleBack}
+        modelCount={models.length}
+      />
 
-      <section className="hero">
-        <div className="hero-content">
-          <h1 className="hero-title">
-            Build Something
-            <span className="gradient-text"> Beautiful</span>
-          </h1>
-          <p className="hero-subtitle">
-            A modern React + TypeScript starter with Vite. Fast development, type safety,
-            and a gorgeous UI out of the box.
-          </p>
-          <div className="hero-actions">
-            <a href="#demo" className="btn btn-primary">Try the Demo</a>
-            <a href="#features" className="btn btn-secondary">Learn More</a>
-          </div>
-        </div>
-        <div className="hero-visual">
-          <div className="orbit">
-            <div className="planet planet-1">⚛️</div>
-            <div className="planet planet-2">⚡</div>
-            <div className="planet planet-3">💎</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="features" className="features">
-        <h2 className="section-title">Features</h2>
-        <div className="feature-grid">
-          {features.map((feature) => (
-            <div key={feature.title} className="feature-card">
-              <span className="feature-icon">{feature.icon}</span>
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section id="demo" className="demo">
-        <h2 className="section-title">Interactive Demo</h2>
-        <p className="demo-subtitle">Click the counter to see React state in action</p>
-        <div className="counter-container">
-          <button
-            className="counter-btn"
-            onClick={() => setCount((c) => c + 1)}
-          >
-            Count: {count}
-          </button>
-          <button
-            className="reset-btn"
-            onClick={() => setCount(0)}
-            disabled={count === 0}
-          >
-            Reset
-          </button>
-        </div>
-        <p className="counter-message">
-          {count === 0 && 'Click to get started!'}
-          {count > 0 && count < 10 && `Nice! You've clicked ${count} time${count > 1 ? 's' : ''}.`}
-          {count >= 10 && count < 50 && '🔥 You\'re on fire!'}
-          {count >= 50 && '🏆 Counter champion!'}
-        </p>
-      </section>
-
-      <section id="newsletter" className="newsletter">
-        <h2 className="section-title">Stay Updated</h2>
-        {subscribed ? (
-          <div className="success-message">
-            <span className="success-icon">✅</span>
-            <p>Thanks for subscribing! You'll hear from us soon.</p>
-          </div>
-        ) : (
-          <form className="newsletter-form" onSubmit={handleSubscribe}>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="email-input"
-            />
-            <button type="submit" className="btn btn-primary">
-              Subscribe
+      {selectedModel ? (
+        <main className="main">
+          <ModelDetail model={selectedModel} onBack={handleBack} />
+        </main>
+      ) : (
+        <>
+          <Hero />
+          <main className="main">
+            <button
+              className="mobile-filter-toggle"
+              onClick={() => setShowFilters(!showFilters)}
+            >
+              {showFilters ? '✕ Hide Filters' : '☰ Show Filters'}
             </button>
-          </form>
-        )}
-      </section>
+
+            <div className="content-layout">
+              <div className={`filters-container ${showFilters ? 'show' : ''}`}>
+                <Filters
+                  filters={filters}
+                  onChange={setFilters}
+                  resultCount={filtered.length}
+                />
+              </div>
+
+              <div className="model-grid">
+                {filtered.length === 0 ? (
+                  <div className="no-results">
+                    <span className="no-results-icon">🔍</span>
+                    <h3>No models found</h3>
+                    <p>Try adjusting your search or filters.</p>
+                  </div>
+                ) : (
+                  filtered.map((model) => (
+                    <ModelCard
+                      key={model.id}
+                      model={model}
+                      onClick={handleModelClick}
+                    />
+                  ))
+                )}
+              </div>
+            </div>
+          </main>
+        </>
+      )}
 
       <footer className="footer">
         <p>
-          Built with React + TypeScript + Vite &middot; {new Date().getFullYear()}
+          AI Models Hub — Explore {models.length} models from top AI providers
+          &middot; {new Date().getFullYear()}
         </p>
       </footer>
     </div>

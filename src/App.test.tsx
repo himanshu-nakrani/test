@@ -1,45 +1,55 @@
-import { render, screen, fireEvent } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
+import { render, screen, fireEvent, within } from '@testing-library/react'
+import { describe, it, expect, beforeEach } from 'vitest'
 import App from './App'
 
-describe('App', () => {
-  it('renders the hero headline', () => {
+beforeEach(() => {
+  window.scrollTo = () => {}
+})
+
+describe('AI Models Hub', () => {
+  it('renders the hero section with model stats', () => {
     render(<App />)
-    expect(screen.getByText(/Build Something/i)).toBeInTheDocument()
-    expect(screen.getByText(/Beautiful/i)).toBeInTheDocument()
+    const hero = document.querySelector('.hero-section')!
+    expect(hero).toBeTruthy()
+    expect(within(hero as HTMLElement).getByText(/Explore.*models from.*providers/i)).toBeInTheDocument()
   })
 
-  it('renders all feature cards', () => {
+  it('renders model cards on the home page', () => {
     render(<App />)
-    expect(screen.getByText('Lightning Fast')).toBeInTheDocument()
-    expect(screen.getByText('Modern Design')).toBeInTheDocument()
-    expect(screen.getByText('Type Safe')).toBeInTheDocument()
-    expect(screen.getByText('Component-Based')).toBeInTheDocument()
+    expect(screen.getByText('GPT-4o')).toBeInTheDocument()
+    expect(screen.getByText('Claude 4 Opus')).toBeInTheDocument()
+    expect(screen.getByText('Gemini 2.5 Pro')).toBeInTheDocument()
   })
 
-  it('increments and resets the counter', () => {
+  it('filters models by search query', () => {
     render(<App />)
-    const counterBtn = screen.getByText(/Count: 0/)
-    fireEvent.click(counterBtn)
-    expect(screen.getByText(/Count: 1/)).toBeInTheDocument()
-
-    fireEvent.click(counterBtn)
-    fireEvent.click(counterBtn)
-    expect(screen.getByText(/Count: 3/)).toBeInTheDocument()
-
-    const resetBtn = screen.getByText('Reset')
-    fireEvent.click(resetBtn)
-    expect(screen.getByText(/Count: 0/)).toBeInTheDocument()
+    const searchInput = screen.getByPlaceholderText(/Search.*models/i)
+    fireEvent.change(searchInput, { target: { value: 'Claude' } })
+    expect(screen.getByText('Claude 4 Opus')).toBeInTheDocument()
+    expect(screen.getByText('Claude 4 Sonnet')).toBeInTheDocument()
+    expect(screen.queryByText('GPT-4o')).not.toBeInTheDocument()
   })
 
-  it('handles newsletter subscription', () => {
+  it('opens model detail view on card click', () => {
     render(<App />)
-    const input = screen.getByPlaceholderText('Enter your email')
-    const submitBtn = screen.getByText('Subscribe')
+    fireEvent.click(screen.getByText('GPT-4o'))
+    expect(screen.getByText(/Back to all models/i)).toBeInTheDocument()
+    expect(screen.getByText(/Specifications/i)).toBeInTheDocument()
+  })
 
-    fireEvent.change(input, { target: { value: 'test@example.com' } })
-    fireEvent.click(submitBtn)
+  it('navigates back from detail view', () => {
+    render(<App />)
+    fireEvent.click(screen.getByText('GPT-4o'))
+    expect(screen.getByText(/Back to all models/i)).toBeInTheDocument()
+    fireEvent.click(screen.getByText(/Back to all models/i))
+    expect(document.querySelector('.hero-section')).toBeTruthy()
+  })
 
-    expect(screen.getByText(/Thanks for subscribing/i)).toBeInTheDocument()
+  it('filters by provider chip', () => {
+    render(<App />)
+    const anthropicChip = screen.getByRole('button', { name: 'Anthropic' })
+    fireEvent.click(anthropicChip)
+    expect(screen.getByText('Claude 4 Opus')).toBeInTheDocument()
+    expect(screen.queryByText('GPT-4o')).not.toBeInTheDocument()
   })
 })
