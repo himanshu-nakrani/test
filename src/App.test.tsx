@@ -4,10 +4,11 @@ import App from './App'
 
 beforeEach(() => {
   window.scrollTo = () => {}
+  localStorage.clear()
 })
 
 describe('AI Models Hub', () => {
-  it('renders the hero section with model stats', () => {
+  it('renders the hero section with animated stats', () => {
     render(<App />)
     const hero = document.querySelector('.hero-section')!
     expect(hero).toBeTruthy()
@@ -35,6 +36,7 @@ describe('AI Models Hub', () => {
     fireEvent.click(screen.getByText('GPT-4o'))
     expect(screen.getByText(/Back to all models/i)).toBeInTheDocument()
     expect(screen.getByText(/Specifications/i)).toBeInTheDocument()
+    expect(screen.getByText(/Related Models/i)).toBeInTheDocument()
   })
 
   it('navigates back from detail view', () => {
@@ -51,5 +53,23 @@ describe('AI Models Hub', () => {
     fireEvent.click(anthropicChip)
     expect(screen.getByText('Claude 4 Opus')).toBeInTheDocument()
     expect(screen.queryByText('GPT-4o')).not.toBeInTheDocument()
+  })
+
+  it('switches between grid and table view', () => {
+    render(<App />)
+    const tableBtn = screen.getByTitle('Table view')
+    fireEvent.click(tableBtn)
+    expect(document.querySelector('.model-table')).toBeTruthy()
+    const gridBtn = screen.getByTitle('Grid view')
+    fireEvent.click(gridBtn)
+    expect(document.querySelector('.model-grid')).toBeTruthy()
+  })
+
+  it('toggles favorites on model cards', () => {
+    render(<App />)
+    const favButtons = document.querySelectorAll('.fav-btn')
+    expect(favButtons.length).toBeGreaterThan(0)
+    fireEvent.click(favButtons[0])
+    expect(favButtons[0].classList.contains('is-fav')).toBe(true)
   })
 })

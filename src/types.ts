@@ -33,6 +33,8 @@ export interface AIModel {
   isFeatured?: boolean
 }
 
+export type ViewMode = 'grid' | 'table'
+
 export interface FilterState {
   search: string
   providers: string[]

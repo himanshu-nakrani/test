@@ -1,10 +1,12 @@
-import type { ModelCategory, PricingTier, LicenseType, FilterState } from '../types'
+import type { ModelCategory, PricingTier, LicenseType, FilterState, ViewMode } from '../types'
 import { allProviders, allCategories } from '../data/models'
 
 interface FiltersProps {
   filters: FilterState
   onChange: (filters: FilterState) => void
   resultCount: number
+  viewMode: ViewMode
+  onViewModeChange: (mode: ViewMode) => void
 }
 
 const categoryLabels: Record<ModelCategory, string> = {
@@ -32,7 +34,7 @@ const licenseLabels: Record<LicenseType, string> = {
   proprietary: 'Proprietary',
 }
 
-export default function Filters({ filters, onChange, resultCount }: FiltersProps) {
+export default function Filters({ filters, onChange, resultCount, viewMode, onViewModeChange }: FiltersProps) {
   const toggleProvider = (p: string) => {
     const next = filters.providers.includes(p)
       ? filters.providers.filter((x) => x !== p)
@@ -83,9 +85,26 @@ export default function Filters({ filters, onChange, resultCount }: FiltersProps
         <span className="result-count">{resultCount} models</span>
       </div>
 
+      <div className="view-mode-switch">
+        <button
+          className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
+          onClick={() => onViewModeChange('grid')}
+          title="Grid view"
+        >
+          ▦ Grid
+        </button>
+        <button
+          className={`view-btn ${viewMode === 'table' ? 'active' : ''}`}
+          onClick={() => onViewModeChange('table')}
+          title="Table view"
+        >
+          ≡ Table
+        </button>
+      </div>
+
       {hasActiveFilters && (
         <button className="clear-filters" onClick={clearAll}>
-          Clear all filters
+          ✕ Clear all filters
         </button>
       )}
 

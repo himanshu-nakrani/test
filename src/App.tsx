@@ -1,11 +1,14 @@
-import { useState, useEffect, useMemo } from 'react'
-import type { AIModel, FilterState } from './types'
+import { useState, useEffect, useMemo, useCallback } from 'react'
+import type { AIModel, FilterState, ViewMode } from './types'
 import { models } from './data/models'
+import { useFavorites } from './hooks/useFavorites'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Filters from './components/Filters'
 import ModelCard from './components/ModelCard'
+import ModelTable from './components/ModelTable'
 import ModelDetail from './components/ModelDetail'
+import CompareView from './components/CompareView'
 import './App.css'
 
 const defaultFilters: FilterState = {
@@ -26,28 +29,50 @@ const contextToNumber = (ctx: string): number => {
 }
 
 const priceTierOrder: Record<string, number> = {
-  free: 0,
-  low: 1,
-  medium: 2,
-  high: 3,
-  premium: 4,
+  free: 0, low: 1, medium: 2, high: 3, premium: 4,
 }
 
+type Page = 'home' | 'detail' | 'compare'
+
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(() => {
+    try {
+      return localStorage.getItem('ai-hub-theme') === 'dark'
+    } catch {
+      return false
+    }
+  })
   const [filters, setFilters] = useState<FilterState>(defaultFilters)
   const [selectedModel, setSelectedModel] = useState<AIModel | null>(null)
   const [showFilters, setShowFilters] = useState(false)
+  const [viewMode, setViewMode] = useState<ViewMode>('grid')
+  const [compareSet, setCompareSet] = useState<Set<string>>(new Set())
+  const [page, setPage] = useState<Page>('home')
+  const [showFavOnly, setShowFavOnly] = useState(false)
+
+  const { toggle: toggleFav, isFav, count: favCount } = useFavorites()
 
   useEffect(() => {
-    document.documentElement.setAttribute(
-      'data-theme',
-      darkMode ? 'dark' : 'light',
-    )
+    const theme = darkMode ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-theme', theme)
+    try { localStorage.setItem('ai-hub-theme', theme) } catch { /* noop */ }
   }, [darkMode])
+
+  const toggleCompare = useCallback((id: string) => {
+    setCompareSet((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }, [])
 
   const filtered = useMemo(() => {
     let result = [...models]
+
+    if (showFavOnly) {
+      result = result.filter((m) => isFav(m.id))
+    }
 
     if (filters.search) {
       const q = filters.search.toLowerCase()
@@ -60,56 +85,56 @@ function App() {
       )
     }
 
-    if (filters.providers.length > 0) {
+    if (filters.providers.length > 0)
       result = result.filter((m) => filters.providers.includes(m.provider))
-    }
-
-    if (filters.categories.length > 0) {
-      result = result.filter((m) =>
-        m.categories.some((c) => filters.categories.includes(c)),
-      )
-    }
-
-    if (filters.pricingTiers.length > 0) {
+    if (filters.categories.length > 0)
+      result = result.filter((m) => m.categories.some((c) => filters.categories.includes(c)))
+    if (filters.pricingTiers.length > 0)
       result = result.filter((m) => filters.pricingTiers.includes(m.pricingTier))
-    }
-
-    if (filters.licenses.length > 0) {
+    if (filters.licenses.length > 0)
       result = result.filter((m) => filters.licenses.includes(m.license))
-    }
 
     result.sort((a, b) => {
       switch (filters.sortBy) {
-        case 'name':
-          return a.name.localeCompare(b.name)
-        case 'provider':
-          return a.provider.localeCompare(b.provider) || a.name.localeCompare(b.name)
-        case 'date':
-          return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-        case 'context':
-          return contextToNumber(b.contextWindow) - contextToNumber(a.contextWindow)
-        case 'price':
-          return priceTierOrder[a.pricingTier] - priceTierOrder[b.pricingTier]
-        default:
-          return 0
+        case 'name': return a.name.localeCompare(b.name)
+        case 'provider': return a.provider.localeCompare(b.provider) || a.name.localeCompare(b.name)
+        case 'date': return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
+        case 'context': return contextToNumber(b.contextWindow) - contextToNumber(a.contextWindow)
+        case 'price': return priceTierOrder[a.pricingTier] - priceTierOrder[b.pricingTier]
+        default: return 0
       }
     })
 
     return result
-  }, [filters])
+  }, [filters, showFavOnly, isFav])
+
+  const compareModels = useMemo(
+    () => models.filter((m) => compareSet.has(m.id)),
+    [compareSet],
+  )
 
   const handleModelClick = (model: AIModel) => {
     setSelectedModel(model)
+    setPage('detail')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleBack = () => {
     setSelectedModel(null)
+    setPage('home')
   }
 
   const handleSearch = (value: string) => {
     setFilters((f) => ({ ...f, search: value }))
-    if (selectedModel) setSelectedModel(null)
+    if (page !== 'home') { setSelectedModel(null); setPage('home') }
+  }
+
+  const handleCompareClick = () => {
+    if (compareSet.size >= 2) setPage('compare')
+  }
+
+  const handleCompareClose = () => {
+    setPage('home')
   }
 
   return (
@@ -121,11 +146,31 @@ function App() {
         onToggleDark={() => setDarkMode(!darkMode)}
         onLogoClick={handleBack}
         modelCount={models.length}
+        compareCount={compareSet.size}
+        onCompareClick={handleCompareClick}
+        favCount={favCount}
+        showFavOnly={showFavOnly}
+        onToggleFav={() => setShowFavOnly(!showFavOnly)}
       />
 
-      {selectedModel ? (
+      {page === 'detail' && selectedModel ? (
         <main className="main">
-          <ModelDetail model={selectedModel} onBack={handleBack} />
+          <ModelDetail
+            model={selectedModel}
+            onBack={handleBack}
+            onModelClick={handleModelClick}
+            isFav={isFav(selectedModel.id)}
+            onToggleFav={toggleFav}
+          />
+        </main>
+      ) : page === 'compare' ? (
+        <main className="main">
+          <CompareView
+            models={compareModels}
+            onClose={handleCompareClose}
+            onRemove={(id) => toggleCompare(id)}
+            onModelClick={handleModelClick}
+          />
         </main>
       ) : (
         <>
@@ -135,7 +180,7 @@ function App() {
               className="mobile-filter-toggle"
               onClick={() => setShowFilters(!showFilters)}
             >
-              {showFilters ? '✕ Hide Filters' : '☰ Show Filters'}
+              {showFilters ? '✕ Hide Filters' : '☰ Filters & Sort'}
             </button>
 
             <div className="content-layout">
@@ -144,26 +189,46 @@ function App() {
                   filters={filters}
                   onChange={setFilters}
                   resultCount={filtered.length}
+                  viewMode={viewMode}
+                  onViewModeChange={setViewMode}
                 />
               </div>
 
-              <div className="model-grid">
-                {filtered.length === 0 ? (
-                  <div className="no-results">
-                    <span className="no-results-icon">🔍</span>
-                    <h3>No models found</h3>
-                    <p>Try adjusting your search or filters.</p>
-                  </div>
-                ) : (
-                  filtered.map((model) => (
+              {filtered.length === 0 ? (
+                <div className="no-results">
+                  <span className="no-results-icon">🔍</span>
+                  <h3>No models found</h3>
+                  <p>Try adjusting your search or filters.</p>
+                  {showFavOnly && (
+                    <button className="clear-fav-btn" onClick={() => setShowFavOnly(false)}>
+                      Show all models
+                    </button>
+                  )}
+                </div>
+              ) : viewMode === 'grid' ? (
+                <div className="model-grid">
+                  {filtered.map((model) => (
                     <ModelCard
                       key={model.id}
                       model={model}
                       onClick={handleModelClick}
+                      isFav={isFav(model.id)}
+                      onToggleFav={toggleFav}
+                      isCompare={compareSet.has(model.id)}
+                      onToggleCompare={toggleCompare}
                     />
-                  ))
-                )}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <ModelTable
+                  models={filtered}
+                  onClick={handleModelClick}
+                  isFav={isFav}
+                  onToggleFav={toggleFav}
+                  compareSet={compareSet}
+                  onToggleCompare={toggleCompare}
+                />
+              )}
             </div>
           </main>
         </>

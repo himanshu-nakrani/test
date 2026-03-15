@@ -1,34 +1,53 @@
 import type { AIModel } from '../types'
+import { useCopyToClipboard } from '../hooks/useCopyToClipboard'
+import { models } from '../data/models'
 
 interface ModelDetailProps {
   model: AIModel
   onBack: () => void
+  onModelClick: (model: AIModel) => void
+  isFav: boolean
+  onToggleFav: (id: string) => void
 }
 
 const categoryEmoji: Record<string, string> = {
-  chat: '💬',
-  reasoning: '🧠',
-  code: '💻',
-  vision: '👁️',
-  embedding: '📐',
-  image: '🎨',
-  audio: '🎵',
-  video: '🎬',
+  chat: '💬', reasoning: '🧠', code: '💻', vision: '👁️',
+  embedding: '📐', image: '🎨', audio: '🎵', video: '🎬',
 }
 
-export default function ModelDetail({ model, onBack }: ModelDetailProps) {
+export default function ModelDetail({ model, onBack, onModelClick, isFav, onToggleFav }: ModelDetailProps) {
+  const { copy: copyEndpoint, copied: copiedEndpoint } = useCopyToClipboard()
+  const { copy: copyName, copied: copiedName } = useCopyToClipboard()
+
+  const related = models
+    .filter(
+      (m) =>
+        m.id !== model.id &&
+        (m.provider === model.provider ||
+          m.categories.some((c) => model.categories.includes(c))),
+    )
+    .slice(0, 4)
+
   return (
     <div className="model-detail">
-      <button className="back-btn" onClick={onBack}>
-        ← Back to all models
-      </button>
+      <div className="detail-top-bar">
+        <button className="back-btn" onClick={onBack}>
+          ← Back to all models
+        </button>
+        <button
+          className={`fav-btn fav-btn-lg ${isFav ? 'is-fav' : ''}`}
+          onClick={() => onToggleFav(model.id)}
+        >
+          {isFav ? '★ Favorited' : '☆ Add to favorites'}
+        </button>
+      </div>
 
       <div className="detail-hero">
         <div className="detail-hero-top">
           <div>
             <div className="detail-provider">
               <div
-                className="provider-dot"
+                className="provider-dot provider-dot-lg"
                 style={{ background: model.providerColor }}
               />
               <span>{model.provider}</span>
@@ -36,8 +55,18 @@ export default function ModelDetail({ model, onBack }: ModelDetailProps) {
                 {model.license}
               </span>
               {model.isNew && <span className="badge badge-new">New</span>}
+              {model.isFeatured && <span className="badge badge-featured">Featured</span>}
             </div>
-            <h1 className="detail-title">{model.name}</h1>
+            <h1 className="detail-title">
+              {model.name}
+              <button
+                className="copy-name-btn"
+                onClick={() => copyName(model.name)}
+                title="Copy model name"
+              >
+                {copiedName ? '✓' : '⧉'}
+              </button>
+            </h1>
             <p className="detail-description">{model.longDescription}</p>
           </div>
         </div>
@@ -61,7 +90,7 @@ export default function ModelDetail({ model, onBack }: ModelDetailProps) {
             </div>
             <div className="spec-row">
               <dt>Context Window</dt>
-              <dd>{model.contextWindow}</dd>
+              <dd><strong>{model.contextWindow}</strong></dd>
             </div>
             <div className="spec-row">
               <dt>Release Date</dt>
@@ -91,8 +120,10 @@ export default function ModelDetail({ model, onBack }: ModelDetailProps) {
             </div>
             <div className="spec-row">
               <dt>Tier</dt>
-              <dd className="capitalize">
-                {model.pricing.free ? '🆓 Free' : model.pricingTier}
+              <dd>
+                <span className={`pricing-pill pricing-${model.pricingTier}`}>
+                  {model.pricing.free ? '🆓 Free' : model.pricingTier}
+                </span>
               </dd>
             </div>
           </dl>
@@ -132,7 +163,16 @@ export default function ModelDetail({ model, onBack }: ModelDetailProps) {
           <dl className="spec-list">
             <div className="spec-row">
               <dt>API Endpoint</dt>
-              <dd className="mono">{model.apiEndpoint}</dd>
+              <dd className="api-cell">
+                <code className="api-code">{model.apiEndpoint}</code>
+                <button
+                  className={`copy-btn ${copiedEndpoint ? 'copied' : ''}`}
+                  onClick={() => copyEndpoint(model.apiEndpoint)}
+                  title="Copy endpoint"
+                >
+                  {copiedEndpoint ? '✓ Copied' : 'Copy'}
+                </button>
+              </dd>
             </div>
             <div className="spec-row">
               <dt>Documentation</dt>
@@ -150,6 +190,31 @@ export default function ModelDetail({ model, onBack }: ModelDetailProps) {
           </dl>
         </div>
       </div>
+
+      {related.length > 0 && (
+        <div className="related-section">
+          <h2>Related Models</h2>
+          <div className="related-grid">
+            {related.map((r) => (
+              <button
+                key={r.id}
+                className="related-card"
+                onClick={() => {
+                  onModelClick(r)
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }}
+              >
+                <div className="related-provider">
+                  <span className="provider-dot" style={{ background: r.providerColor }} />
+                  {r.provider}
+                </div>
+                <div className="related-name">{r.name}</div>
+                <div className="related-desc">{r.description}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
