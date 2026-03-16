@@ -6,6 +6,7 @@ import { usePageTitle } from '../hooks/usePageTitle'
 import { models } from '../data/models'
 import CodeBlock from './CodeBlock'
 import RadarChart from './RadarChart'
+import ReviewSection from './ReviewSection'
 
 interface ModelDetailProps {
   model: AIModel
@@ -360,6 +361,9 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
           </motion.div>
         )}
       </div>
+
+      {/* Reviews */}
+      <ReviewSection modelId={model.id} />
 
       {/* Related Models */}
       {related.length > 0 && (

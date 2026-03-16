@@ -1,5 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+import LoginModal from './LoginModal'
+import UserMenu from './UserMenu'
 
 interface HeaderProps {
   darkMode: boolean
@@ -22,6 +25,8 @@ export default function Header({
   showFavOnly,
   onToggleFav,
 }: HeaderProps) {
+  const { isAuthenticated } = useAuth()
+  const [showLogin, setShowLogin] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const location = useLocation()
   const navigate = useNavigate()
@@ -116,7 +121,15 @@ export default function Header({
         <button className="header-btn theme-toggle" onClick={onToggleDark} aria-label="Toggle theme">
           {darkMode ? '☀️' : '🌙'}
         </button>
+        {isAuthenticated ? (
+          <UserMenu />
+        ) : (
+          <button className="header-btn signin-btn" onClick={() => setShowLogin(true)}>
+            Sign In
+          </button>
+        )}
       </div>
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
     </header>
   )
 }

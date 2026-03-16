@@ -5,6 +5,7 @@ import type { AIModel, FilterState, ViewMode, ModelCategory, PricingTier, Licens
 import { models } from './data/models'
 import { useFavorites } from './hooks/useFavorites'
 import { usePageTitle } from './hooks/usePageTitle'
+import { AuthProvider } from './hooks/useAuth'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Filters from './components/Filters'
@@ -22,6 +23,7 @@ const CostCalculator = lazy(() => import('./components/CostCalculator'))
 const ComparisonGuides = lazy(() => import('./components/ComparisonGuides'))
 const CompareView = lazy(() => import('./components/CompareView'))
 const Analytics = lazy(() => import('./components/Analytics'))
+const Workspace = lazy(() => import('./components/Workspace'))
 
 const ITEMS_PER_PAGE = 12
 
@@ -406,6 +408,7 @@ function App() {
   }, [compareSet, navigate])
 
   return (
+    <AuthProvider>
     <div className="app">
       <a href="#main-content" className="skip-to-content">Skip to content</a>
       <Header
@@ -474,6 +477,13 @@ function App() {
               toggleCompare={toggleCompare}
             />
           } />
+          <Route path="/workspace" element={
+            <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Workspace />
+              </Suspense>
+            </motion.main>
+          } />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
@@ -482,6 +492,7 @@ function App() {
       </footer>
       <BackToTop />
     </div>
+    </AuthProvider>
   )
 }
 
