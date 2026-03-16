@@ -1,0 +1,73 @@
+{
+  "id": "phi-4",
+  "name": "Phi-4",
+  "provider": "Microsoft",
+  "providerColor": "#00a4ef",
+  "description": "Small but mighty 14B model excelling at reasoning and STEM.",
+  "longDescription": "Phi-4 is a 14B parameter model from Microsoft Research that punches well above its weight class. Trained with a focus on data quality and synthetic data, it achieves performance comparable to much larger models on reasoning, math, and science tasks.",
+  "categories": [
+    "chat",
+    "reasoning",
+    "code"
+  ],
+  "parameters": "14B",
+  "contextWindow": "16K tokens",
+  "contextTokens": 16000,
+  "releaseDate": "2024-12-12",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-source",
+  "strengths": [
+    "Exceptional for its size",
+    "Strong reasoning and math",
+    "Runs on consumer GPUs",
+    "MIT license"
+  ],
+  "limitations": [
+    "Small context window",
+    "Limited multilingual ability",
+    "Weaker on creative writing"
+  ],
+  "useCases": [
+    "Edge AI deployment",
+    "STEM tutoring",
+    "On-device inference",
+    "Lightweight coding assistant"
+  ],
+  "apiEndpoint": "Self-hosted or via Azure AI",
+  "documentationUrl": "https://azure.microsoft.com/en-us/products/phi",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~150ms",
+    "tokensPerSec": "~120 tok/s"
+  },
+  "tags": [
+    "reasoning",
+    "open-source",
+    "edge",
+    "coding"
+  ],
+  "benchmarks": {
+    "mmlu": 81.4,
+    "humanEval": 82,
+    "gsm8k": 89.5,
+    "mtBench": 8.3
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "28 GB (FP16)"
+}

@@ -1,0 +1,79 @@
+{
+  "id": "gen-3-alpha",
+  "name": "Gen-3 Alpha",
+  "provider": "Runway",
+  "providerColor": "#e11d48",
+  "description": "Leading video generation model with fine temporal and motion control.",
+  "longDescription": "Gen-3 Alpha is Runway's most advanced video generation model, capable of creating high-fidelity videos from text and image prompts. It offers fine-grained control over structure, style, and motion, with improved temporal consistency.",
+  "categories": [
+    "video"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "N/A",
+  "contextTokens": 0,
+  "releaseDate": "2024-06-17",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.05 / second of video",
+    "output": "N/A"
+  },
+  "pricingTier": "high",
+  "license": "proprietary",
+  "strengths": [
+    "High-quality video generation",
+    "Fine motion control",
+    "Text and image-to-video",
+    "Director mode for precise control"
+  ],
+  "limitations": [
+    "Short maximum duration",
+    "Expensive for long content",
+    "Occasional temporal artifacts"
+  ],
+  "useCases": [
+    "Film pre-visualization",
+    "Advertising content",
+    "Social media videos",
+    "Creative prototyping"
+  ],
+  "apiEndpoint": "https://api.dev.runwayml.com/v1/image_to_video",
+  "documentationUrl": "https://docs.dev.runwayml.com/",
+  "inputModalities": [
+    "text",
+    "image"
+  ],
+  "outputModalities": [
+    "video"
+  ],
+  "latency": "Slow",
+  "latencyInfo": {
+    "label": "Slow",
+    "ttfb": "~5s",
+    "tokensPerSec": "N/A"
+  },
+  "tags": [
+    "creative",
+    "multimodal"
+  ],
+  "rateLimits": {
+    "rpm": "20",
+    "tpm": "N/A"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import requests\n\nresponse = requests.post(\n    \"https://api.dev.runwayml.com/v1/image_to_video\",\n    headers={\"Authorization\": \"Bearer $RUNWAY_API_KEY\", \"Content-Type\": \"application/json\"},\n    json={\"promptImage\": \"https://example.com/image.png\", \"promptText\": \"A bird flying\"}\n)\nprint(response.json())"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.dev.runwayml.com/v1/image_to_video\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $RUNWAY_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    promptImage: \"https://example.com/image.png\",\n    promptText: \"A bird flying\",\n  }),\n});\nconst data = await response.json();\nconsole.log(data);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.dev.runwayml.com/v1/image_to_video \\\n  -H \"Authorization: Bearer $RUNWAY_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"promptImage\":\"https://example.com/image.png\",\"promptText\":\"A bird flying\"}'"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "aya-expanse-32b",
+  "name": "Aya Expanse 32B",
+  "provider": "Cohere",
+  "providerColor": "#39594d",
+  "description": "Multilingual open model supporting 23 languages with strong performance.",
+  "longDescription": "Aya Expanse 32B is Cohere's open-weight multilingual model, designed for broad language coverage across 23 languages. It achieves strong performance on multilingual benchmarks, making it ideal for applications requiring robust cross-lingual understanding and generation.",
+  "categories": [
+    "chat",
+    "reasoning"
+  ],
+  "parameters": "32B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-10-23",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-source",
+  "strengths": [
+    "23 language support",
+    "Strong multilingual performance",
+    "Open weights (Apache 2.0)",
+    "Research-driven development"
+  ],
+  "limitations": [
+    "Less capable than Command R+ on English",
+    "Requires GPU hosting",
+    "Smaller community than Llama"
+  ],
+  "useCases": [
+    "Multilingual chatbots",
+    "Cross-language content generation",
+    "Translation and localization",
+    "Global customer support"
+  ],
+  "apiEndpoint": "Self-hosted or via Cohere API",
+  "documentationUrl": "https://docs.cohere.com/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~500ms",
+    "tokensPerSec": "~80 tok/s"
+  },
+  "tags": [
+    "multilingual",
+    "open-source",
+    "reasoning"
+  ],
+  "benchmarks": {
+    "mmlu": 79,
+    "humanEval": 76,
+    "gsm8k": 82,
+    "mtBench": 8
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "64 GB (FP16)"
+}

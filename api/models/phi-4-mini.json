@@ -1,0 +1,74 @@
+{
+  "id": "phi-4-mini",
+  "name": "Phi-4 mini",
+  "provider": "Microsoft",
+  "providerColor": "#00a4ef",
+  "description": "Ultra-compact 3.8B model for on-device and edge applications.",
+  "longDescription": "Phi-4 mini is a 3.8B parameter model designed for on-device deployment. Despite its tiny size, it delivers surprisingly strong performance on reasoning and coding tasks, making it ideal for mobile and IoT applications.",
+  "categories": [
+    "chat",
+    "code",
+    "reasoning"
+  ],
+  "parameters": "3.8B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2025-02-27",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-source",
+  "strengths": [
+    "Runs on phones and edge devices",
+    "Surprisingly capable for 3.8B",
+    "128K context window",
+    "MIT license"
+  ],
+  "limitations": [
+    "Limited world knowledge",
+    "Weaker on complex tasks",
+    "Basic vision only"
+  ],
+  "useCases": [
+    "Mobile AI features",
+    "IoT and edge devices",
+    "Offline AI assistants",
+    "Embedded systems"
+  ],
+  "apiEndpoint": "Self-hosted or via Azure AI",
+  "documentationUrl": "https://azure.microsoft.com/en-us/products/phi",
+  "isNew": true,
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~100ms",
+    "tokensPerSec": "~180 tok/s"
+  },
+  "tags": [
+    "open-source",
+    "edge",
+    "coding",
+    "reasoning"
+  ],
+  "benchmarks": {
+    "mmlu": 72,
+    "humanEval": 74,
+    "gsm8k": 78,
+    "mtBench": 7.5
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "7.6 GB (FP16)"
+}

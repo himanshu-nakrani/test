@@ -1,0 +1,82 @@
+{
+  "id": "stable-diffusion-3-5",
+  "name": "Stable Diffusion 3.5",
+  "provider": "Stability AI",
+  "providerColor": "#a855f7",
+  "description": "Open-weight image generation model with fine control over outputs.",
+  "longDescription": "Stable Diffusion 3.5 is Stability AI's latest open-weight image generation model using a Multimodal Diffusion Transformer architecture. It offers three variants (Large, Large Turbo, and Medium) for different quality/speed tradeoffs, with improved text rendering and prompt adherence.",
+  "categories": [
+    "image"
+  ],
+  "parameters": "8B (Large) / 2.5B (Medium)",
+  "contextWindow": "N/A",
+  "contextTokens": 0,
+  "releaseDate": "2024-10-22",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-weights",
+  "strengths": [
+    "Open weights — fully customizable",
+    "Multiple size variants",
+    "Excellent text rendering",
+    "Fine-tuning friendly"
+  ],
+  "limitations": [
+    "Requires GPU for local inference",
+    "Output quality varies with prompting",
+    "Safety filters may be too strict"
+  ],
+  "useCases": [
+    "Art and illustration",
+    "Product visualization",
+    "Game asset generation",
+    "Marketing materials"
+  ],
+  "apiEndpoint": "https://api.stability.ai/v2beta/stable-image/generate",
+  "documentationUrl": "https://platform.stability.ai/docs/api-reference",
+  "inputModalities": [
+    "text",
+    "image"
+  ],
+  "outputModalities": [
+    "image"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~2s",
+    "tokensPerSec": "N/A"
+  },
+  "tags": [
+    "creative",
+    "open-source",
+    "multimodal"
+  ],
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "16 GB (FP16 Large)",
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import requests\n\nresponse = requests.post(\n    \"https://api.stability.ai/v2beta/stable-image/generate/sd3\",\n    headers={\"Authorization\": \"Bearer $STABILITY_API_KEY\"},\n    files={\"none\": \"\"},\n    data={\"prompt\": \"A futuristic cityscape\", \"model\": \"sd3.5-large\"}\n)\nwith open(\"output.png\", \"wb\") as f:\n    f.write(response.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const formData = new FormData();\nformData.append(\"prompt\", \"A futuristic cityscape\");\nformData.append(\"model\", \"sd3.5-large\");\nconst response = await fetch(\"https://api.stability.ai/v2beta/stable-image/generate/sd3\", {\n  method: \"POST\",\n  headers: { \"Authorization\": \"Bearer $STABILITY_API_KEY\" },\n  body: formData,\n});\nconst blob = await response.blob();\nconsole.log(\"Image generated:\", blob.size, \"bytes\");"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.stability.ai/v2beta/stable-image/generate/sd3 \\\n  -H \"Authorization: Bearer $STABILITY_API_KEY\" \\\n  -F prompt=\"A futuristic cityscape\" \\\n  -F model=\"sd3.5-large\" \\\n  -o output.png"
+    }
+  ]
+}

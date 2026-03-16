@@ -1,0 +1,89 @@
+{
+  "id": "amazon-titan-text-premier",
+  "name": "Amazon Titan Text Premier",
+  "provider": "Amazon",
+  "providerColor": "#ff9900",
+  "description": "Amazon's most capable proprietary LLM for enterprise text generation.",
+  "longDescription": "Amazon Titan Text Premier is Amazon's flagship proprietary large language model, optimized for enterprise workloads on AWS Bedrock. It excels at complex text generation, summarization, RAG-based Q&A, and multi-turn conversation, with built-in safety features and AWS integration.",
+  "categories": [
+    "chat",
+    "reasoning",
+    "code"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "32K tokens",
+  "contextTokens": 32000,
+  "releaseDate": "2024-08-01",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.50 / 1M tokens",
+    "output": "$1.50 / 1M tokens",
+    "inputPerMillion": 0.5,
+    "outputPerMillion": 1.5
+  },
+  "pricingTier": "low",
+  "license": "proprietary",
+  "strengths": [
+    "Native AWS Bedrock integration",
+    "Built-in content safety",
+    "Optimized for enterprise compliance",
+    "Strong multilingual support"
+  ],
+  "limitations": [
+    "AWS ecosystem dependency",
+    "Smaller context than competitors",
+    "Less capable than GPT-4 class models"
+  ],
+  "useCases": [
+    "Enterprise chatbots on AWS",
+    "Document summarization",
+    "RAG-powered Q&A",
+    "Content generation for compliance"
+  ],
+  "apiEndpoint": "https://bedrock-runtime.amazonaws.com",
+  "documentationUrl": "https://docs.aws.amazon.com/bedrock/latest/userguide/titan-text-models.html",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~400ms",
+    "tokensPerSec": "~100 tok/s"
+  },
+  "tags": [
+    "enterprise",
+    "multilingual",
+    "RAG"
+  ],
+  "benchmarks": {
+    "mmlu": 80,
+    "humanEval": 78,
+    "gsm8k": 82,
+    "mtBench": 8
+  },
+  "rateLimits": {
+    "rpm": "200",
+    "tpm": "50,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import boto3\nimport json\n\nclient = boto3.client(\"bedrock-runtime\")\nresponse = client.invoke_model(\n    modelId=\"amazon.titan-text-premier-v1:0\",\n    body=json.dumps({\"inputText\": \"Hello!\", \"textGenerationConfig\": {\"maxTokenCount\": 512}})\n)\nresult = json.loads(response[\"body\"].read())\nprint(result[\"results\"][0][\"outputText\"])"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.titan-text-premier-v1:0/invoke\", {\n  method: \"POST\",\n  headers: { \"Content-Type\": \"application/json\" },\n  body: JSON.stringify({\n    inputText: \"Hello!\",\n    textGenerationConfig: { maxTokenCount: 512 },\n  }),\n});\nconst data = await response.json();\nconsole.log(data.results[0].outputText);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "aws bedrock-runtime invoke-model \\\n  --model-id amazon.titan-text-premier-v1:0 \\\n  --body '{\"inputText\":\"Hello!\",\"textGenerationConfig\":{\"maxTokenCount\":512}}' \\\n  --region us-east-1 \\\n  output.json"
+    }
+  ]
+}

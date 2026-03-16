@@ -1,0 +1,79 @@
+{
+  "id": "flux-1-1-pro",
+  "name": "Flux 1.1 Pro",
+  "provider": "Black Forest Labs",
+  "providerColor": "#1a1a2e",
+  "description": "State-of-the-art image generation with exceptional prompt adherence.",
+  "longDescription": "Flux 1.1 Pro is the flagship image generation model from Black Forest Labs (founded by the creators of Stable Diffusion). It achieves state-of-the-art image quality with exceptional prompt adherence, photorealistic output, and superior handling of text, hands, and complex compositions.",
+  "categories": [
+    "image"
+  ],
+  "parameters": "12B",
+  "contextWindow": "N/A",
+  "contextTokens": 0,
+  "releaseDate": "2024-10-01",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.04 / image",
+    "output": "N/A"
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Best-in-class image quality",
+    "Superior text rendering in images",
+    "Excellent hand and anatomy generation",
+    "Fast generation speed"
+  ],
+  "limitations": [
+    "Proprietary API only for Pro version",
+    "Limited editing/inpainting options",
+    "Newer platform with smaller community"
+  ],
+  "useCases": [
+    "Professional graphic design",
+    "Marketing and advertising imagery",
+    "Product visualization",
+    "High-quality art generation"
+  ],
+  "apiEndpoint": "https://api.bfl.ml/v1/flux-pro-1.1",
+  "documentationUrl": "https://docs.bfl.ml/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "image"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~2s",
+    "tokensPerSec": "N/A"
+  },
+  "tags": [
+    "creative",
+    "multimodal"
+  ],
+  "rateLimits": {
+    "rpm": "60",
+    "tpm": "N/A"
+  },
+  "modelSize": "24 GB (FP16)",
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import requests\n\nresponse = requests.post(\n    \"https://api.bfl.ml/v1/flux-pro-1.1\",\n    headers={\"X-Key\": \"$BFL_API_KEY\", \"Content-Type\": \"application/json\"},\n    json={\"prompt\": \"A serene mountain landscape at dawn\", \"width\": 1024, \"height\": 1024}\n)\nresult = response.json()\nprint(result[\"id\"])"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.bfl.ml/v1/flux-pro-1.1\", {\n  method: \"POST\",\n  headers: {\n    \"X-Key\": \"$BFL_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    prompt: \"A serene mountain landscape at dawn\",\n    width: 1024,\n    height: 1024,\n  }),\n});\nconst data = await response.json();\nconsole.log(data.id);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.bfl.ml/v1/flux-pro-1.1 \\\n  -H \"X-Key: $BFL_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"prompt\":\"A serene mountain landscape at dawn\",\"width\":1024,\"height\":1024}'"
+    }
+  ]
+}

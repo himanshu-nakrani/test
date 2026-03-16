@@ -1,0 +1,90 @@
+{
+  "id": "mistral-saba",
+  "name": "Mistral Saba",
+  "provider": "Mistral",
+  "providerColor": "#ff7000",
+  "description": "Optimized for Middle Eastern and South Asian languages.",
+  "longDescription": "Mistral Saba is a specialized model from Mistral AI optimized for Middle Eastern and South Asian languages including Arabic, Hindi, Urdu, and others. It delivers strong performance on multilingual tasks while maintaining excellent English capabilities, making it ideal for applications serving these regions.",
+  "categories": [
+    "chat",
+    "code",
+    "reasoning"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "32K tokens",
+  "contextTokens": 32000,
+  "releaseDate": "2025-02-04",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.20 / 1M tokens",
+    "output": "$0.60 / 1M tokens",
+    "inputPerMillion": 0.2,
+    "outputPerMillion": 0.6
+  },
+  "pricingTier": "low",
+  "license": "proprietary",
+  "strengths": [
+    "Optimized for Arabic, Hindi, Urdu, and more",
+    "Strong English performance maintained",
+    "Cost-effective multilingual model",
+    "Good for regional deployments"
+  ],
+  "limitations": [
+    "Smaller context than Mistral Large",
+    "Specialized — less general purpose",
+    "Newer model with limited adoption"
+  ],
+  "useCases": [
+    "Middle East and South Asian market chatbots",
+    "Arabic/Hindi content generation",
+    "Regional customer support",
+    "Multilingual enterprise apps"
+  ],
+  "apiEndpoint": "https://api.mistral.ai/v1/chat/completions",
+  "documentationUrl": "https://docs.mistral.ai/",
+  "isNew": true,
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~250ms",
+    "tokensPerSec": "~120 tok/s"
+  },
+  "tags": [
+    "multilingual",
+    "enterprise",
+    "edge"
+  ],
+  "benchmarks": {
+    "mmlu": 79,
+    "humanEval": 77,
+    "gsm8k": 81,
+    "mtBench": 8.1
+  },
+  "rateLimits": {
+    "rpm": "300",
+    "tpm": "50,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "from mistralai import Mistral\n\nclient = Mistral(api_key=\"YOUR_MISTRAL_API_KEY\")\nresponse = client.chat.complete(\n    model=\"mistral-saba-latest\",\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.mistral.ai/v1/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $MISTRAL_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"mistral-saba-latest\",\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.mistral.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $MISTRAL_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"mistral-saba-latest\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

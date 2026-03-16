@@ -1,0 +1,89 @@
+{
+  "id": "command-r-plus",
+  "name": "Command R+",
+  "provider": "Cohere",
+  "providerColor": "#39594d",
+  "description": "Enterprise-grade model optimized for RAG and tool use.",
+  "longDescription": "Command R+ is Cohere's most powerful model designed for enterprise use cases. It excels at retrieval-augmented generation (RAG), multi-step tool use, and structured outputs, with strong multilingual support across 10 languages.",
+  "categories": [
+    "chat",
+    "reasoning"
+  ],
+  "parameters": "104B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-04-04",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$2.50 / 1M tokens",
+    "output": "$10.00 / 1M tokens",
+    "inputPerMillion": 2.5,
+    "outputPerMillion": 10
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Best-in-class RAG performance",
+    "Native citation generation",
+    "Strong multilingual support",
+    "Enterprise security features"
+  ],
+  "limitations": [
+    "Smaller general knowledge base",
+    "Less well-known than OpenAI/Anthropic",
+    "Limited vision capabilities"
+  ],
+  "useCases": [
+    "Enterprise search and RAG",
+    "Customer support with citations",
+    "Document analysis",
+    "Multi-step business workflows"
+  ],
+  "apiEndpoint": "https://api.cohere.com/v2/chat",
+  "documentationUrl": "https://docs.cohere.com/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~600ms",
+    "tokensPerSec": "~70 tok/s"
+  },
+  "tags": [
+    "RAG",
+    "function-calling",
+    "multilingual",
+    "enterprise"
+  ],
+  "benchmarks": {
+    "mmlu": 84.5,
+    "humanEval": 82,
+    "gsm8k": 85,
+    "mtBench": 8.5
+  },
+  "rateLimits": {
+    "rpm": "1,000",
+    "tpm": "100,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import cohere\n\nco = cohere.ClientV2(api_key=\"YOUR_COHERE_API_KEY\")\nresponse = co.chat(\n    model=\"command-r-plus\",\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}]\n)\nprint(response.message.content[0].text)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.cohere.com/v2/chat\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $COHERE_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"command-r-plus\",\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.message.content[0].text);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.cohere.com/v2/chat \\\n  -H \"Authorization: Bearer $COHERE_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"command-r-plus\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

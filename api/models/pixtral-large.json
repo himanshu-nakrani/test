@@ -1,0 +1,94 @@
+{
+  "id": "pixtral-large",
+  "name": "Pixtral Large",
+  "provider": "Mistral",
+  "providerColor": "#ff7000",
+  "description": "Multimodal model with strong vision understanding and 128K context.",
+  "longDescription": "Pixtral Large is Mistral's flagship multimodal model, built on Mistral Large 2 with a 124B parameter architecture. It features a dedicated 1B parameter vision encoder and excels at document understanding, chart interpretation, and natural image analysis.",
+  "categories": [
+    "chat",
+    "vision",
+    "code",
+    "reasoning"
+  ],
+  "parameters": "124B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-11-18",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$2.00 / 1M tokens",
+    "output": "$6.00 / 1M tokens",
+    "inputPerMillion": 2,
+    "outputPerMillion": 6
+  },
+  "pricingTier": "medium",
+  "license": "open-weights",
+  "strengths": [
+    "Strong vision understanding",
+    "Document and chart analysis",
+    "Open weights available",
+    "Large context window"
+  ],
+  "limitations": [
+    "Larger model requires more compute",
+    "Vision adds latency",
+    "Newer — less community adoption"
+  ],
+  "useCases": [
+    "Document digitization",
+    "Chart and graph analysis",
+    "Visual Q&A systems",
+    "Multimodal enterprise apps"
+  ],
+  "apiEndpoint": "https://api.mistral.ai/v1/chat/completions",
+  "documentationUrl": "https://docs.mistral.ai/",
+  "inputModalities": [
+    "text",
+    "image"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~700ms",
+    "tokensPerSec": "~60 tok/s"
+  },
+  "tags": [
+    "vision",
+    "coding",
+    "reasoning",
+    "open-source",
+    "multimodal"
+  ],
+  "benchmarks": {
+    "mmlu": 85,
+    "humanEval": 85,
+    "gsm8k": 88,
+    "mtBench": 8.5
+  },
+  "rateLimits": {
+    "rpm": "300",
+    "tpm": "50,000"
+  },
+  "modelSize": "248 GB (FP16)",
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "from mistralai import Mistral\n\nclient = Mistral(api_key=\"YOUR_MISTRAL_API_KEY\")\nresponse = client.chat.complete(\n    model=\"pixtral-large-latest\",\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.mistral.ai/v1/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $MISTRAL_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"pixtral-large-latest\",\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.mistral.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $MISTRAL_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"pixtral-large-latest\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

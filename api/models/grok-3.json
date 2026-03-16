@@ -1,0 +1,98 @@
+{
+  "id": "grok-3",
+  "name": "Grok-3",
+  "provider": "xAI",
+  "providerColor": "#1da1f2",
+  "description": "xAI's most powerful model with state-of-the-art reasoning.",
+  "longDescription": "Grok-3 is xAI's flagship model, trained on Colossus — one of the world's largest AI supercomputers. It achieves state-of-the-art results across math, science, and coding benchmarks, and features an extended thinking mode for deeper reasoning.",
+  "categories": [
+    "chat",
+    "reasoning",
+    "code"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2025-02-18",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$3.00 / 1M tokens",
+    "output": "$15.00 / 1M tokens",
+    "inputPerMillion": 3,
+    "outputPerMillion": 15
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Top-tier benchmark performance",
+    "Extended thinking mode",
+    "Real-time X/Twitter integration",
+    "Strong at math and science"
+  ],
+  "limitations": [
+    "Newer ecosystem, fewer integrations",
+    "API access may be limited",
+    "Less established than competitors"
+  ],
+  "useCases": [
+    "Research and analysis",
+    "Real-time information synthesis",
+    "Complex problem solving",
+    "Technical writing"
+  ],
+  "apiEndpoint": "https://api.x.ai/v1/chat/completions",
+  "documentationUrl": "https://docs.x.ai/",
+  "isNew": true,
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~700ms",
+    "tokensPerSec": "~80 tok/s"
+  },
+  "tags": [
+    "reasoning",
+    "coding",
+    "search",
+    "function-calling"
+  ],
+  "benchmarks": {
+    "mmlu": 88,
+    "humanEval": 89,
+    "gsm8k": 94,
+    "mtBench": 9.1
+  },
+  "rateLimits": {
+    "rpm": "300",
+    "tpm": "50,000"
+  },
+  "versions": [
+    {
+      "version": "grok-3-beta",
+      "date": "2025-02-18",
+      "notes": "Beta release"
+    }
+  ],
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import openai\n\nclient = openai.OpenAI(\n    base_url=\"https://api.x.ai/v1\",\n    api_key=\"YOUR_XAI_API_KEY\"\n)\nresponse = client.chat.completions.create(\n    model=\"grok-3\",\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.x.ai/v1/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $XAI_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"grok-3\",\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.x.ai/v1/chat/completions \\\n  -H \"Authorization: Bearer $XAI_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"grok-3\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

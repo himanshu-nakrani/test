@@ -1,0 +1,86 @@
+{
+  "id": "github-copilot",
+  "name": "GitHub Copilot",
+  "provider": "GitHub",
+  "providerColor": "#000000",
+  "description": "AI pair programmer that helps you write code faster with contextual suggestions.",
+  "longDescription": "GitHub Copilot is an AI-powered coding assistant that integrates directly into your IDE. It provides real-time code suggestions, whole-function completions, and natural language-to-code translation. Built on OpenAI Codex models and fine-tuned on billions of lines of public code, it supports dozens of languages and frameworks.",
+  "categories": [
+    "code",
+    "chat"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-12-18",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$10/mo Individual",
+    "output": "$19/mo Business"
+  },
+  "pricingTier": "low",
+  "license": "proprietary",
+  "strengths": [
+    "Deep IDE integration (VS Code, JetBrains, Neovim)",
+    "Context-aware completions from open files",
+    "Supports 40+ programming languages",
+    "Built-in chat for code Q&A"
+  ],
+  "limitations": [
+    "Subscription required",
+    "Can suggest copyrighted code patterns",
+    "Less effective on very niche frameworks"
+  ],
+  "useCases": [
+    "Code autocompletion",
+    "Unit test generation",
+    "Code refactoring suggestions",
+    "Learning new APIs and languages"
+  ],
+  "apiEndpoint": "https://api.github.com/copilot",
+  "documentationUrl": "https://docs.github.com/en/copilot",
+  "inputModalities": [
+    "text",
+    "code"
+  ],
+  "outputModalities": [
+    "text",
+    "code"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~200ms",
+    "tokensPerSec": "~120 tok/s"
+  },
+  "tags": [
+    "coding",
+    "function-calling",
+    "agents"
+  ],
+  "benchmarks": {
+    "humanEval": 88,
+    "gsm8k": 85
+  },
+  "rateLimits": {
+    "rpm": "300",
+    "tpm": "50,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import openai\n\nclient = openai.OpenAI(\n    base_url=\"https://models.inference.ai.azure.com\",\n    api_key=\"YOUR_GITHUB_TOKEN\"\n)\nresponse = client.chat.completions.create(\n    model=\"gpt-4o\",\n    messages=[{\"role\": \"user\", \"content\": \"Write a Python function to sort a list\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://models.inference.ai.azure.com/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $GITHUB_TOKEN\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"gpt-4o\",\n    messages: [{ role: \"user\", content: \"Write a Python function to sort a list\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://models.inference.ai.azure.com/chat/completions \\\n  -H \"Authorization: Bearer $GITHUB_TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"gpt-4o\",\"messages\":[{\"role\":\"user\",\"content\":\"Write a Python function to sort a list\"}]}'"
+    }
+  ]
+}

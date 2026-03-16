@@ -1,0 +1,66 @@
+{
+  "id": "inflection-3",
+  "name": "Inflection 3",
+  "provider": "Inflection",
+  "providerColor": "#6c5ce7",
+  "description": "Empathetic AI model optimized for natural, human-like conversation.",
+  "longDescription": "Inflection 3 (powering Pi) is designed specifically for natural, empathetic conversation. It focuses on being a supportive and engaging conversational partner, excelling at nuanced dialogue, active listening, and emotionally intelligent responses.",
+  "categories": [
+    "chat"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "32K tokens",
+  "contextTokens": 32000,
+  "releaseDate": "2024-03-07",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (Pi app)",
+    "output": "N/A",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "proprietary",
+  "strengths": [
+    "Most natural conversational ability",
+    "Emotionally intelligent responses",
+    "Excellent at active listening",
+    "Free via Pi app"
+  ],
+  "limitations": [
+    "Limited API availability",
+    "Not optimized for code/reasoning",
+    "Smaller context window"
+  ],
+  "useCases": [
+    "Personal AI companion",
+    "Mental wellness support",
+    "Conversational practice",
+    "Brainstorming partner"
+  ],
+  "apiEndpoint": "Via Pi app or Inflection API",
+  "documentationUrl": "https://pi.ai/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~300ms",
+    "tokensPerSec": "~100 tok/s"
+  },
+  "tags": [
+    "creative",
+    "multilingual"
+  ],
+  "benchmarks": {
+    "mmlu": 80,
+    "mtBench": 8.8
+  },
+  "rateLimits": {
+    "rpm": "N/A (Pi app)",
+    "tpm": "N/A"
+  }
+}

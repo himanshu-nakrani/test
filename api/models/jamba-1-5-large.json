@@ -1,0 +1,90 @@
+{
+  "id": "jamba-1-5-large",
+  "name": "Jamba 1.5 Large",
+  "provider": "AI21 Labs",
+  "providerColor": "#5046e5",
+  "description": "Hybrid SSM-Transformer model with 256K context at exceptional speed.",
+  "longDescription": "Jamba 1.5 Large is a 94B parameter model using a novel hybrid SSM-Transformer architecture (Mamba + Attention). This unique design delivers a massive 256K context window with exceptional inference speed and efficiency, outperforming traditional transformers on long-context tasks.",
+  "categories": [
+    "chat",
+    "reasoning",
+    "code"
+  ],
+  "parameters": "94B (MoE, 39B active)",
+  "contextWindow": "256K tokens",
+  "contextTokens": 256000,
+  "releaseDate": "2024-08-22",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$2.00 / 1M tokens",
+    "output": "$8.00 / 1M tokens",
+    "inputPerMillion": 2,
+    "outputPerMillion": 8
+  },
+  "pricingTier": "medium",
+  "license": "open-weights",
+  "strengths": [
+    "Novel SSM-Transformer hybrid architecture",
+    "256K context with fast processing",
+    "Efficient long-context handling",
+    "Open weights"
+  ],
+  "limitations": [
+    "Less established than GPT/Claude",
+    "Fewer fine-tuned variants",
+    "Limited vision capabilities"
+  ],
+  "useCases": [
+    "Long document analysis",
+    "Enterprise knowledge bases",
+    "Legal and compliance review",
+    "Multi-turn conversations"
+  ],
+  "apiEndpoint": "https://api.ai21.com/studio/v1/chat/completions",
+  "documentationUrl": "https://docs.ai21.com/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~400ms",
+    "tokensPerSec": "~90 tok/s"
+  },
+  "tags": [
+    "long-context",
+    "open-source",
+    "reasoning"
+  ],
+  "benchmarks": {
+    "mmlu": 84,
+    "humanEval": 83,
+    "gsm8k": 85,
+    "mtBench": 8.4
+  },
+  "rateLimits": {
+    "rpm": "200",
+    "tpm": "40,000"
+  },
+  "modelSize": "188 GB (FP16)",
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import openai\n\nclient = openai.OpenAI(\n    base_url=\"https://api.ai21.com/studio/v1\",\n    api_key=\"YOUR_AI21_API_KEY\"\n)\nresponse = client.chat.completions.create(\n    model=\"jamba-1.5-large\",\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.ai21.com/studio/v1/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $AI21_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"jamba-1.5-large\",\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.ai21.com/studio/v1/chat/completions \\\n  -H \"Authorization: Bearer $AI21_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"jamba-1.5-large\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

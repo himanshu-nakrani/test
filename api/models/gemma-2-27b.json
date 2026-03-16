@@ -1,0 +1,72 @@
+{
+  "id": "gemma-2-27b",
+  "name": "Gemma 2 27B",
+  "provider": "Google",
+  "providerColor": "#4285f4",
+  "description": "Open-weight model from Google optimized for efficiency and performance.",
+  "longDescription": "Gemma 2 27B is Google's open-weight language model, designed to be highly efficient while delivering strong performance. Built using the same research and technology as Google's Gemini models, it offers excellent reasoning and coding capabilities in a size that can run on a single GPU.",
+  "categories": [
+    "chat",
+    "code",
+    "reasoning"
+  ],
+  "parameters": "27B",
+  "contextWindow": "8K tokens",
+  "contextTokens": 8192,
+  "releaseDate": "2024-06-27",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-weights",
+  "strengths": [
+    "Strong performance for its size",
+    "Google-quality training data",
+    "Runs on single GPU",
+    "Permissive license"
+  ],
+  "limitations": [
+    "Smaller context than Gemini models",
+    "No vision support",
+    "Limited multilingual compared to Qwen"
+  ],
+  "useCases": [
+    "On-premise AI deployment",
+    "Research and experimentation",
+    "Fine-tuning for specific domains",
+    "Edge deployment on powerful GPUs"
+  ],
+  "apiEndpoint": "Self-hosted or via Google AI Studio",
+  "documentationUrl": "https://ai.google.dev/gemma",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~200ms",
+    "tokensPerSec": "~100 tok/s"
+  },
+  "tags": [
+    "open-source",
+    "coding",
+    "reasoning"
+  ],
+  "benchmarks": {
+    "mmlu": 83,
+    "humanEval": 81,
+    "gsm8k": 87,
+    "mtBench": 8.2
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "54 GB (FP16)"
+}

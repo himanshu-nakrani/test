@@ -1,0 +1,93 @@
+{
+  "id": "nova-pro",
+  "name": "Nova Pro",
+  "provider": "Amazon",
+  "providerColor": "#ff9900",
+  "description": "Amazon's most capable model balancing accuracy, speed, and cost.",
+  "longDescription": "Amazon Nova Pro is a highly capable multimodal model that offers the best combination of accuracy, speed, and cost among the Nova family. It processes text, images, and video inputs and is optimized for a wide range of tasks from analysis to content generation.",
+  "categories": [
+    "chat",
+    "vision",
+    "reasoning",
+    "code"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "300K tokens",
+  "contextTokens": 300000,
+  "releaseDate": "2024-12-03",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.80 / 1M tokens",
+    "output": "$3.20 / 1M tokens",
+    "inputPerMillion": 0.8,
+    "outputPerMillion": 3.2
+  },
+  "pricingTier": "low",
+  "license": "proprietary",
+  "strengths": [
+    "Multimodal (text, image, video)",
+    "Strong cost-to-performance ratio",
+    "Integrated with AWS ecosystem",
+    "Large 300K context"
+  ],
+  "limitations": [
+    "AWS Bedrock dependency",
+    "Less well-known than GPT/Claude",
+    "Limited community tooling"
+  ],
+  "useCases": [
+    "Enterprise AI on AWS",
+    "Document and image analysis",
+    "Video content understanding",
+    "RAG applications"
+  ],
+  "apiEndpoint": "https://bedrock-runtime.amazonaws.com",
+  "documentationUrl": "https://docs.aws.amazon.com/nova/",
+  "inputModalities": [
+    "text",
+    "image",
+    "video"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~600ms",
+    "tokensPerSec": "~80 tok/s"
+  },
+  "tags": [
+    "multimodal",
+    "vision",
+    "enterprise",
+    "RAG"
+  ],
+  "benchmarks": {
+    "mmlu": 83,
+    "humanEval": 82,
+    "gsm8k": 84,
+    "mtBench": 8.3
+  },
+  "rateLimits": {
+    "rpm": "200",
+    "tpm": "50,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import boto3\nimport json\n\nclient = boto3.client(\"bedrock-runtime\")\nresponse = client.invoke_model(\n    modelId=\"amazon.nova-pro-v1:0\",\n    body=json.dumps({\"messages\": [{\"role\": \"user\", \"content\": [{\"text\": \"Hello!\"}]}]})\n)\nresult = json.loads(response[\"body\"].read())\nprint(result[\"output\"][\"message\"][\"content\"][0][\"text\"])"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.nova-pro-v1:0/invoke\", {\n  method: \"POST\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    messages: [{ role: \"user\", content: [{ text: \"Hello!\" }] }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.output.message.content[0].text);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "aws bedrock-runtime invoke-model \\\n  --model-id amazon.nova-pro-v1:0 \\\n  --body '{\"messages\":[{\"role\":\"user\",\"content\":[{\"text\":\"Hello!\"}]}]}' \\\n  --region us-east-1 \\\n  output.json"
+    }
+  ]
+}

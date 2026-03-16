@@ -1,0 +1,88 @@
+{
+  "id": "ernie-4-0",
+  "name": "ERNIE 4.0",
+  "provider": "Baidu",
+  "providerColor": "#2932e1",
+  "description": "Baidu's most capable LLM with strong Chinese language understanding.",
+  "longDescription": "ERNIE 4.0 is Baidu's flagship large language model, excelling at Chinese and English language tasks. It demonstrates strong performance in understanding, generation, reasoning, and knowledge retrieval, making it the leading AI model in the Chinese market.",
+  "categories": [
+    "chat",
+    "reasoning",
+    "code"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-04-16",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "¥0.12 / 1K tokens",
+    "output": "¥0.12 / 1K tokens"
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Best-in-class Chinese language understanding",
+    "Strong reasoning capabilities",
+    "Integrated with Baidu ecosystem",
+    "Optimized for Chinese cultural context"
+  ],
+  "limitations": [
+    "Primarily optimized for Chinese market",
+    "Limited international API access",
+    "Less known outside China"
+  ],
+  "useCases": [
+    "Chinese language AI assistants",
+    "Enterprise solutions in China",
+    "Chinese content generation",
+    "Cross-language translation (Chinese focus)"
+  ],
+  "apiEndpoint": "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-4.0",
+  "documentationUrl": "https://cloud.baidu.com/doc/WENXINWORKSHOP/index.html",
+  "inputModalities": [
+    "text",
+    "image"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~600ms",
+    "tokensPerSec": "~70 tok/s"
+  },
+  "tags": [
+    "multilingual",
+    "reasoning",
+    "enterprise"
+  ],
+  "benchmarks": {
+    "mmlu": 86,
+    "humanEval": 84,
+    "gsm8k": 90,
+    "mtBench": 8.6
+  },
+  "rateLimits": {
+    "rpm": "300",
+    "tpm": "60,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import requests\n\nresponse = requests.post(\n    \"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-4.0-8k\",\n    headers={\"Content-Type\": \"application/json\"},\n    params={\"access_token\": \"$BAIDU_ACCESS_TOKEN\"},\n    json={\"messages\": [{\"role\": \"user\", \"content\": \"Hello!\"}]}\n)\nprint(response.json()[\"result\"])"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-4.0-8k?access_token=$BAIDU_ACCESS_TOKEN\", {\n  method: \"POST\",\n  headers: { \"Content-Type\": \"application/json\" },\n  body: JSON.stringify({\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.result);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl \"https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ernie-4.0-8k?access_token=$BAIDU_ACCESS_TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

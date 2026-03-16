@@ -1,0 +1,103 @@
+{
+  "id": "llama-4-maverick",
+  "name": "Llama 4 Maverick",
+  "provider": "Meta",
+  "providerColor": "#0668E1",
+  "description": "Mixture-of-experts model with 400B total params and 17B active.",
+  "longDescription": "Llama 4 Maverick is Meta's latest open-weight MoE model with 128 experts, 400B total parameters, and only 17B active parameters per forward pass. It delivers competitive performance with GPT-4o and Gemini 2.0 Flash while being highly efficient.",
+  "categories": [
+    "chat",
+    "code",
+    "reasoning",
+    "vision"
+  ],
+  "parameters": "400B total / 17B active",
+  "contextWindow": "1M tokens",
+  "contextTokens": 1000000,
+  "releaseDate": "2025-04-05",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-weights",
+  "strengths": [
+    "Open weights — self-hostable",
+    "Efficient MoE architecture",
+    "Competitive with proprietary models",
+    "1M token context"
+  ],
+  "limitations": [
+    "Requires significant compute to host",
+    "MoE needs more memory than dense models",
+    "Community fine-tunes vary in quality"
+  ],
+  "useCases": [
+    "Self-hosted AI assistants",
+    "Custom fine-tuning",
+    "Research and experimentation",
+    "On-premise deployments"
+  ],
+  "apiEndpoint": "Self-hosted or via providers (Together, Fireworks, etc.)",
+  "documentationUrl": "https://llama.meta.com/",
+  "isNew": true,
+  "isFeatured": true,
+  "inputModalities": [
+    "text",
+    "image"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~400ms",
+    "tokensPerSec": "~90 tok/s"
+  },
+  "tags": [
+    "open-source",
+    "coding",
+    "reasoning",
+    "vision",
+    "long-context",
+    "multilingual"
+  ],
+  "benchmarks": {
+    "mmlu": 87.5,
+    "humanEval": 89.5,
+    "gsm8k": 93,
+    "mtBench": 8.9
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "800 GB (FP16)",
+  "versions": [
+    {
+      "version": "Llama-4-Maverick-17B-128E-Instruct",
+      "date": "2025-04-05",
+      "notes": "Initial release"
+    }
+  ],
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import openai\n\nclient = openai.OpenAI(\n    base_url=\"https://api.together.xyz/v1\",\n    api_key=\"YOUR_TOGETHER_API_KEY\"\n)\nresponse = client.chat.completions.create(\n    model=\"meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8\",\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.together.xyz/v1/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $TOGETHER_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8\",\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.together.xyz/v1/chat/completions \\\n  -H \"Authorization: Bearer $TOGETHER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "id": "palmyra-x-004",
+  "name": "Palmyra X 004",
+  "provider": "Writer",
+  "providerColor": "#6236ff",
+  "description": "Enterprise model built for business writing and brand-consistent content.",
+  "longDescription": "Palmyra X 004 is Writer's flagship enterprise model, designed specifically for business content generation. It excels at maintaining brand voice consistency, following style guides, and generating high-quality marketing, sales, and corporate content.",
+  "categories": [
+    "chat",
+    "code"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-09-18",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$1.00 / 1M tokens",
+    "output": "$5.00 / 1M tokens",
+    "inputPerMillion": 1,
+    "outputPerMillion": 5
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Best-in-class brand consistency",
+    "Enterprise compliance features",
+    "Strong business writing",
+    "Graph-based RAG support"
+  ],
+  "limitations": [
+    "Focused on enterprise — less general",
+    "Limited public API access",
+    "Less community support"
+  ],
+  "useCases": [
+    "Marketing content generation",
+    "Brand voice compliance",
+    "Enterprise report writing",
+    "Sales enablement content"
+  ],
+  "apiEndpoint": "https://api.writer.com/v1/chat",
+  "documentationUrl": "https://dev.writer.com/docs/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~500ms",
+    "tokensPerSec": "~80 tok/s"
+  },
+  "tags": [
+    "enterprise",
+    "creative",
+    "RAG"
+  ],
+  "benchmarks": {
+    "mmlu": 82,
+    "humanEval": 80,
+    "gsm8k": 80,
+    "mtBench": 8.2
+  },
+  "rateLimits": {
+    "rpm": "100",
+    "tpm": "50,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import requests\n\nresponse = requests.post(\n    \"https://api.writer.com/v1/chat\",\n    headers={\"Authorization\": \"Bearer $WRITER_API_KEY\", \"Content-Type\": \"application/json\"},\n    json={\"model\": \"palmyra-x-004\", \"messages\": [{\"role\": \"user\", \"content\": \"Hello!\"}]}\n)\nprint(response.json()[\"choices\"][0][\"message\"][\"content\"])"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.writer.com/v1/chat\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $WRITER_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"palmyra-x-004\",\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.writer.com/v1/chat \\\n  -H \"Authorization: Bearer $WRITER_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"palmyra-x-004\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

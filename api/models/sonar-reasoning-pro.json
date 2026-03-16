@@ -1,0 +1,89 @@
+{
+  "id": "sonar-reasoning-pro",
+  "name": "Sonar Reasoning Pro",
+  "provider": "Perplexity",
+  "providerColor": "#20b2aa",
+  "description": "Search-augmented reasoning model combining web search with chain-of-thought.",
+  "longDescription": "Sonar Reasoning Pro combines Perplexity's real-time web search with chain-of-thought reasoning. It can think through complex research questions step-by-step while accessing live web data, delivering deeply researched, well-cited answers.",
+  "categories": [
+    "reasoning",
+    "chat"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2025-02-18",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$2.00 / 1M tokens",
+    "output": "$8.00 / 1M tokens",
+    "inputPerMillion": 2,
+    "outputPerMillion": 8
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Combines reasoning with live search",
+    "Deep research capabilities",
+    "Step-by-step analysis",
+    "Comprehensive citations"
+  ],
+  "limitations": [
+    "Higher latency due to search + reasoning",
+    "More expensive than basic Sonar",
+    "Complex prompts may timeout"
+  ],
+  "useCases": [
+    "In-depth research questions",
+    "Complex fact verification",
+    "Market research with reasoning",
+    "Academic research assistance"
+  ],
+  "apiEndpoint": "https://api.perplexity.ai/chat/completions",
+  "documentationUrl": "https://docs.perplexity.ai/",
+  "isNew": true,
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Slow",
+  "latencyInfo": {
+    "label": "Slow",
+    "ttfb": "~2s",
+    "tokensPerSec": "~40 tok/s"
+  },
+  "tags": [
+    "search",
+    "reasoning",
+    "RAG"
+  ],
+  "benchmarks": {
+    "mmlu": 86,
+    "humanEval": 84,
+    "gsm8k": 90,
+    "mtBench": 8.7
+  },
+  "rateLimits": {
+    "rpm": "50",
+    "tpm": "20,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import openai\n\nclient = openai.OpenAI(\n    base_url=\"https://api.perplexity.ai\",\n    api_key=\"YOUR_PERPLEXITY_API_KEY\"\n)\nresponse = client.chat.completions.create(\n    model=\"sonar-reasoning-pro\",\n    messages=[{\"role\": \"user\", \"content\": \"Explain quantum computing advances in 2025\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.perplexity.ai/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $PERPLEXITY_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"sonar-reasoning-pro\",\n    messages: [{ role: \"user\", content: \"Explain quantum computing advances in 2025\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.perplexity.ai/chat/completions \\\n  -H \"Authorization: Bearer $PERPLEXITY_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"sonar-reasoning-pro\",\"messages\":[{\"role\":\"user\",\"content\":\"Explain quantum computing advances in 2025\"}]}'"
+    }
+  ]
+}

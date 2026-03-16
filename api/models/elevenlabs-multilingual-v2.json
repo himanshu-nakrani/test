@@ -1,0 +1,78 @@
+{
+  "id": "elevenlabs-multilingual-v2",
+  "name": "Multilingual v2",
+  "provider": "ElevenLabs",
+  "providerColor": "#f97316",
+  "description": "Advanced text-to-speech model with natural, expressive voices.",
+  "longDescription": "ElevenLabs Multilingual v2 is a state-of-the-art text-to-speech model capable of generating natural, emotionally expressive speech across 29 languages. It supports voice cloning, custom voice design, and real-time streaming.",
+  "categories": [
+    "audio"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "N/A",
+  "contextTokens": 0,
+  "releaseDate": "2024-01-01",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.30 / 1K characters",
+    "output": "N/A"
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Most natural-sounding TTS",
+    "29 language support",
+    "Voice cloning capability",
+    "Real-time streaming"
+  ],
+  "limitations": [
+    "Character-based pricing adds up",
+    "Voice cloning has ethical concerns",
+    "Limited free tier"
+  ],
+  "useCases": [
+    "Audiobook narration",
+    "Video voiceovers",
+    "Accessibility features",
+    "Virtual assistants"
+  ],
+  "apiEndpoint": "https://api.elevenlabs.io/v1/text-to-speech",
+  "documentationUrl": "https://elevenlabs.io/docs/api-reference",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "audio"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~300ms",
+    "tokensPerSec": "N/A"
+  },
+  "tags": [
+    "multilingual",
+    "creative"
+  ],
+  "rateLimits": {
+    "rpm": "100",
+    "tpm": "N/A"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import requests\n\nresponse = requests.post(\n    \"https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM\",\n    headers={\"xi-api-key\": \"$ELEVENLABS_API_KEY\", \"Content-Type\": \"application/json\"},\n    json={\"text\": \"Hello world!\", \"model_id\": \"eleven_multilingual_v2\"}\n)\nwith open(\"output.mp3\", \"wb\") as f:\n    f.write(response.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM\", {\n  method: \"POST\",\n  headers: {\n    \"xi-api-key\": \"$ELEVENLABS_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    text: \"Hello world!\",\n    model_id: \"eleven_multilingual_v2\",\n  }),\n});\nconst blob = await response.blob();\nconsole.log(\"Audio generated:\", blob.size, \"bytes\");"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM \\\n  -H \"xi-api-key: $ELEVENLABS_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"text\":\"Hello world!\",\"model_id\":\"eleven_multilingual_v2\"}' \\\n  -o output.mp3"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "id": "embed-v4",
+  "name": "Embed v4",
+  "provider": "Cohere",
+  "providerColor": "#39594d",
+  "description": "Multimodal embedding model supporting text, images, and mixed inputs.",
+  "longDescription": "Cohere Embed v4 is a state-of-the-art multimodal embedding model capable of embedding text, images, and mixed text+image inputs into the same vector space. It achieves best-in-class performance on multilingual retrieval benchmarks across 100+ languages.",
+  "categories": [
+    "embedding"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2025-03-12",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.10 / 1M tokens",
+    "output": "N/A",
+    "inputPerMillion": 0.1
+  },
+  "pricingTier": "low",
+  "license": "proprietary",
+  "strengths": [
+    "Multimodal embeddings (text + images)",
+    "100+ language support",
+    "128K token input",
+    "Best-in-class retrieval quality"
+  ],
+  "limitations": [
+    "Embedding only — no generation",
+    "Higher latency for images",
+    "Less known than OpenAI embeddings"
+  ],
+  "useCases": [
+    "Multimodal search engines",
+    "Cross-lingual retrieval",
+    "Image + text matching",
+    "Multilingual RAG systems"
+  ],
+  "apiEndpoint": "https://api.cohere.com/v2/embed",
+  "documentationUrl": "https://docs.cohere.com/",
+  "isNew": true,
+  "inputModalities": [
+    "text",
+    "image"
+  ],
+  "outputModalities": [
+    "embeddings"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~150ms",
+    "tokensPerSec": "N/A"
+  },
+  "tags": [
+    "RAG",
+    "multilingual",
+    "multimodal"
+  ],
+  "rateLimits": {
+    "rpm": "1,000",
+    "tpm": "100,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import cohere\n\nco = cohere.ClientV2(api_key=\"YOUR_COHERE_API_KEY\")\nresponse = co.embed(\n    model=\"embed-v4.0\",\n    input_type=\"search_document\",\n    texts=[\"Hello world\"]\n)\nprint(response.embeddings.float_[0][:5])"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.cohere.com/v2/embed\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $COHERE_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"embed-v4.0\",\n    input_type: \"search_document\",\n    texts: [\"Hello world\"],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.embeddings.float_[0].slice(0, 5));"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.cohere.com/v2/embed \\\n  -H \"Authorization: Bearer $COHERE_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"embed-v4.0\",\"input_type\":\"search_document\",\"texts\":[\"Hello world\"]}'"
+    }
+  ]
+}

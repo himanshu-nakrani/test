@@ -1,0 +1,79 @@
+{
+  "id": "whisper",
+  "name": "Whisper",
+  "provider": "OpenAI",
+  "providerColor": "#10a37f",
+  "description": "Robust speech recognition model supporting 99 languages.",
+  "longDescription": "Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual data. It approaches human-level robustness and accuracy on English speech recognition and supports transcription and translation across 99 languages.",
+  "categories": [
+    "audio"
+  ],
+  "parameters": "1.5B",
+  "contextWindow": "30 sec chunks",
+  "contextTokens": 0,
+  "releaseDate": "2023-03-01",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.006 / minute",
+    "output": "N/A"
+  },
+  "pricingTier": "low",
+  "license": "open-source",
+  "strengths": [
+    "99 language support",
+    "Near human-level accuracy",
+    "Handles accents well",
+    "Open source"
+  ],
+  "limitations": [
+    "Can hallucinate on silence",
+    "Limited speaker diarization",
+    "Real-time streaming not native"
+  ],
+  "useCases": [
+    "Transcription services",
+    "Subtitle generation",
+    "Voice assistants",
+    "Podcast processing"
+  ],
+  "apiEndpoint": "https://api.openai.com/v1/audio/transcriptions",
+  "documentationUrl": "https://platform.openai.com/docs/models/whisper",
+  "inputModalities": [
+    "audio"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~300ms",
+    "tokensPerSec": "N/A"
+  },
+  "tags": [
+    "multilingual",
+    "open-source"
+  ],
+  "rateLimits": {
+    "rpm": "500",
+    "tpm": "30,000"
+  },
+  "modelSize": "3 GB (FP16)",
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import openai\n\nclient = openai.OpenAI()\naudio_file = open(\"audio.mp3\", \"rb\")\ntranscription = client.audio.transcriptions.create(\n    model=\"whisper-1\",\n    file=audio_file\n)\nprint(transcription.text)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const formData = new FormData();\nformData.append(\"file\", audioFile);\nformData.append(\"model\", \"whisper-1\");\nconst response = await fetch(\"https://api.openai.com/v1/audio/transcriptions\", {\n  method: \"POST\",\n  headers: { \"Authorization\": \"Bearer $OPENAI_API_KEY\" },\n  body: formData,\n});\nconst data = await response.json();\nconsole.log(data.text);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.openai.com/v1/audio/transcriptions \\\n  -H \"Authorization: Bearer $OPENAI_API_KEY\" \\\n  -F file=\"@audio.mp3\" \\\n  -F model=\"whisper-1\""
+    }
+  ]
+}

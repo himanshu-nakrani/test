@@ -1,0 +1,86 @@
+{
+  "id": "sonar",
+  "name": "Sonar",
+  "provider": "Perplexity",
+  "providerColor": "#20b2aa",
+  "description": "Lightweight search-augmented model for fast, cited answers.",
+  "longDescription": "Sonar is Perplexity's standard search-augmented model, optimized for speed while still providing web-grounded, cited answers. It is ideal for applications that need real-time information access with lower latency than Sonar Pro.",
+  "categories": [
+    "chat"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2025-02-01",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$1.00 / 1M tokens",
+    "output": "$1.00 / 1M tokens",
+    "inputPerMillion": 1,
+    "outputPerMillion": 1
+  },
+  "pricingTier": "low",
+  "license": "proprietary",
+  "strengths": [
+    "Real-time web search",
+    "Source citations included",
+    "Lower cost than Sonar Pro",
+    "Fast response times"
+  ],
+  "limitations": [
+    "Less thorough than Sonar Pro",
+    "Dependent on search results",
+    "Less reasoning capability"
+  ],
+  "useCases": [
+    "Quick fact-checking",
+    "Real-time Q&A bots",
+    "News monitoring",
+    "Lightweight research"
+  ],
+  "apiEndpoint": "https://api.perplexity.ai/chat/completions",
+  "documentationUrl": "https://docs.perplexity.ai/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~500ms",
+    "tokensPerSec": "~80 tok/s"
+  },
+  "tags": [
+    "search",
+    "RAG"
+  ],
+  "benchmarks": {
+    "mmlu": 78,
+    "humanEval": 75,
+    "gsm8k": 78,
+    "mtBench": 7.8
+  },
+  "rateLimits": {
+    "rpm": "50",
+    "tpm": "20,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import openai\n\nclient = openai.OpenAI(\n    base_url=\"https://api.perplexity.ai\",\n    api_key=\"YOUR_PERPLEXITY_API_KEY\"\n)\nresponse = client.chat.completions.create(\n    model=\"sonar\",\n    messages=[{\"role\": \"user\", \"content\": \"What is the weather today?\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.perplexity.ai/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $PERPLEXITY_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"sonar\",\n    messages: [{ role: \"user\", content: \"What is the weather today?\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.perplexity.ai/chat/completions \\\n  -H \"Authorization: Bearer $PERPLEXITY_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"sonar\",\"messages\":[{\"role\":\"user\",\"content\":\"What is the weather today?\"}]}'"
+    }
+  ]
+}

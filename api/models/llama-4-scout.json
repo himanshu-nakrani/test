@@ -1,0 +1,81 @@
+{
+  "id": "llama-4-scout",
+  "name": "Llama 4 Scout",
+  "provider": "Meta",
+  "providerColor": "#0668E1",
+  "description": "Efficient MoE model with 109B params and 10M token context window.",
+  "longDescription": "Llama 4 Scout is a 109B parameter MoE model with 16 experts and 17B active parameters. It achieves an industry-leading 10M token context window, making it ideal for processing extremely long documents while remaining efficient enough to run on a single H100 node.",
+  "categories": [
+    "chat",
+    "code",
+    "reasoning"
+  ],
+  "parameters": "109B total / 17B active",
+  "contextWindow": "10M tokens",
+  "contextTokens": 10000000,
+  "releaseDate": "2025-04-05",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-weights",
+  "strengths": [
+    "Industry-leading 10M token context",
+    "Runs on single H100 node",
+    "Open weights",
+    "Efficient MoE architecture"
+  ],
+  "limitations": [
+    "Less capable than Maverick on benchmarks",
+    "Very long contexts need special infra",
+    "Newer model, less battle-tested"
+  ],
+  "useCases": [
+    "Extremely long document analysis",
+    "Full repository code review",
+    "Legal document processing",
+    "On-premise long-context deployments"
+  ],
+  "apiEndpoint": "Self-hosted or via providers (Together, Fireworks, etc.)",
+  "documentationUrl": "https://llama.meta.com/",
+  "isNew": true,
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~400ms",
+    "tokensPerSec": "~100 tok/s"
+  },
+  "tags": [
+    "open-source",
+    "long-context",
+    "coding",
+    "reasoning"
+  ],
+  "benchmarks": {
+    "mmlu": 85,
+    "humanEval": 86,
+    "gsm8k": 90,
+    "mtBench": 8.6
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "220 GB (FP16)",
+  "versions": [
+    {
+      "version": "Llama-4-Scout-17B-16E-Instruct",
+      "date": "2025-04-05",
+      "notes": "Initial release"
+    }
+  ]
+}

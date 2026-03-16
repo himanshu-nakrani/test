@@ -1,0 +1,69 @@
+{
+  "id": "qwen-2-5-coder-32b",
+  "name": "Qwen 2.5 Coder 32B",
+  "provider": "Alibaba",
+  "providerColor": "#ff6a00",
+  "description": "Specialized code model matching GPT-4o on coding benchmarks.",
+  "longDescription": "Qwen 2.5 Coder 32B is a specialized coding model that achieves state-of-the-art performance among open-source code models. It matches GPT-4o on multiple coding benchmarks including HumanEval and MBPP, while being fully open source.",
+  "categories": [
+    "code"
+  ],
+  "parameters": "32B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-11-11",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-source",
+  "strengths": [
+    "Matches GPT-4o on code benchmarks",
+    "Open source (Apache 2.0)",
+    "Excellent multi-language code support",
+    "Strong code completion"
+  ],
+  "limitations": [
+    "Code-focused — limited chat ability",
+    "Requires hosting infrastructure",
+    "Smaller community than StarCoder"
+  ],
+  "useCases": [
+    "IDE code completion",
+    "Automated code review",
+    "Code translation",
+    "Test generation"
+  ],
+  "apiEndpoint": "Self-hosted or via providers",
+  "documentationUrl": "https://qwen.readthedocs.io/",
+  "inputModalities": [
+    "text",
+    "code"
+  ],
+  "outputModalities": [
+    "text",
+    "code"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~300ms",
+    "tokensPerSec": "~100 tok/s"
+  },
+  "tags": [
+    "coding",
+    "open-source"
+  ],
+  "benchmarks": {
+    "humanEval": 92,
+    "gsm8k": 82
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "64 GB (FP16)"
+}

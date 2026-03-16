@@ -1,0 +1,84 @@
+{
+  "id": "nova-lite",
+  "name": "Nova Lite",
+  "provider": "Amazon",
+  "providerColor": "#ff9900",
+  "description": "Fast, low-cost multimodal model for high-volume workloads.",
+  "longDescription": "Amazon Nova Lite is a very low-cost multimodal model that processes text, images, and video inputs. It is designed for high-speed, high-volume tasks where cost efficiency is paramount while still maintaining competitive quality.",
+  "categories": [
+    "chat",
+    "vision"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "300K tokens",
+  "contextTokens": 300000,
+  "releaseDate": "2024-12-03",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$0.06 / 1M tokens",
+    "output": "$0.24 / 1M tokens",
+    "inputPerMillion": 0.06,
+    "outputPerMillion": 0.24
+  },
+  "pricingTier": "low",
+  "license": "proprietary",
+  "strengths": [
+    "Extremely affordable",
+    "Multimodal at low cost",
+    "Fast inference",
+    "300K token context"
+  ],
+  "limitations": [
+    "Less capable than Nova Pro",
+    "AWS ecosystem required",
+    "Not ideal for complex reasoning"
+  ],
+  "useCases": [
+    "High-volume image labeling",
+    "Bulk document processing",
+    "Real-time chat at scale",
+    "Cost-sensitive deployments"
+  ],
+  "apiEndpoint": "https://bedrock-runtime.amazonaws.com",
+  "documentationUrl": "https://docs.aws.amazon.com/nova/",
+  "inputModalities": [
+    "text",
+    "image",
+    "video"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~300ms",
+    "tokensPerSec": "~120 tok/s"
+  },
+  "tags": [
+    "multimodal",
+    "vision",
+    "enterprise"
+  ],
+  "rateLimits": {
+    "rpm": "200",
+    "tpm": "50,000"
+  },
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import boto3\nimport json\n\nclient = boto3.client(\"bedrock-runtime\")\nresponse = client.invoke_model(\n    modelId=\"amazon.nova-lite-v1:0\",\n    body=json.dumps({\"messages\": [{\"role\": \"user\", \"content\": [{\"text\": \"Hello!\"}]}]})\n)\nresult = json.loads(response[\"body\"].read())\nprint(result[\"output\"][\"message\"][\"content\"][0][\"text\"])"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://bedrock-runtime.us-east-1.amazonaws.com/model/amazon.nova-lite-v1:0/invoke\", {\n  method: \"POST\",\n  headers: {\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    messages: [{ role: \"user\", content: [{ text: \"Hello!\" }] }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.output.message.content[0].text);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "aws bedrock-runtime invoke-model \\\n  --model-id amazon.nova-lite-v1:0 \\\n  --body '{\"messages\":[{\"role\":\"user\",\"content\":[{\"text\":\"Hello!\"}]}]}' \\\n  --region us-east-1 \\\n  output.json"
+    }
+  ]
+}

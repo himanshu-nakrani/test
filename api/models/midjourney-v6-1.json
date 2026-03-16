@@ -1,0 +1,62 @@
+{
+  "id": "midjourney-v6-1",
+  "name": "Midjourney v6.1",
+  "provider": "Midjourney",
+  "providerColor": "#2b2d42",
+  "description": "Industry-leading image generation with unmatched artistic quality.",
+  "longDescription": "Midjourney v6.1 is the latest version of the Midjourney image generation model, known for producing stunningly artistic and highly detailed images. It features improved coherence, better text rendering, and enhanced understanding of complex prompts.",
+  "categories": [
+    "image"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "N/A",
+  "contextTokens": 0,
+  "releaseDate": "2024-08-01",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$10/mo Basic plan",
+    "output": "N/A"
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Best artistic quality",
+    "Highly detailed outputs",
+    "Strong prompt interpretation",
+    "Excellent aesthetic consistency"
+  ],
+  "limitations": [
+    "Discord-first interface",
+    "Limited API access",
+    "No inpainting in API"
+  ],
+  "useCases": [
+    "Artistic illustration",
+    "Concept art and design",
+    "Brand visual creation",
+    "Photography-style images"
+  ],
+  "apiEndpoint": "Discord bot or web interface",
+  "documentationUrl": "https://docs.midjourney.com/",
+  "inputModalities": [
+    "text",
+    "image"
+  ],
+  "outputModalities": [
+    "image"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~5s",
+    "tokensPerSec": "N/A"
+  },
+  "tags": [
+    "creative",
+    "multimodal"
+  ],
+  "rateLimits": {
+    "rpm": "N/A (Discord)",
+    "tpm": "N/A"
+  }
+}

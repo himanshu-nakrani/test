@@ -1,0 +1,80 @@
+{
+  "id": "llama-3-1-405b",
+  "name": "Llama 3.1 405B",
+  "provider": "Meta",
+  "providerColor": "#0668E1",
+  "description": "Largest open-weight dense model rivaling GPT-4 class performance.",
+  "longDescription": "Llama 3.1 405B is the largest openly available dense language model, delivering performance comparable to leading closed-source models. It supports 8 languages, 128K context, and excels at general knowledge, code, and math tasks.",
+  "categories": [
+    "chat",
+    "code",
+    "reasoning"
+  ],
+  "parameters": "405B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-07-23",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-weights",
+  "strengths": [
+    "Largest open dense model",
+    "GPT-4 class performance",
+    "Excellent for distillation",
+    "Strong multilingual support"
+  ],
+  "limitations": [
+    "Requires multi-GPU setup to host",
+    "High memory requirements",
+    "Superseded by Llama 4 for many tasks"
+  ],
+  "useCases": [
+    "Synthetic data generation",
+    "Model distillation",
+    "Research benchmarking",
+    "Enterprise on-premise deployments"
+  ],
+  "apiEndpoint": "Self-hosted or via providers",
+  "documentationUrl": "https://llama.meta.com/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Slow",
+  "latencyInfo": {
+    "label": "Slow",
+    "ttfb": "~1.5s",
+    "tokensPerSec": "~30 tok/s"
+  },
+  "tags": [
+    "open-source",
+    "coding",
+    "reasoning",
+    "multilingual"
+  ],
+  "benchmarks": {
+    "mmlu": 87.3,
+    "humanEval": 89,
+    "gsm8k": 96.8,
+    "mtBench": 9.1
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "810 GB (FP16)",
+  "versions": [
+    {
+      "version": "Meta-Llama-3.1-405B-Instruct",
+      "date": "2024-07-23",
+      "notes": "Initial release"
+    }
+  ]
+}

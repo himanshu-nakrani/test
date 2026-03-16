@@ -1,0 +1,80 @@
+{
+  "id": "llama-3-3-70b",
+  "name": "Llama 3.3 70B",
+  "provider": "Meta",
+  "providerColor": "#0668E1",
+  "description": "Powerful open-weight model matching Llama 3.1 405B performance.",
+  "longDescription": "Llama 3.3 70B is a multilingual large language model that delivers the performance of the much larger Llama 3.1 405B at a fraction of the cost. It supports 8 languages and excels at dialogue, reasoning, code generation, and instruction following.",
+  "categories": [
+    "chat",
+    "code",
+    "reasoning"
+  ],
+  "parameters": "70B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2024-12-06",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-weights",
+  "strengths": [
+    "Open weights — free to use",
+    "Matches 405B performance",
+    "Runs on single GPU node",
+    "Large ecosystem of fine-tunes"
+  ],
+  "limitations": [
+    "Smaller context than newer models",
+    "No native vision support",
+    "Requires hosting infrastructure"
+  ],
+  "useCases": [
+    "On-premise AI assistants",
+    "Fine-tuning for specific domains",
+    "Research and academia",
+    "Cost-effective inference"
+  ],
+  "apiEndpoint": "Self-hosted or via providers",
+  "documentationUrl": "https://llama.meta.com/",
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~500ms",
+    "tokensPerSec": "~70 tok/s"
+  },
+  "tags": [
+    "open-source",
+    "coding",
+    "reasoning",
+    "multilingual"
+  ],
+  "benchmarks": {
+    "mmlu": 86,
+    "humanEval": 88.5,
+    "gsm8k": 93,
+    "mtBench": 8.9
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "140 GB (FP16)",
+  "versions": [
+    {
+      "version": "Llama-3.3-70B-Instruct",
+      "date": "2024-12-06",
+      "notes": "Initial release"
+    }
+  ]
+}

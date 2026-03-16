@@ -1,0 +1,91 @@
+{
+  "id": "nemotron-ultra-253b",
+  "name": "Llama-3.1-Nemotron-Ultra-253B",
+  "provider": "NVIDIA",
+  "providerColor": "#76b900",
+  "description": "NVIDIA's most powerful open reasoning model with dynamic thinking.",
+  "longDescription": "Nemotron Ultra 253B is NVIDIA's flagship open model, built on Llama 3.1 with extensive post-training for reasoning, coding, and agentic tasks. It features a unique dynamic reasoning toggle that switches between fast chat and deep thinking modes.",
+  "categories": [
+    "reasoning",
+    "code",
+    "chat"
+  ],
+  "parameters": "253B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2025-03-18",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-weights",
+  "strengths": [
+    "Dynamic thinking mode toggle",
+    "Competitive with GPT-4o on reasoning",
+    "Open weights (Llama license)",
+    "NVIDIA hardware optimized"
+  ],
+  "limitations": [
+    "Very large — needs multi-GPU",
+    "NVIDIA GPU recommended",
+    "Based on older Llama 3.1 base"
+  ],
+  "useCases": [
+    "Research and scientific computing",
+    "Enterprise on-premise AI",
+    "Agentic workflows",
+    "Code generation and analysis"
+  ],
+  "apiEndpoint": "https://integrate.api.nvidia.com/v1/chat/completions",
+  "documentationUrl": "https://build.nvidia.com/",
+  "isNew": true,
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Medium",
+  "latencyInfo": {
+    "label": "Medium",
+    "ttfb": "~1s",
+    "tokensPerSec": "~50 tok/s"
+  },
+  "tags": [
+    "reasoning",
+    "coding",
+    "open-source",
+    "agents"
+  ],
+  "benchmarks": {
+    "mmlu": 87,
+    "humanEval": 87,
+    "gsm8k": 93,
+    "mtBench": 9
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "506 GB (FP16)",
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import openai\n\nclient = openai.OpenAI(\n    base_url=\"https://integrate.api.nvidia.com/v1\",\n    api_key=\"YOUR_NVIDIA_API_KEY\"\n)\nresponse = client.chat.completions.create(\n    model=\"nvidia/llama-3.1-nemotron-ultra-253b-v1\",\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}]\n)\nprint(response.choices[0].message.content)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://integrate.api.nvidia.com/v1/chat/completions\", {\n  method: \"POST\",\n  headers: {\n    \"Authorization\": \"Bearer $NVIDIA_API_KEY\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"nvidia/llama-3.1-nemotron-ultra-253b-v1\",\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.choices[0].message.content);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://integrate.api.nvidia.com/v1/chat/completions \\\n  -H \"Authorization: Bearer $NVIDIA_API_KEY\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"nvidia/llama-3.1-nemotron-ultra-253b-v1\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}

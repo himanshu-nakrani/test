@@ -1,0 +1,73 @@
+{
+  "id": "qwq-32b",
+  "name": "QwQ-32B",
+  "provider": "Alibaba",
+  "providerColor": "#ff6a00",
+  "description": "Open reasoning model matching DeepSeek R1 and o1 performance.",
+  "longDescription": "QwQ-32B is Alibaba's open-source reasoning model that achieves performance competitive with DeepSeek R1 and OpenAI o1 on math and coding benchmarks. At only 32B parameters, it is remarkably efficient and easy to self-host compared to larger reasoning models.",
+  "categories": [
+    "reasoning",
+    "code",
+    "chat"
+  ],
+  "parameters": "32B",
+  "contextWindow": "128K tokens",
+  "contextTokens": 128000,
+  "releaseDate": "2025-03-06",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "Free (open weights)",
+    "output": "Free (open weights)",
+    "free": true
+  },
+  "pricingTier": "free",
+  "license": "open-source",
+  "strengths": [
+    "Matches o1-level reasoning at 32B",
+    "Easy to self-host",
+    "Apache 2.0 license",
+    "Strong math and coding"
+  ],
+  "limitations": [
+    "Can get stuck in reasoning loops",
+    "Less polished than proprietary alternatives",
+    "Limited multilingual reasoning"
+  ],
+  "useCases": [
+    "Mathematical problem solving",
+    "Self-hosted reasoning engine",
+    "Code reasoning and debugging",
+    "Research applications"
+  ],
+  "apiEndpoint": "Self-hosted or via providers",
+  "documentationUrl": "https://qwen.readthedocs.io/",
+  "isNew": true,
+  "inputModalities": [
+    "text"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Slow",
+  "latencyInfo": {
+    "label": "Slow",
+    "ttfb": "~1.5s",
+    "tokensPerSec": "~40 tok/s"
+  },
+  "tags": [
+    "reasoning",
+    "coding",
+    "open-source"
+  ],
+  "benchmarks": {
+    "mmlu": 85,
+    "humanEval": 88,
+    "gsm8k": 94,
+    "mtBench": 8.6
+  },
+  "rateLimits": {
+    "rpm": "N/A (self-hosted)",
+    "tpm": "N/A"
+  },
+  "modelSize": "64 GB (FP16)"
+}

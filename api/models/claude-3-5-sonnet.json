@@ -1,0 +1,105 @@
+{
+  "id": "claude-3-5-sonnet",
+  "name": "Claude 3.5 Sonnet",
+  "provider": "Anthropic",
+  "providerColor": "#d4a574",
+  "description": "Previous-gen balanced model, still excellent for coding and analysis.",
+  "longDescription": "Claude 3.5 Sonnet (v2) was the most capable model from the Claude 3.5 generation, setting new benchmarks for coding, reasoning, and agentic tasks. It remains a popular choice for production applications requiring a proven, reliable model.",
+  "categories": [
+    "chat",
+    "reasoning",
+    "code",
+    "vision"
+  ],
+  "parameters": "Undisclosed",
+  "contextWindow": "200K tokens",
+  "contextTokens": 200000,
+  "releaseDate": "2024-10-22",
+  "lastUpdated": "2025-03-15",
+  "pricing": {
+    "input": "$3.00 / 1M tokens",
+    "output": "$15.00 / 1M tokens",
+    "inputPerMillion": 3,
+    "outputPerMillion": 15
+  },
+  "pricingTier": "medium",
+  "license": "proprietary",
+  "strengths": [
+    "Proven production reliability",
+    "Excellent coding performance",
+    "Strong agentic capabilities",
+    "Good speed-to-quality ratio"
+  ],
+  "limitations": [
+    "Superseded by Claude 4 Sonnet",
+    "No extended thinking mode",
+    "Proprietary only"
+  ],
+  "useCases": [
+    "Production applications",
+    "Software development",
+    "Document analysis",
+    "Content generation"
+  ],
+  "apiEndpoint": "https://api.anthropic.com/v1/messages",
+  "documentationUrl": "https://docs.anthropic.com/en/docs/about-claude/models",
+  "inputModalities": [
+    "text",
+    "image"
+  ],
+  "outputModalities": [
+    "text"
+  ],
+  "latency": "Fast",
+  "latencyInfo": {
+    "label": "Fast",
+    "ttfb": "~400ms",
+    "tokensPerSec": "~90 tok/s"
+  },
+  "tags": [
+    "coding",
+    "reasoning",
+    "vision",
+    "function-calling",
+    "agents"
+  ],
+  "benchmarks": {
+    "mmlu": 88.7,
+    "humanEval": 92,
+    "gsm8k": 96,
+    "mtBench": 9.1
+  },
+  "rateLimits": {
+    "rpm": "1,000",
+    "tpm": "80,000"
+  },
+  "versions": [
+    {
+      "version": "claude-3-5-sonnet-20241022",
+      "date": "2024-10-22",
+      "notes": "Updated v2 release"
+    },
+    {
+      "version": "claude-3-5-sonnet-20240620",
+      "date": "2024-06-20",
+      "notes": "Initial release"
+    }
+  ],
+  "codeSnippets": [
+    {
+      "language": "python",
+      "label": "Python",
+      "code": "import anthropic\n\nclient = anthropic.Anthropic()\nmessage = client.messages.create(\n    model=\"claude-3-5-sonnet-20241022\",\n    max_tokens=1024,\n    messages=[{\"role\": \"user\", \"content\": \"Hello!\"}]\n)\nprint(message.content[0].text)"
+    },
+    {
+      "language": "javascript",
+      "label": "JavaScript",
+      "code": "const response = await fetch(\"https://api.anthropic.com/v1/messages\", {\n  method: \"POST\",\n  headers: {\n    \"x-api-key\": \"$ANTHROPIC_API_KEY\",\n    \"anthropic-version\": \"2023-06-01\",\n    \"Content-Type\": \"application/json\",\n  },\n  body: JSON.stringify({\n    model: \"claude-3-5-sonnet-20241022\",\n    max_tokens: 1024,\n    messages: [{ role: \"user\", content: \"Hello!\" }],\n  }),\n});\nconst data = await response.json();\nconsole.log(data.content[0].text);"
+    },
+    {
+      "language": "curl",
+      "label": "cURL",
+      "code": "curl https://api.anthropic.com/v1/messages \\\n  -H \"x-api-key: $ANTHROPIC_API_KEY\" \\\n  -H \"anthropic-version: 2023-06-01\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"model\":\"claude-3-5-sonnet-20241022\",\"max_tokens\":1024,\"messages\":[{\"role\":\"user\",\"content\":\"Hello!\"}]}'"
+    }
+  ]
+}
