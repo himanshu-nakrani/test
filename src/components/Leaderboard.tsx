@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
+import { Trophy, ArrowLeft } from 'lucide-react'
 import type { AIModel } from '../types'
 import { models } from '../data/models'
 import { usePageTitle } from '../hooks/usePageTitle'
@@ -40,11 +41,11 @@ export default function Leaderboard() {
   return (
     <div className="leaderboard-page">
       <Link to="/" className="back-btn">
-        ← Back to models
+        <ArrowLeft size={16} aria-hidden="true" /> Back to models
       </Link>
 
       <div className="lb-hero">
-        <h1>🏆 AI Model Leaderboard</h1>
+        <h1><Trophy size={24} aria-hidden="true" /> AI Model Leaderboard</h1>
         <p>Compare models by benchmark performance. Click a model to view details.</p>
       </div>
 

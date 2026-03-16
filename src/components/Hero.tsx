@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
+import { Sparkles, Flame, Clock, MessageSquare, Code, Brain, Eye, Image, Music, Layers, Video, Trophy, DollarSign } from 'lucide-react'
 import type { AIModel } from '../types'
 import { models, allProviders } from '../data/models'
 
 const categoryPills = [
-  { key: 'chat', label: '💬 Chat' },
-  { key: 'code', label: '💻 Code' },
-  { key: 'reasoning', label: '🧠 Reasoning' },
-  { key: 'vision', label: '👁️ Vision' },
-  { key: 'image', label: '🎨 Image' },
-  { key: 'audio', label: '🎵 Audio' },
-  { key: 'embedding', label: '📐 Embedding' },
-  { key: 'video', label: '🎬 Video' },
+  { key: 'chat', label: 'Chat', icon: <MessageSquare size={14} aria-hidden="true" /> },
+  { key: 'code', label: 'Code', icon: <Code size={14} aria-hidden="true" /> },
+  { key: 'reasoning', label: 'Reasoning', icon: <Brain size={14} aria-hidden="true" /> },
+  { key: 'vision', label: 'Vision', icon: <Eye size={14} aria-hidden="true" /> },
+  { key: 'image', label: 'Image', icon: <Image size={14} aria-hidden="true" /> },
+  { key: 'audio', label: 'Audio', icon: <Music size={14} aria-hidden="true" /> },
+  { key: 'embedding', label: 'Embedding', icon: <Layers size={14} aria-hidden="true" /> },
+  { key: 'video', label: 'Video', icon: <Video size={14} aria-hidden="true" /> },
 ] as const
 
 function AnimatedNumber({ target }: { target: number }) {
@@ -56,7 +57,7 @@ export default function Hero({
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
         >
-          ✨ Navigate the AI landscape
+          <Sparkles size={16} aria-hidden="true" /> Navigate the AI landscape
         </motion.div>
         <motion.h1
           className="hero-title"
@@ -105,7 +106,7 @@ export default function Hero({
               className="hero-category-pill"
               onClick={() => navigate(`/?categories=${c.key}`)}
             >
-              {c.label}
+              {c.icon} {c.label}
             </button>
           ))}
         </motion.div>
@@ -116,8 +117,8 @@ export default function Hero({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <Link to="/leaderboard" className="hero-link">🏆 Leaderboard</Link>
-          <Link to="/calculator" className="hero-link">💰 Cost Calculator</Link>
+          <Link to="/leaderboard" className="hero-link"><Trophy size={16} aria-hidden="true" /> Leaderboard</Link>
+          <Link to="/calculator" className="hero-link"><DollarSign size={16} aria-hidden="true" /> Cost Calculator</Link>
         </motion.div>
       </div>
 
@@ -128,7 +129,7 @@ export default function Hero({
         transition={{ duration: 0.5, delay: 0.5 }}
       >
         <div className="showcase-col">
-          <h3 className="showcase-title">🔥 Featured</h3>
+          <h3 className="showcase-title"><Flame size={16} aria-hidden="true" /> Featured</h3>
           <div className="showcase-list">
             {featured.map((m) => (
               <button key={m.id} className="showcase-item" onClick={() => onModelClick(m)}>
@@ -140,7 +141,7 @@ export default function Hero({
           </div>
         </div>
         <div className="showcase-col">
-          <h3 className="showcase-title">🆕 Recently Released</h3>
+          <h3 className="showcase-title"><Clock size={16} aria-hidden="true" /> Recently Released</h3>
           <div className="showcase-list">
             {recent.map((m) => (
               <button key={m.id} className="showcase-item" onClick={() => onModelClick(m)}>

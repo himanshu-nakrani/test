@@ -1,4 +1,6 @@
+import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
+import { MessageSquare, Brain, Code, Eye, Layers, Image, Music, Video, Square, CheckSquare, Star } from 'lucide-react'
 import type { AIModel } from '../types'
 import Highlight from './Highlight'
 
@@ -13,15 +15,18 @@ interface ModelCardProps {
   index?: number
 }
 
-const categoryEmoji: Record<string, string> = {
-  chat: '💬',
-  reasoning: '🧠',
-  code: '💻',
-  vision: '👁️',
-  embedding: '📐',
-  image: '🎨',
-  audio: '🎵',
-  video: '🎬',
+function categoryIcon(cat: string): ReactNode {
+  const icons: Record<string, ReactNode> = {
+    chat: <MessageSquare size={12} aria-hidden="true" />,
+    reasoning: <Brain size={12} aria-hidden="true" />,
+    code: <Code size={12} aria-hidden="true" />,
+    vision: <Eye size={12} aria-hidden="true" />,
+    embedding: <Layers size={12} aria-hidden="true" />,
+    image: <Image size={12} aria-hidden="true" />,
+    audio: <Music size={12} aria-hidden="true" />,
+    video: <Video size={12} aria-hidden="true" />,
+  }
+  return icons[cat] || null
 }
 
 export default function ModelCard({
@@ -51,7 +56,7 @@ export default function ModelCard({
             onChange={() => onToggleCompare(model.id)}
             aria-label={`Compare ${model.name}`}
           />
-          <span className="compare-check-icon" aria-hidden="true">{isCompare ? '☑' : '☐'}</span>
+          <span className="compare-check-icon" aria-hidden="true">{isCompare ? <CheckSquare size={16} /> : <Square size={16} />}</span>
         </label>
         <button
           className={`fav-btn ${isFav ? 'is-fav' : ''}`}
@@ -61,7 +66,7 @@ export default function ModelCard({
           }}
           title={isFav ? 'Remove from favorites' : 'Add to favorites'}
         >
-          {isFav ? '★' : '☆'}
+          <Star size={16} fill={isFav ? 'currentColor' : 'none'} aria-hidden="true" />
         </button>
       </div>
 
@@ -98,7 +103,7 @@ export default function ModelCard({
         <div className="card-categories">
           {model.categories.map((cat) => (
             <span key={cat} className="category-tag" title={cat}>
-              {categoryEmoji[cat]} {cat}
+              {categoryIcon(cat)} {cat}
             </span>
           ))}
         </div>
@@ -111,7 +116,7 @@ export default function ModelCard({
           <div className="meta-item">
             <span className="meta-label">Pricing</span>
             <span className="meta-value">
-              {model.pricing.free ? '🆓 Free' : model.pricingTier}
+              {model.pricing.free ? 'Free' : model.pricingTier}
             </span>
           </div>
         </div>

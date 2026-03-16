@@ -1,5 +1,12 @@
+import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
+import {
+  MessageSquare, Brain, Code, Eye, Layers, Image as ImageIcon, Music, Video,
+  BarChart3, DollarSign, ArrowLeftRight, TrendingUp, CheckCircle, AlertTriangle,
+  Target, Link as LinkIcon, Zap, Gauge, History, Copy, ArrowLeft, Star,
+  Type, Volume2, Film,
+} from 'lucide-react'
 import type { AIModel } from '../types'
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard'
 import { usePageTitle } from '../hooks/usePageTitle'
@@ -14,14 +21,35 @@ interface ModelDetailProps {
   onToggleFav: (id: string) => void
 }
 
-const categoryEmoji: Record<string, string> = {
-  chat: '💬', reasoning: '🧠', code: '💻', vision: '👁️',
-  embedding: '📐', image: '🎨', audio: '🎵', video: '🎬',
+function categoryIcon(cat: string): ReactNode {
+  const icons: Record<string, ReactNode> = {
+    chat: <MessageSquare size={14} aria-hidden="true" />,
+    reasoning: <Brain size={14} aria-hidden="true" />,
+    code: <Code size={14} aria-hidden="true" />,
+    vision: <Eye size={14} aria-hidden="true" />,
+    embedding: <Layers size={14} aria-hidden="true" />,
+    image: <ImageIcon size={14} aria-hidden="true" />,
+    audio: <Music size={14} aria-hidden="true" />,
+    video: <Video size={14} aria-hidden="true" />,
+  }
+  return icons[cat] || null
 }
 
-const modalityLabel: Record<string, string> = {
-  text: '📝 Text', image: '🖼️ Image', audio: '🔊 Audio',
-  video: '🎥 Video', code: '💻 Code', embeddings: '📐 Embeddings',
+function modalityIcon(mod: string): ReactNode {
+  const icons: Record<string, ReactNode> = {
+    text: <Type size={14} aria-hidden="true" />,
+    image: <ImageIcon size={14} aria-hidden="true" />,
+    audio: <Volume2 size={14} aria-hidden="true" />,
+    video: <Film size={14} aria-hidden="true" />,
+    code: <Code size={14} aria-hidden="true" />,
+    embeddings: <Layers size={14} aria-hidden="true" />,
+  }
+  return icons[mod] || null
+}
+
+const modalityLabelText: Record<string, string> = {
+  text: 'Text', image: 'Image', audio: 'Audio',
+  video: 'Video', code: 'Code', embeddings: 'Embeddings',
 }
 
 export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailProps) {
@@ -56,13 +84,13 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
             <span className="breadcrumb-sep">&gt;</span>
             <span className="breadcrumb-current">{model.name}</span>
           </nav>
-          <Link to="/" className="back-btn">← Back to all models</Link>
+          <Link to="/" className="back-btn"><ArrowLeft size={16} aria-hidden="true" /> Back to all models</Link>
         </div>
         <button
           className={`fav-btn fav-btn-lg ${isFav ? 'is-fav' : ''}`}
           onClick={() => onToggleFav(model.id)}
         >
-          {isFav ? '★ Favorited' : '☆ Add to favorites'}
+          <Star size={18} fill={isFav ? 'currentColor' : 'none'} aria-hidden="true" /> {isFav ? 'Favorited' : 'Add to favorites'}
         </button>
       </div>
 
@@ -78,14 +106,14 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
         <h1 className="detail-title">
           {model.name}
           <button className="copy-name-btn" onClick={() => copyName(model.name)} title="Copy model name">
-            {copiedName ? '✓' : '⧉'}
+            {copiedName ? '✓' : <Copy size={14} aria-hidden="true" />}
           </button>
         </h1>
         <p className="detail-description">{model.longDescription}</p>
 
         <div className="detail-categories">
           {model.categories.map((cat) => (
-            <span key={cat} className="category-tag category-tag-lg">{categoryEmoji[cat]} {cat}</span>
+            <span key={cat} className="category-tag category-tag-lg">{categoryIcon(cat)} {cat}</span>
           ))}
         </div>
 
@@ -107,7 +135,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
         >
-          <h3>📊 Specifications</h3>
+          <h3><BarChart3 size={18} className="section-icon" aria-hidden="true" /> Specifications</h3>
           <dl className="spec-list">
             <div className="spec-row"><dt>Parameters</dt><dd>{model.parameters}</dd></div>
             <div className="spec-row"><dt>Context Window</dt><dd><strong>{model.contextWindow}</strong></dd></div>
@@ -138,7 +166,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <h3>💰 Pricing</h3>
+          <h3><DollarSign size={18} className="section-icon" aria-hidden="true" /> Pricing</h3>
           <dl className="spec-list">
             <div className="spec-row"><dt>Input</dt><dd>{model.pricing.input}</dd></div>
             <div className="spec-row"><dt>Output</dt><dd>{model.pricing.output}</dd></div>
@@ -146,7 +174,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
               <dt>Tier</dt>
               <dd>
                 <span className={`pricing-pill pricing-${model.pricingTier}`}>
-                  {model.pricing.free ? '🆓 Free' : model.pricingTier}
+                  {model.pricing.free ? 'Free' : model.pricingTier}
                 </span>
               </dd>
             </div>
@@ -162,13 +190,13 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
           >
-            <h3>🔄 Input / Output Modalities</h3>
+            <h3><ArrowLeftRight size={18} className="section-icon" aria-hidden="true" /> Input / Output Modalities</h3>
             <div className="modalities-grid">
               <div>
                 <h4>Accepts</h4>
                 <div className="modality-chips">
                   {(model.inputModalities || []).map((m) => (
-                    <span key={m} className="modality-chip modality-in">{modalityLabel[m] || m}</span>
+                    <span key={m} className="modality-chip modality-in">{modalityIcon(m)} {modalityLabelText[m] || m}</span>
                   ))}
                 </div>
               </div>
@@ -176,7 +204,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
                 <h4>Produces</h4>
                 <div className="modality-chips">
                   {(model.outputModalities || []).map((m) => (
-                    <span key={m} className="modality-chip modality-out">{modalityLabel[m] || m}</span>
+                    <span key={m} className="modality-chip modality-out">{modalityIcon(m)} {modalityLabelText[m] || m}</span>
                   ))}
                 </div>
               </div>
@@ -193,7 +221,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
           >
-            <h3>📈 Benchmark Scores</h3>
+            <h3><TrendingUp size={18} className="section-icon" aria-hidden="true" /> Benchmark Scores</h3>
             <div className="benchmark-layout">
               <div className="benchmark-bars">
                 {model.benchmarks!.mmlu != null && (
@@ -238,7 +266,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
         >
-          <h3>✅ Strengths</h3>
+          <h3><CheckCircle size={18} className="section-icon" aria-hidden="true" /> Strengths</h3>
           <ul className="detail-list strengths-list">
             {model.strengths.map((s) => <li key={s}>{s}</li>)}
           </ul>
@@ -250,7 +278,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          <h3>⚠️ Limitations</h3>
+          <h3><AlertTriangle size={18} className="section-icon" aria-hidden="true" /> Limitations</h3>
           <ul className="detail-list limitations-list">
             {model.limitations.map((l) => <li key={l}>{l}</li>)}
           </ul>
@@ -264,7 +292,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
         >
-          <h3>🎯 Use Cases</h3>
+          <h3><Target size={18} className="section-icon" aria-hidden="true" /> Use Cases</h3>
           <div className="use-case-grid">
             {model.useCases.map((u) => <div key={u} className="use-case-item">{u}</div>)}
           </div>
@@ -278,7 +306,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
         >
-          <h3>🔗 API & Documentation</h3>
+          <h3><LinkIcon size={18} className="section-icon" aria-hidden="true" /> API & Documentation</h3>
           <dl className="spec-list">
             <div className="spec-row">
               <dt>API Endpoint</dt>
@@ -305,7 +333,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
           >
-            <h3>🚦 Rate Limits</h3>
+            <h3><Gauge size={18} className="section-icon" aria-hidden="true" /> Rate Limits</h3>
             <dl className="spec-list">
               {model.rateLimits.rpm && <div className="spec-row"><dt>Requests/min</dt><dd>{model.rateLimits.rpm}</dd></div>}
               {model.rateLimits.tpm && <div className="spec-row"><dt>Tokens/min</dt><dd>{model.rateLimits.tpm}</dd></div>}
@@ -323,7 +351,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
           >
-            <h3>📋 Version History</h3>
+            <h3><History size={18} className="section-icon" aria-hidden="true" /> Version History</h3>
             <div className="version-list">
               {model.versions.map((v) => (
                 <div key={v.version} className="version-item">
@@ -347,7 +375,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
           >
-            <h3>⚡ Quick Start</h3>
+            <h3><Zap size={18} className="section-icon" aria-hidden="true" /> Quick Start</h3>
             <div className="code-snippets">
               {model.codeSnippets.map((snippet) => (
                 <CodeBlock

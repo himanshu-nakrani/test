@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { ArrowUp } from 'lucide-react'
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false)
@@ -17,7 +18,7 @@ export default function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Back to top"
     >
-      ↑
+      <ArrowUp size={20} aria-hidden="true" />
     </button>
   )
 }

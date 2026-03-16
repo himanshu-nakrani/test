@@ -1,4 +1,6 @@
+import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Scale, X, MessageSquare, Brain, Code, Eye, Layers, Image, Music, Video } from 'lucide-react'
 import type { AIModel } from '../types'
 import { usePageTitle } from '../hooks/usePageTitle'
 
@@ -7,9 +9,18 @@ interface CompareViewProps {
   onRemove: (id: string) => void
 }
 
-const categoryEmoji: Record<string, string> = {
-  chat: '💬', reasoning: '🧠', code: '💻', vision: '👁️',
-  embedding: '📐', image: '🎨', audio: '🎵', video: '🎬',
+function categoryIcon(cat: string): ReactNode {
+  const icons: Record<string, ReactNode> = {
+    chat: <MessageSquare size={12} aria-hidden="true" />,
+    reasoning: <Brain size={12} aria-hidden="true" />,
+    code: <Code size={12} aria-hidden="true" />,
+    vision: <Eye size={12} aria-hidden="true" />,
+    embedding: <Layers size={12} aria-hidden="true" />,
+    image: <Image size={12} aria-hidden="true" />,
+    audio: <Music size={12} aria-hidden="true" />,
+    video: <Video size={12} aria-hidden="true" />,
+  }
+  return icons[cat] || null
 }
 
 export default function CompareView({ models, onRemove }: CompareViewProps) {
@@ -38,7 +49,7 @@ export default function CompareView({ models, onRemove }: CompareViewProps) {
         <div className="compare-cats">
           {m.categories.map((c) => (
             <span key={c} className="category-tag category-tag-sm">
-              {categoryEmoji[c]} {c}
+              {categoryIcon(c)} {c}
             </span>
           ))}
         </div>
@@ -93,8 +104,8 @@ export default function CompareView({ models, onRemove }: CompareViewProps) {
   return (
     <div className="compare-view">
       <div className="compare-header">
-        <h2>⚖️ Model Comparison</h2>
-        <button className="compare-close" onClick={() => navigate('/')}>✕ Close</button>
+        <h2><Scale size={24} aria-hidden="true" /> Model Comparison</h2>
+        <button className="compare-close" onClick={() => navigate('/')}><X size={14} aria-hidden="true" /> Close</button>
       </div>
 
       <div className="compare-table-wrap">
@@ -106,14 +117,14 @@ export default function CompareView({ models, onRemove }: CompareViewProps) {
                 <th key={m.id} className="compare-model-col">
                   <button className="compare-model-header" onClick={() => handleModelClick(m)}>
                     <span className="compare-model-name">{m.name}</span>
-                    <span className="compare-view-detail">View details →</span>
+                    <span className="compare-view-detail">View details</span>
                   </button>
                   <button
                     className="compare-remove"
                     onClick={() => onRemove(m.id)}
                     title="Remove from comparison"
                   >
-                    ✕
+                    <X size={14} aria-hidden="true" />
                   </button>
                 </th>
               ))}

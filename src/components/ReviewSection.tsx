@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { FormEvent } from 'react'
 import { motion } from 'framer-motion'
+import { Star, MessageCircle } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 
 interface Review {
@@ -35,7 +36,7 @@ function StarRating({ value, onChange, interactive = false }: {
           onMouseEnter={() => interactive && setHover(star)}
           onMouseLeave={() => interactive && setHover(0)}
         >
-          ★
+          <Star size={20} fill={star <= (hover || value) ? 'currentColor' : 'none'} aria-hidden="true" />
         </span>
       ))}
     </span>
@@ -107,7 +108,7 @@ export default function ReviewSection({ modelId }: ReviewSectionProps) {
       transition={{ duration: 0.5 }}
     >
       <div className="review-header">
-        <h2>💬 Reviews</h2>
+        <h2><MessageCircle size={20} aria-hidden="true" /> Reviews</h2>
         <div className="review-summary">
           {reviews.length > 0 ? (
             <>

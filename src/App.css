@@ -2584,3 +2584,18 @@ a.guide-card {
 @media (max-width: 480px) {
   .signin-btn .signin-text { display: none; }
 }
+
+/* Icon alignment helper */
+.icon-inline {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+/* Star rating icons */
+.star-icon { color: var(--text-tertiary); cursor: pointer; transition: color 0.15s; }
+.star-icon.filled { color: #f59e0b; }
+.star-icon:hover { color: #fbbf24; }
+
+/* Section heading icons */
+.section-icon { color: var(--accent); margin-right: 0.35rem; vertical-align: middle; }

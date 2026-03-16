@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { BarChart3, ArrowLeft } from 'lucide-react'
 import { models } from '../data/models'
 import { usePageTitle } from '../hooks/usePageTitle'
 import ScatterPlot from './ScatterPlot'
@@ -9,10 +10,10 @@ export default function Analytics() {
 
   return (
     <div className="analytics-page">
-      <Link to="/" className="back-btn">← Back to models</Link>
+      <Link to="/" className="back-btn"><ArrowLeft size={16} aria-hidden="true" /> Back to models</Link>
 
       <div className="analytics-hero">
-        <h1>📊 Analytics & Insights</h1>
+        <h1><BarChart3 size={24} aria-hidden="true" /> Analytics & Insights</h1>
         <p>Visualize AI model trends, pricing patterns, and performance benchmarks across the industry.</p>
       </div>
 

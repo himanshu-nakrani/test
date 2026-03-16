@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { Sparkles, Search, Star, Scale, Sun, Moon, Menu, X } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import LoginModal from './LoginModal'
 import UserMenu from './UserMenu'
@@ -83,7 +84,7 @@ export default function Header({
   return (
     <header className="header">
       <Link to="/" className="logo">
-        <span className="logo-icon">🤖</span>
+        <span className="logo-icon"><Sparkles size={22} aria-hidden="true" /></span>
         <span className="logo-text">NeuralAtlas</span>
       </Link>
 
@@ -94,7 +95,7 @@ export default function Header({
       </nav>
 
       <div className="header-search" role="search">
-        <span className="search-icon" aria-hidden="true">🔍</span>
+        <span className="search-icon" aria-hidden="true"><Search size={16} /></span>
         <input
           ref={inputRef}
           type="text"
@@ -105,7 +106,7 @@ export default function Header({
           aria-label={`Search ${modelCount} models`}
         />
         {search ? (
-          <button className="search-clear" onClick={() => handleSearch('')} aria-label="Clear search">✕</button>
+          <button className="search-clear" onClick={() => handleSearch('')} aria-label="Clear search"><X size={14} aria-hidden="true" /></button>
         ) : (
           <kbd className="search-kbd">⌘K</kbd>
         )}
@@ -118,7 +119,7 @@ export default function Header({
           aria-label="Show favorites"
           title="Show favorites"
         >
-          {showFavOnly ? '★' : '☆'}
+          <Star size={18} fill={showFavOnly ? 'currentColor' : 'none'} aria-hidden="true" />
           {favCount > 0 && <span className="header-badge">{favCount}</span>}
         </button>
         <button
@@ -128,10 +129,10 @@ export default function Header({
           aria-label={compareCount < 2 ? 'Select 2+ models to compare' : `Compare ${compareCount} models`}
           title={compareCount < 2 ? 'Select 2+ models to compare' : `Compare ${compareCount} models`}
         >
-          ⚖️{compareCount > 0 && <span className="header-badge">{compareCount}</span>}
+          <Scale size={18} aria-hidden="true" />{compareCount > 0 && <span className="header-badge">{compareCount}</span>}
         </button>
         <button className="header-btn theme-toggle" onClick={onToggleDark} aria-label="Toggle theme">
-          {darkMode ? '☀️' : '🌙'}
+          {darkMode ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
         </button>
         {isAuthenticated ? (
           <UserMenu />
@@ -146,7 +147,7 @@ export default function Header({
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
         >
-          {menuOpen ? '✕' : '☰'}
+          {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
         </button>
       </div>
 

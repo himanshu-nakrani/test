@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { User, Star, Scale, MessageCircle, X } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { usePageTitle } from '../hooks/usePageTitle'
 
@@ -114,14 +115,14 @@ export default function Workspace() {
       transition={{ duration: 0.3 }}
     >
       <div className="workspace-hero">
-        <h1>👋 Welcome, {user?.displayName || user?.username}</h1>
+        <h1><User size={24} aria-hidden="true" /> Welcome, {user?.displayName || user?.username}</h1>
         <p>Your personal NeuralAtlas dashboard</p>
       </div>
 
       <div className="workspace-grid">
         {/* Favorites */}
         <div className="workspace-card">
-          <h2>★ My Favorites</h2>
+          <h2><Star size={18} aria-hidden="true" /> My Favorites</h2>
           {loading ? <p className="workspace-empty">Loading...</p> : favorites.length === 0 ? (
             <p className="workspace-empty">No favorites yet. Star some models to see them here!</p>
           ) : (
@@ -142,7 +143,7 @@ export default function Workspace() {
 
         {/* Saved Comparisons */}
         <div className="workspace-card">
-          <h2>⚖️ Saved Comparisons</h2>
+          <h2><Scale size={18} aria-hidden="true" /> Saved Comparisons</h2>
           {loading ? <p className="workspace-empty">Loading...</p> : comparisons.length === 0 ? (
             <p className="workspace-empty">No saved comparisons yet.</p>
           ) : (
@@ -161,7 +162,7 @@ export default function Workspace() {
                       View
                     </Link>
                     <button className="workspace-delete-btn" onClick={() => deleteComparison(c.id)}>
-                      ✕
+                      <X size={14} aria-hidden="true" />
                     </button>
                   </div>
                 </li>
@@ -194,7 +195,7 @@ export default function Workspace() {
 
         {/* Reviews */}
         <div className="workspace-card workspace-card-wide">
-          <h2>💬 My Reviews</h2>
+          <h2><MessageCircle size={18} aria-hidden="true" /> My Reviews</h2>
           {loading ? <p className="workspace-empty">Loading...</p> : reviews.length === 0 ? (
             <p className="workspace-empty">You haven&apos;t written any reviews yet.</p>
           ) : (
@@ -204,7 +205,7 @@ export default function Workspace() {
                   <Link to={`/models/${r.model_id}`} className="workspace-list-link">
                     {r.model_id}
                   </Link>
-                  <span className="workspace-review-stars">{'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}</span>
+                  <span className="workspace-review-stars">{[1, 2, 3, 4, 5].map((s) => <Star key={s} size={14} fill={s <= r.rating ? 'currentColor' : 'none'} className={s <= r.rating ? 'star-icon filled' : 'star-icon'} aria-hidden="true" />)}</span>
                   <strong>{r.title}</strong>
                   <span className="workspace-date">{new Date(r.created_at).toLocaleDateString()}</span>
                 </li>

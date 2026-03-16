@@ -1,4 +1,5 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { BookOpen, ArrowRight, Award, ArrowLeft } from 'lucide-react'
 import type { AIModel } from '../types'
 import { comparisonGuides } from '../data/comparisons'
 import { models } from '../data/models'
@@ -13,7 +14,7 @@ function GuideDetail({ guideId }: { guideId: string }) {
   if (!guide) {
     return (
       <div className="guides-page page-transition">
-        <Link to="/guides" className="back-btn">← Back to guides</Link>
+        <Link to="/guides" className="back-btn"><ArrowLeft size={16} aria-hidden="true" /> Back to guides</Link>
         <div className="no-results">
           <h3>Guide not found</h3>
           <p>This comparison guide doesn't exist.</p>
@@ -30,7 +31,7 @@ function GuideDetail({ guideId }: { guideId: string }) {
 
   return (
     <div className="guides-page page-transition">
-      <Link to="/guides" className="back-btn">← Back to guides</Link>
+      <Link to="/guides" className="back-btn"><ArrowLeft size={16} aria-hidden="true" /> Back to guides</Link>
       <div className="guide-detail">
         <h1 className="guide-title">{guide.title}</h1>
         <p className="guide-subtitle">{guide.subtitle}</p>
@@ -39,7 +40,7 @@ function GuideDetail({ guideId }: { guideId: string }) {
           {[m1, m2].filter(Boolean).map((m) => (
             <button key={m.id} className="guide-model-chip" onClick={() => handleModelClick(m)}>
               <span className="provider-dot" style={{ background: m.providerColor }} />
-              {m.name} <span className="guide-chip-arrow">→</span>
+              {m.name} <span className="guide-chip-arrow"><ArrowRight size={14} aria-hidden="true" /></span>
             </button>
           ))}
         </div>
@@ -52,7 +53,7 @@ function GuideDetail({ guideId }: { guideId: string }) {
         ))}
 
         <div className="guide-verdict">
-          <h3>🏆 Verdict</h3>
+          <h3><Award size={18} className="section-icon" aria-hidden="true" /> Verdict</h3>
           <p>{guide.verdict}</p>
         </div>
       </div>
@@ -65,9 +66,9 @@ function GuidesList() {
 
   return (
     <div className="guides-page page-transition">
-      <Link to="/" className="back-btn">← Back to models</Link>
+      <Link to="/" className="back-btn"><ArrowLeft size={16} aria-hidden="true" /> Back to models</Link>
       <div className="guides-hero">
-        <h1>📖 Comparison Guides</h1>
+        <h1><BookOpen size={24} aria-hidden="true" /> Comparison Guides</h1>
         <p>In-depth comparisons of the most popular AI models to help you choose.</p>
       </div>
       <div className="guides-grid">
@@ -75,7 +76,7 @@ function GuidesList() {
           <Link key={g.id} to={`/guides/${g.id}`} className="guide-card">
             <h3>{g.title}</h3>
             <p>{g.subtitle}</p>
-            <span className="guide-read-more">Read comparison →</span>
+            <span className="guide-read-more">Read comparison <ArrowRight size={14} aria-hidden="true" /></span>
           </Link>
         ))}
       </div>

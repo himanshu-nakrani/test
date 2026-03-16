@@ -22,8 +22,8 @@ describe('NeuralAtlas', () => {
     const hero = document.querySelector('.hero-section')!
     expect(hero).toBeTruthy()
     expect(within(hero as HTMLElement).getByText(/Explore.*models from.*providers/i)).toBeInTheDocument()
-    expect(within(hero as HTMLElement).getByText('🔥 Featured')).toBeInTheDocument()
-    expect(within(hero as HTMLElement).getByText('🆕 Recently Released')).toBeInTheDocument()
+    expect(within(hero as HTMLElement).getByText(/Featured/)).toBeInTheDocument()
+    expect(within(hero as HTMLElement).getByText(/Recently Released/)).toBeInTheDocument()
   })
 
   it('renders model cards in the grid', () => {

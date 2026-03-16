@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { FolderOpen, Star, LogOut } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 
 export default function UserMenu() {
@@ -41,14 +42,14 @@ export default function UserMenu() {
       {open && (
         <div className="user-menu-dropdown">
           <button className="user-menu-item" onClick={() => handleNav('/workspace')}>
-            📁 My Workspace
+            <FolderOpen size={16} aria-hidden="true" /> My Workspace
           </button>
           <button className="user-menu-item" onClick={() => handleNav('/?favorites=true')}>
-            ★ My Favorites
+            <Star size={16} aria-hidden="true" /> My Favorites
           </button>
           <div className="user-menu-divider" />
           <button className="user-menu-item user-menu-signout" onClick={() => { setOpen(false); logout() }}>
-            🚪 Sign Out
+            <LogOut size={16} aria-hidden="true" /> Sign Out
           </button>
         </div>
       )}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { Routes, Route, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { X, Menu, Search, Scale, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import type { AIModel, FilterState, ViewMode, ModelCategory, PricingTier, LicenseType } from './types'
 import { models } from './data/models'
 import { useFavorites } from './hooks/useFavorites'
@@ -187,7 +188,7 @@ function HomePage({
           className="mobile-filter-toggle"
           onClick={() => setShowFilters(!showFilters)}
         >
-          {showFilters ? '✕ Hide Filters' : '☰ Filters & Sort'}
+          {showFilters ? <><X size={14} aria-hidden="true" /> Hide Filters</> : <><Menu size={14} aria-hidden="true" /> Filters &amp; Sort</>}
         </button>
 
         {showFilters && (
@@ -196,7 +197,7 @@ function HomePage({
 
         <div className="content-layout">
           <div className={`filters-container ${showFilters ? 'show' : ''}`}>
-            <button className="mobile-filter-close" onClick={() => setShowFilters(false)}>✕ Close</button>
+            <button className="mobile-filter-close" onClick={() => setShowFilters(false)}><X size={14} aria-hidden="true" /> Close</button>
             <Filters
               filters={filters}
               onChange={updateFilters}
@@ -208,7 +209,7 @@ function HomePage({
 
           {filtered.length === 0 ? (
             <div className="no-results">
-              <span className="no-results-icon">🔍</span><h3>No models found</h3><p>Try adjusting your search or filters.</p>
+              <span className="no-results-icon"><Search size={24} aria-hidden="true" /></span><h3>No models found</h3><p>Try adjusting your search or filters.</p>
             </div>
           ) : viewMode === 'grid' ? (
             <>
@@ -243,7 +244,7 @@ function HomePage({
                       disabled={safePage <= 1}
                       onClick={() => setPage(safePage - 1)}
                     >
-                      ← Previous
+                      <ChevronLeft size={14} aria-hidden="true" /> Previous
                     </button>
                     <div className="pagination-pages">
                       {pageNumbers.map((p) => (
@@ -261,7 +262,7 @@ function HomePage({
                       disabled={safePage >= totalPages}
                       onClick={() => setPage(safePage + 1)}
                     >
-                      Next →
+                      Next <ChevronRight size={14} aria-hidden="true" />
                     </button>
                   </div>
                 )}
@@ -351,10 +352,10 @@ function ComparePage({
         transition={{ duration: 0.3 }}
       >
         <div className="no-results">
-          <span className="no-results-icon">⚖️</span>
+          <span className="no-results-icon"><Scale size={24} aria-hidden="true" /></span>
           <h3>Not enough models to compare</h3>
           <p>Select at least 2 models from the home page, or provide model IDs via URL query.</p>
-          <button className="back-btn" onClick={() => navigate('/')}>← Back to models</button>
+          <button className="back-btn" onClick={() => navigate('/')}><ArrowLeft size={16} aria-hidden="true" /> Back to models</button>
         </div>
       </motion.main>
     )

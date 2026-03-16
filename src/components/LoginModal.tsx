@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import { X } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 
 interface LoginModalProps {
@@ -34,7 +35,7 @@ export default function LoginModal({ onClose }: LoginModalProps) {
   return (
     <div className="login-modal-overlay" onClick={onClose}>
       <div className="login-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="login-modal-close" onClick={onClose} aria-label="Close">✕</button>
+        <button className="login-modal-close" onClick={onClose} aria-label="Close"><X size={20} aria-hidden="true" /></button>
         <h2 className="login-modal-title">Sign In</h2>
         <p className="login-modal-subtitle">Welcome back to NeuralAtlas</p>
 
