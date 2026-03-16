@@ -1,69 +1,81 @@
 /* ===== Light Theme ===== */
 :root,
 [data-theme='light'] {
-  --bg: #fafbfc;
-  --bg-translucent: rgba(250, 251, 252, 0.9);
+  --bg: #f8fafc;
+  --bg-translucent: rgba(248, 250, 252, 0.82);
   --surface: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-tertiary: #9ca3af;
-  --border: #e5e7eb;
-  --border-hover: #d1d5db;
+  --surface-raised: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-tertiary: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
   --card-bg: #ffffff;
-  --card-hover: #f9fafb;
-  --hover-bg: #f3f4f6;
+  --card-hover: #f8fafc;
+  --hover-bg: #f1f5f9;
   --accent: #6366f1;
-  --accent-light: rgba(99, 102, 241, 0.1);
+  --accent-hover: #4f46e5;
+  --accent-light: rgba(99, 102, 241, 0.08);
   --accent-text: #4f46e5;
-  --section-alt-bg: #f1f5f9;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --section-alt-bg: linear-gradient(180deg, #f1f5f9 0%, #f8fafc 100%);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06);
   --badge-new: #059669;
   --badge-new-bg: #ecfdf5;
   --badge-featured: #d97706;
   --badge-featured-bg: #fffbeb;
-  --strength-bg: #ecfdf5;
-  --strength-color: #065f46;
+  --strength-bg: #f0fdf4;
+  --strength-color: #166534;
   --limitation-bg: #fef2f2;
   --limitation-color: #991b1b;
-  --mono: ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
   --chip-bg: #f1f5f9;
   --chip-active-bg: #6366f1;
   --chip-active-color: #ffffff;
+  --glow: 0 0 20px rgba(99, 102, 241, 0.15);
+  --card-border: rgba(0, 0, 0, 0.06);
 }
 
 /* ===== Dark Theme ===== */
 [data-theme='dark'] {
-  --bg: #0b0d14;
-  --bg-translucent: rgba(11, 13, 20, 0.9);
-  --surface: #12141d;
+  --bg: #080a11;
+  --bg-translucent: rgba(8, 10, 17, 0.82);
+  --surface: #111318;
+  --surface-raised: #161923;
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
   --text-tertiary: #64748b;
-  --border: #1e293b;
-  --border-hover: #334155;
-  --card-bg: #151822;
-  --card-hover: #1a1e2e;
-  --hover-bg: #1e293b;
+  --border: #1e2535;
+  --border-hover: #2d3a50;
+  --card-bg: #111318;
+  --card-hover: #181c28;
+  --hover-bg: #1a1f2e;
   --accent: #818cf8;
-  --accent-light: rgba(129, 140, 248, 0.12);
+  --accent-hover: #6366f1;
+  --accent-light: rgba(129, 140, 248, 0.1);
   --accent-text: #a5b4fc;
-  --section-alt-bg: #0f1119;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --accent-gradient: linear-gradient(135deg, #818cf8, #a78bfa);
+  --section-alt-bg: linear-gradient(180deg, #0c0e16 0%, #080a11 100%);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.7), 0 8px 16px rgba(0, 0, 0, 0.5);
   --badge-new: #34d399;
   --badge-new-bg: rgba(52, 211, 153, 0.1);
   --badge-featured: #fbbf24;
   --badge-featured-bg: rgba(251, 191, 36, 0.1);
-  --strength-bg: rgba(16, 185, 129, 0.1);
+  --strength-bg: rgba(16, 185, 129, 0.08);
   --strength-color: #6ee7b7;
-  --limitation-bg: rgba(239, 68, 68, 0.1);
+  --limitation-bg: rgba(239, 68, 68, 0.08);
   --limitation-color: #fca5a5;
-  --chip-bg: #1e293b;
+  --chip-bg: #1a1f2e;
   --chip-active-bg: #818cf8;
   --chip-active-color: #0f172a;
+  --glow: 0 0 30px rgba(129, 140, 248, 0.12);
+  --card-border: rgba(255, 255, 255, 0.04);
 }
 
 /* ===== Reset ===== */
@@ -85,7 +97,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 #root {
@@ -94,4 +106,9 @@ body {
 
 button {
   font-family: inherit;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
 }
