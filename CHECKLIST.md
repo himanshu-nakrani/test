@@ -17,18 +17,18 @@ See [ROADMAP.md](./ROADMAP.md) for detailed descriptions of each feature.
 - [ ] Add loading skeletons / suspense boundaries
 - [ ] Add 404 page for unknown routes
 
-## Data & Content
+## Data & Content ✅
 
-- [ ] Add more models (Cursor, GitHub Copilot, Amazon Titan, Baidu ERNIE, etc.)
-- [ ] Add benchmark scores to remaining models
-- [ ] Add code snippets (Python, JS, cURL) to remaining models
-- [ ] Add JavaScript/TypeScript code snippets alongside Python and cURL
-- [ ] Add `lastUpdated` field to track data freshness
-- [ ] Add model version history (e.g. GPT-4o → GPT-4o-2024-08-06)
-- [ ] Add real-world latency data (TTFB, tokens/sec)
-- [ ] Add rate limit information per model
-- [ ] Add model size / download size for open-weight models
-- [ ] Write comparison guides (e.g. "GPT-4o vs Claude 4 Sonnet for coding")
+- [x] Add more models (GitHub Copilot, Amazon Titan, Baidu ERNIE, Yi, Gemma, Flux, Aya, Reka, Qwen Max, Mistral Saba — 65 total)
+- [x] Add benchmark scores to all chat/reasoning/code models
+- [x] Add code snippets (Python, JS, cURL) to all models with API endpoints
+- [x] Add JavaScript/TypeScript code snippets alongside Python and cURL
+- [x] Add `lastUpdated` field to track data freshness
+- [x] Add model version history (e.g. GPT-4o → GPT-4o-2024-08-06)
+- [x] Add real-world latency data (TTFB, tokens/sec)
+- [x] Add rate limit information per model
+- [x] Add model size / download size for open-weight models
+- [x] Write comparison guides (GPT-4o vs Claude 4 Sonnet, GPT-4.1 vs Gemini 2.5 Pro, o3 vs DeepSeek R1, Claude 4 Opus vs o3, Llama 4 Maverick vs GPT-4o)
 
 ## UI/UX
 

@@ -30,6 +30,24 @@ export interface CodeSnippet {
   code: string
 }
 
+export interface ModelVersion {
+  version: string
+  date: string
+  notes: string
+}
+
+export interface RateLimits {
+  rpm?: string
+  tpm?: string
+  notes?: string
+}
+
+export interface LatencyInfo {
+  label: string
+  ttfb?: string
+  tokensPerSec?: string
+}
+
 export interface AIModel {
   id: string
   name: string
@@ -42,6 +60,7 @@ export interface AIModel {
   contextWindow: string
   contextTokens?: number
   releaseDate: string
+  lastUpdated?: string
   pricing: ModelPricing
   pricingTier: PricingTier
   license: LicenseType
@@ -55,14 +74,18 @@ export interface AIModel {
   inputModalities?: Modality[]
   outputModalities?: Modality[]
   latency?: string
+  latencyInfo?: LatencyInfo
   benchmarks?: BenchmarkScores
   codeSnippets?: CodeSnippet[]
   tags?: string[]
+  versions?: ModelVersion[]
+  rateLimits?: RateLimits
+  modelSize?: string
 }
 
 export type ViewMode = 'grid' | 'table'
 
-export type AppPage = 'home' | 'detail' | 'compare' | 'leaderboard' | 'calculator'
+export type AppPage = 'home' | 'detail' | 'compare' | 'leaderboard' | 'calculator' | 'guides'
 
 export interface FilterState {
   search: string

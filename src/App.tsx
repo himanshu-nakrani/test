@@ -11,6 +11,7 @@ import ModelDetail from './components/ModelDetail'
 import CompareView from './components/CompareView'
 import Leaderboard from './components/Leaderboard'
 import CostCalculator from './components/CostCalculator'
+import ComparisonGuides from './components/ComparisonGuides'
 import './App.css'
 
 const defaultFilters: FilterState = {
@@ -113,6 +114,12 @@ function App() {
         return (
           <main className="main">
             <CostCalculator onBack={handleBack} />
+          </main>
+        )
+      case 'guides':
+        return (
+          <main className="main">
+            <ComparisonGuides onBack={handleBack} onModelClick={handleModelClick} />
           </main>
         )
       default:

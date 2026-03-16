@@ -87,11 +87,21 @@ export default function ModelDetail({ model, onBack, onModelClick, isFav, onTogg
           <dl className="spec-list">
             <div className="spec-row"><dt>Parameters</dt><dd>{model.parameters}</dd></div>
             <div className="spec-row"><dt>Context Window</dt><dd><strong>{model.contextWindow}</strong></dd></div>
-            {model.latency && <div className="spec-row"><dt>Latency</dt><dd>{model.latency}</dd></div>}
+            {model.latencyInfo ? (
+              <>
+                <div className="spec-row"><dt>Latency</dt><dd>{model.latencyInfo.label}</dd></div>
+                {model.latencyInfo.ttfb && <div className="spec-row"><dt>TTFB</dt><dd>{model.latencyInfo.ttfb}</dd></div>}
+                {model.latencyInfo.tokensPerSec && <div className="spec-row"><dt>Speed</dt><dd>{model.latencyInfo.tokensPerSec}</dd></div>}
+              </>
+            ) : model.latency ? (
+              <div className="spec-row"><dt>Latency</dt><dd>{model.latency}</dd></div>
+            ) : null}
+            {model.modelSize && <div className="spec-row"><dt>Model Size</dt><dd>{model.modelSize}</dd></div>}
             <div className="spec-row">
               <dt>Release Date</dt>
               <dd>{new Date(model.releaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</dd>
             </div>
+            {model.lastUpdated && <div className="spec-row"><dt>Data Updated</dt><dd>{model.lastUpdated}</dd></div>}
             <div className="spec-row"><dt>License</dt><dd className="capitalize">{model.license}</dd></div>
           </dl>
         </div>
@@ -216,6 +226,36 @@ export default function ModelDetail({ model, onBack, onModelClick, isFav, onTogg
             </div>
           </dl>
         </div>
+
+        {/* Rate Limits */}
+        {model.rateLimits && (
+          <div className="detail-card">
+            <h3>🚦 Rate Limits</h3>
+            <dl className="spec-list">
+              {model.rateLimits.rpm && <div className="spec-row"><dt>Requests/min</dt><dd>{model.rateLimits.rpm}</dd></div>}
+              {model.rateLimits.tpm && <div className="spec-row"><dt>Tokens/min</dt><dd>{model.rateLimits.tpm}</dd></div>}
+              {model.rateLimits.notes && <div className="spec-row"><dt>Notes</dt><dd>{model.rateLimits.notes}</dd></div>}
+            </dl>
+          </div>
+        )}
+
+        {/* Version History */}
+        {model.versions && model.versions.length > 0 && (
+          <div className="detail-card">
+            <h3>📋 Version History</h3>
+            <div className="version-list">
+              {model.versions.map((v) => (
+                <div key={v.version} className="version-item">
+                  <div className="version-header">
+                    <code className="version-id">{v.version}</code>
+                    <span className="version-date">{v.date}</span>
+                  </div>
+                  <p className="version-notes">{v.notes}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Code Snippets */}
         {model.codeSnippets && model.codeSnippets.length > 0 && (

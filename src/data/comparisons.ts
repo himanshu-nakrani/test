@@ -1,0 +1,189 @@
+export interface ComparisonGuide {
+  id: string
+  title: string
+  subtitle: string
+  modelIds: [string, string]
+  sections: {
+    heading: string
+    content: string
+  }[]
+  verdict: string
+}
+
+export const comparisonGuides: ComparisonGuide[] = [
+  {
+    id: 'gpt4o-vs-claude4-sonnet',
+    title: 'GPT-4o vs Claude 4 Sonnet',
+    subtitle: 'The two most popular production AI models compared',
+    modelIds: ['gpt-4o', 'claude-4-sonnet'],
+    sections: [
+      {
+        heading: 'Overview',
+        content:
+          'GPT-4o and Claude 4 Sonnet are the go-to models for most production applications. GPT-4o is OpenAI\'s flagship multimodal model supporting text, vision, and audio. Claude 4 Sonnet is Anthropic\'s balanced model excelling at coding and agentic tasks.',
+      },
+      {
+        heading: 'Coding',
+        content:
+          'Claude 4 Sonnet has a slight edge in coding benchmarks (92.0 vs 90.2 on HumanEval) and is widely preferred for software development workflows. It excels at understanding large codebases and following complex instructions. GPT-4o is still excellent for code generation and review, especially when multimodal context (screenshots, diagrams) is involved.',
+      },
+      {
+        heading: 'Reasoning',
+        content:
+          'Both models score similarly on MMLU (GPT-4o: 88.7, Claude 4 Sonnet: 88.5). For deep reasoning tasks, consider upgrading to o3 or Claude 4 Opus instead. For everyday reasoning, both are comparable.',
+      },
+      {
+        heading: 'Pricing',
+        content:
+          'Both are priced identically: $3.00/1M input tokens and $15.00/1M output tokens for Claude 4 Sonnet; $2.50/1M input and $10.00/1M output for GPT-4o. GPT-4o is slightly cheaper on output tokens.',
+      },
+      {
+        heading: 'Multimodal',
+        content:
+          'GPT-4o has broader multimodal support with audio input/output capabilities in addition to vision. Claude 4 Sonnet supports vision input but not audio. If your use case involves audio processing, GPT-4o is the clear choice.',
+      },
+    ],
+    verdict:
+      'Choose GPT-4o for multimodal tasks involving audio, or when you need the OpenAI ecosystem. Choose Claude 4 Sonnet for coding-heavy workflows, agentic tasks, or when you need strong instruction following. Both are excellent general-purpose choices.',
+  },
+  {
+    id: 'gpt41-vs-gemini25-pro',
+    title: 'GPT-4.1 vs Gemini 2.5 Pro',
+    subtitle: 'Long-context champions compared',
+    modelIds: ['gpt-4-1', 'gemini-2-5-pro'],
+    sections: [
+      {
+        heading: 'Overview',
+        content:
+          'GPT-4.1 and Gemini 2.5 Pro are the latest flagships from OpenAI and Google, both featuring massive context windows of 1M tokens. They represent the cutting edge of commercial LLMs.',
+      },
+      {
+        heading: 'Context Window',
+        content:
+          'Both support 1M tokens. In practice, Gemini 2.5 Pro has more established support for very long contexts (it previously offered 2M tokens with Gemini 1.5 Pro), while GPT-4.1 is newer to the long-context game. Both handle full codebases and long documents well.',
+      },
+      {
+        heading: 'Reasoning',
+        content:
+          'Gemini 2.5 Pro features a built-in "thinking" mode for enhanced reasoning, scoring 90.0 on MMLU versus GPT-4.1\'s 89.0. GPT-4.1 leads on coding benchmarks (93.5 vs 93.0 on HumanEval). The differences are marginal.',
+      },
+      {
+        heading: 'Pricing',
+        content:
+          'Gemini 2.5 Pro is cheaper on input ($1.25 vs $2.00 per 1M tokens) but similar on output ($10.00 vs $8.00). For input-heavy workloads (like analyzing long documents), Gemini is more cost-effective. For output-heavy workloads, GPT-4.1 has a slight edge.',
+      },
+      {
+        heading: 'Ecosystem',
+        content:
+          'GPT-4.1 integrates seamlessly with the OpenAI ecosystem (Assistants API, function calling, file search). Gemini 2.5 Pro is tightly integrated with Google Cloud, Vertex AI, and has native grounding with Google Search.',
+      },
+    ],
+    verdict:
+      'Choose GPT-4.1 for coding-focused tasks and OpenAI ecosystem compatibility. Choose Gemini 2.5 Pro for cost-effective long-context processing and Google Cloud integration. Both are top-tier choices for demanding applications.',
+  },
+  {
+    id: 'o3-vs-deepseek-r1',
+    title: 'o3 vs DeepSeek R1',
+    subtitle: 'Premium vs open-source reasoning compared',
+    modelIds: ['o3', 'deepseek-r1'],
+    sections: [
+      {
+        heading: 'Overview',
+        content:
+          'o3 is OpenAI\'s most advanced reasoning model, while DeepSeek R1 is the open-source reasoning breakthrough that shocked the industry. Both use chain-of-thought reasoning to solve complex problems.',
+      },
+      {
+        heading: 'Benchmarks',
+        content:
+          'o3 leads on most benchmarks: MMLU (96.0 vs 90.8), HumanEval (97.0 vs 96.3), GSM8K (99.0 vs 97.3). However, DeepSeek R1\'s scores are remarkably close given it\'s open-source and far cheaper.',
+      },
+      {
+        heading: 'Pricing',
+        content:
+          'This is where the comparison gets dramatic. o3 costs $10.00/$40.00 per 1M tokens (input/output). DeepSeek R1 costs $0.55/$2.19 — roughly 18x cheaper. For budget-conscious teams, DeepSeek R1 delivers 95% of the performance at 5% of the cost.',
+      },
+      {
+        heading: 'Openness',
+        content:
+          'DeepSeek R1 is fully open-source (MIT license) with weights available for self-hosting. o3 is proprietary and API-only. If you need on-premise deployment, data privacy, or custom fine-tuning, DeepSeek R1 is the only option.',
+      },
+      {
+        heading: 'Latency',
+        content:
+          'Both reasoning models are slower than standard chat models due to their chain-of-thought process. o3 tends to be faster via API due to OpenAI\'s optimized infrastructure. Self-hosted DeepSeek R1 latency depends on your hardware.',
+      },
+    ],
+    verdict:
+      'Choose o3 for the absolute best reasoning performance and when budget isn\'t a constraint. Choose DeepSeek R1 for exceptional reasoning at a fraction of the cost, or when you need open-source/self-hosted deployment.',
+  },
+  {
+    id: 'claude4-opus-vs-o3',
+    title: 'Claude 4 Opus vs o3',
+    subtitle: 'Top-tier intelligence: balanced vs specialized reasoning',
+    modelIds: ['claude-4-opus', 'o3'],
+    sections: [
+      {
+        heading: 'Overview',
+        content:
+          'Claude 4 Opus is Anthropic\'s most powerful general-purpose model, while o3 is OpenAI\'s specialized reasoning model. Both represent the pinnacle of AI capability but take different approaches.',
+      },
+      {
+        heading: 'General Intelligence',
+        content:
+          'Claude 4 Opus is a well-rounded model excelling at writing, analysis, coding, and conversation. o3 is specifically optimized for reasoning-heavy tasks like math, science, and complex problem-solving. For general tasks, Opus is more versatile.',
+      },
+      {
+        heading: 'Reasoning',
+        content:
+          'o3 significantly outperforms on reasoning benchmarks: MMLU (96.0 vs 89.0), GSM8K (99.0 vs 96.5). For PhD-level math and science problems, o3 is clearly superior. Opus is still excellent at reasoning but in a more general sense.',
+      },
+      {
+        heading: 'Pricing',
+        content:
+          'Both are premium-priced. Claude 4 Opus: $15/$75 per 1M tokens. o3: $10/$40 per 1M tokens. o3 is actually cheaper, but Opus\'s broader capabilities may justify the premium for teams that need one model for everything.',
+      },
+      {
+        heading: 'Best For',
+        content:
+          'Claude 4 Opus shines at complex research, legal analysis, strategic planning, and tasks requiring nuanced understanding. o3 shines at mathematical proofs, scientific research, competitive programming, and multi-step problem solving.',
+      },
+    ],
+    verdict:
+      'Choose Claude 4 Opus as your "do-everything" premium model for research, writing, and analysis. Choose o3 when you need the absolute best reasoning and problem-solving, especially in STEM domains.',
+  },
+  {
+    id: 'llama4-maverick-vs-gpt4o',
+    title: 'Llama 4 Maverick vs GPT-4o',
+    subtitle: 'Open-weights vs proprietary: can Llama compete?',
+    modelIds: ['llama-4-maverick', 'gpt-4o'],
+    sections: [
+      {
+        heading: 'Overview',
+        content:
+          'Llama 4 Maverick is Meta\'s flagship open-weight MoE model with 400B total parameters (17B active). GPT-4o is OpenAI\'s flagship proprietary model. This comparison highlights how close open models have gotten to proprietary ones.',
+      },
+      {
+        heading: 'Performance',
+        content:
+          'Maverick scores competitively: MMLU (87.5 vs 88.7), HumanEval (89.5 vs 90.2). The gap has narrowed significantly. For most practical tasks, users may not notice a meaningful difference in quality.',
+      },
+      {
+        heading: 'Cost',
+        content:
+          'Maverick\'s weights are free to download and self-host. Via cloud providers (Together, Fireworks), it typically costs $0.20-0.50 per 1M tokens — roughly 5-10x cheaper than GPT-4o\'s $2.50/$10.00 pricing.',
+      },
+      {
+        heading: 'Context & Features',
+        content:
+          'Both support 128K+ tokens. GPT-4o has richer API features (function calling, structured outputs, assistants API). Maverick\'s advantage is full customizability — you can fine-tune, distill, or deploy on your own infrastructure.',
+      },
+      {
+        heading: 'Deployment',
+        content:
+          'GPT-4o is API-only. Maverick can be self-hosted on your own GPUs, deployed on-premise for data privacy, or accessed via third-party providers. The MoE architecture means only 17B parameters are active per pass, making it efficient to serve.',
+      },
+    ],
+    verdict:
+      'Choose GPT-4o for the most polished API experience, audio support, and OpenAI ecosystem features. Choose Llama 4 Maverick for cost savings, self-hosting, data privacy, fine-tuning, or when you want to own your AI stack.',
+  },
+]

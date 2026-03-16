@@ -57,6 +57,7 @@ export default function Header({
         <button className={`nav-link ${activePage === 'home' ? 'active' : ''}`} onClick={onLogoClick}>Models</button>
         <button className={`nav-link ${activePage === 'leaderboard' ? 'active' : ''}`} onClick={() => onNavigate('leaderboard')}>Leaderboard</button>
         <button className={`nav-link ${activePage === 'calculator' ? 'active' : ''}`} onClick={() => onNavigate('calculator')}>Pricing</button>
+        <button className={`nav-link ${activePage === 'guides' ? 'active' : ''}`} onClick={() => onNavigate('guides')}>Guides</button>
       </nav>
 
       <div className="header-search">
