@@ -168,3 +168,4 @@ class StatsResponse(BaseModel):
     totalProviders: int
     benchmarkedCount: int
     openCount: int
+    totalReviews: int = 0

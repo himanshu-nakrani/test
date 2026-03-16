@@ -7,7 +7,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from backend.database import Base, SessionLocal, engine
-from backend.db_models import AIModel
+from backend.db_models import AIModel, User
 
 MODELS_JSON = os.path.join(
     os.path.dirname(__file__), "..", "public", "api", "models.json"
@@ -76,8 +76,14 @@ def seed():
             )
             db.add(row)
 
+        demo_user = User(
+            username="demo",
+            display_name="Demo User",
+        )
+        db.add(demo_user)
+
         db.commit()
-        print(f"Seeded {len(models)} models into the database.")
+        print(f"Seeded {len(models)} models and 1 demo user into the database.")
     finally:
         db.close()
 

@@ -1,4 +1,6 @@
-from sqlalchemy import Boolean, Column, Float, Integer, String, Text
+from datetime import datetime
+
+from sqlalchemy import Boolean, Column, Float, ForeignKey, Integer, String, Text
 
 from .database import Base
 
@@ -45,3 +47,43 @@ class AIModel(Base):
     model_size = Column(String, nullable=True)
     rate_limit_rpm = Column(String, nullable=True)
     rate_limit_tpm = Column(String, nullable=True)
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    github_id = Column(Integer, unique=True, nullable=True)
+    username = Column(String, unique=True, nullable=False)
+    display_name = Column(String, nullable=True)
+    avatar_url = Column(String, nullable=True)
+    email = Column(String, nullable=True)
+    created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
+
+
+class Review(Base):
+    __tablename__ = "reviews"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    model_id = Column(String, ForeignKey("ai_models.id"), nullable=False)
+    rating = Column(Integer, nullable=False)
+    title = Column(String, nullable=True)
+    comment = Column(Text, nullable=True)
+    created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
+
+
+class UserFavorite(Base):
+    __tablename__ = "user_favorites"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    model_id = Column(String, ForeignKey("ai_models.id"), nullable=False)
+    created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
+
+
+class SavedComparison(Base):
+    __tablename__ = "saved_comparisons"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    name = Column(String, nullable=False)
+    model_ids = Column(String, nullable=False)
+    notes = Column(Text, nullable=True)
+    created_at = Column(String, default=lambda: datetime.utcnow().isoformat())
