@@ -27,6 +27,7 @@ export default function Header({
 }: HeaderProps) {
   const { isAuthenticated } = useAuth()
   const [showLogin, setShowLogin] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const location = useLocation()
   const navigate = useNavigate()
@@ -34,13 +35,18 @@ export default function Header({
 
   const search = location.pathname === '/' ? (searchParams.get('search') || '') : ''
 
+  const closeMenu = () => setMenuOpen(false)
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault()
         inputRef.current?.focus()
       }
-      if (e.key === 'Escape') inputRef.current?.blur()
+      if (e.key === 'Escape') {
+        inputRef.current?.blur()
+        setMenuOpen(false)
+      }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
@@ -66,6 +72,14 @@ export default function Header({
     }
   }
 
+  const navLinks = [
+    { to: '/', label: 'Models' },
+    { to: '/leaderboard', label: 'Leaderboard' },
+    { to: '/calculator', label: 'Pricing' },
+    { to: '/guides', label: 'Guides' },
+    { to: '/analytics', label: 'Analytics' },
+  ]
+
   return (
     <header className="header">
       <Link to="/" className="logo">
@@ -74,11 +88,9 @@ export default function Header({
       </Link>
 
       <nav className="header-nav" role="navigation" aria-label="Main navigation">
-        <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`} aria-current={isActive('/') ? 'page' : undefined}>Models</Link>
-        <Link to="/leaderboard" className={`nav-link ${isActive('/leaderboard') ? 'active' : ''}`} aria-current={isActive('/leaderboard') ? 'page' : undefined}>Leaderboard</Link>
-        <Link to="/calculator" className={`nav-link ${isActive('/calculator') ? 'active' : ''}`} aria-current={isActive('/calculator') ? 'page' : undefined}>Pricing</Link>
-        <Link to="/guides" className={`nav-link ${isActive('/guides') ? 'active' : ''}`} aria-current={isActive('/guides') ? 'page' : undefined}>Guides</Link>
-        <Link to="/analytics" className={`nav-link ${isActive('/analytics') ? 'active' : ''}`} aria-current={isActive('/analytics') ? 'page' : undefined}>Analytics</Link>
+        {navLinks.map(({ to, label }) => (
+          <Link key={to} to={to} className={`nav-link ${isActive(to) ? 'active' : ''}`} aria-current={isActive(to) ? 'page' : undefined}>{label}</Link>
+        ))}
       </nav>
 
       <div className="header-search" role="search">
@@ -128,7 +140,35 @@ export default function Header({
             Sign In
           </button>
         )}
+        <button
+          className="mobile-menu-btn"
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
       </div>
+
+      {menuOpen && (
+        <>
+          <div className="mobile-nav-overlay" onClick={closeMenu} aria-hidden="true" />
+          <nav className="mobile-nav-links" role="navigation" aria-label="Mobile navigation">
+            {navLinks.map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className={`mobile-nav-link ${isActive(to) ? 'active' : ''}`}
+                onClick={closeMenu}
+                aria-current={isActive(to) ? 'page' : undefined}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+        </>
+      )}
+
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
     </header>
   )
