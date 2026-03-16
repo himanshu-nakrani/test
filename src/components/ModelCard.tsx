@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import type { AIModel } from '../types'
 import Highlight from './Highlight'
 
@@ -9,6 +10,7 @@ interface ModelCardProps {
   isCompare: boolean
   onToggleCompare: (id: string) => void
   searchQuery?: string
+  index?: number
 }
 
 const categoryEmoji: Record<string, string> = {
@@ -30,9 +32,17 @@ export default function ModelCard({
   isCompare,
   onToggleCompare,
   searchQuery = '',
+  index = 0,
 }: ModelCardProps) {
   return (
-    <div className={`model-card ${isCompare ? 'card-compare-selected' : ''}`}>
+    <motion.div
+      className={`model-card ${isCompare ? 'card-compare-selected' : ''}`}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      whileHover={{ y: -6, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
+      whileTap={{ scale: 0.98 }}
+    >
       <div className="card-toolbar">
         <label className="compare-check" title="Add to comparison">
           <input
@@ -106,6 +116,6 @@ export default function ModelCard({
           </div>
         </div>
       </button>
-    </div>
+    </motion.div>
   )
 }

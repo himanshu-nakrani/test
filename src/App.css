@@ -14,16 +14,6 @@
 }
 
 /* ===== Animations ===== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.15); }
@@ -175,7 +165,6 @@
   padding: 3rem 1.5rem 2.25rem;
   background: var(--section-alt-bg);
   border-bottom: 1px solid var(--card-border);
-  animation: fadeIn 0.5s ease-out;
 }
 
 .hero-eyebrow {
@@ -430,14 +419,7 @@
   border: 1px solid var(--card-border);
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
-  animation: fadeIn 0.3s ease-out both;
-}
-
-.model-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--accent);
+  transition: border-color 0.2s;
 }
 
 .model-card.card-compare-selected {
@@ -612,7 +594,6 @@
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--surface);
-  animation: fadeIn 0.3s ease-out;
 }
 
 .model-table {
@@ -686,7 +667,7 @@
 .pricing-premium { background: rgba(168, 85, 247, 0.14); color: #a855f7; }
 
 /* ===== Compare View ===== */
-.compare-view { animation: slideUp 0.3s ease-out; padding-top: 1.5rem; }
+.compare-view { padding-top: 1.5rem; }
 
 .compare-header {
   display: flex;
@@ -804,7 +785,7 @@
 .compare-limitations li { background: var(--limitation-bg); color: var(--limitation-color); }
 
 /* ===== Model Detail ===== */
-.model-detail { padding-top: 1.5rem; animation: slideUp 0.3s ease-out; }
+.model-detail { padding-top: 1.5rem; }
 
 .detail-top-bar {
   display: flex;
@@ -1185,7 +1166,7 @@
 .token.class-name { color: #fbbf24; }
 
 /* ===== Leaderboard Page ===== */
-.leaderboard-page { padding-top: 1.5rem; animation: slideUp 0.3s ease-out; }
+.leaderboard-page { padding-top: 1.5rem; }
 .lb-hero { text-align: center; margin-bottom: 1.5rem; }
 .lb-hero h1 { font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem; }
 .lb-hero p { color: var(--text-secondary); margin: 0; }
@@ -1221,7 +1202,7 @@
 .lb-score { font-size: 0.88rem; font-weight: 700; color: var(--text-primary); min-width: 50px; text-align: right; }
 
 /* ===== Cost Calculator ===== */
-.calculator-page { padding-top: 1.5rem; animation: slideUp 0.3s ease-out; }
+.calculator-page { padding-top: 1.5rem; }
 .calc-hero { text-align: center; margin-bottom: 1.5rem; }
 .calc-hero h1 { font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem; }
 .calc-hero p { color: var(--text-secondary); margin: 0; }
@@ -1266,7 +1247,7 @@
 .version-notes { margin: 0; font-size: 0.82rem; color: var(--text-secondary); }
 
 /* ===== Comparison Guides ===== */
-.guides-page { padding-top: 1.5rem; animation: slideUp 0.3s ease-out; }
+.guides-page { padding-top: 1.5rem; }
 .guides-hero { text-align: center; margin-bottom: 2rem; }
 .guides-hero h1 { font-size: 2rem; font-weight: 800; margin: 0 0 0.5rem; }
 .guides-hero p { color: var(--text-secondary); margin: 0; }
@@ -1310,14 +1291,18 @@
 .guide-verdict h3 { margin: 0 0 0.5rem; font-size: 1.1rem; color: var(--accent); }
 .guide-verdict p { margin: 0; font-size: 0.95rem; color: var(--text-primary); line-height: 1.75; }
 
-/* ===== Page Transitions ===== */
-.page-transition {
-  animation: pageFadeIn 0.3s ease-out both;
-}
+/* Page transitions now handled by Framer Motion */
 
-@keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ===== Smooth Hover Transitions (Framer Motion complement) ===== */
+.hero-category-pill,
+.hero-link,
+.showcase-item,
+.lb-tab,
+.guide-card,
+.related-card,
+.pagination-btn,
+.pagination-page {
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 /* ===== Back to Top ===== */
@@ -1350,7 +1335,6 @@
 .not-found-page {
   text-align: center;
   padding: 6rem 2rem;
-  animation: fadeIn 0.4s ease-out;
 }
 
 .not-found-icon { font-size: 4rem; display: block; margin-bottom: 1rem; }
@@ -1625,7 +1609,6 @@ a.guide-card {
 
 /* ===== Analytics Page ===== */
 .analytics-page {
-  animation: fadeIn 0.3s ease;
 }
 
 .analytics-hero {

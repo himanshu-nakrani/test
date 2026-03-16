@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import type { AIModel } from '../types'
 import { models, allProviders } from '../data/models'
@@ -49,15 +50,37 @@ export default function Hero({
   return (
     <section className="hero-section">
       <div className="hero-content">
-        <div className="hero-eyebrow">✨ Navigate the AI landscape</div>
-        <h1 className="hero-title">
+        <motion.div
+          className="hero-eyebrow"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+        >
+          ✨ Navigate the AI landscape
+        </motion.div>
+        <motion.h1
+          className="hero-title"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           <span className="gradient-text">NeuralAtlas</span> — The AI Models Directory
-        </h1>
-        <p className="hero-subtitle">
+        </motion.h1>
+        <motion.p
+          className="hero-subtitle"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           Explore, compare, and discover {models.length} AI models from {allProviders.length} providers.
           Find the perfect model for your project with benchmarks, pricing, and code snippets.
-        </p>
-        <div className="hero-stats">
+        </motion.p>
+        <motion.div
+          className="hero-stats"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
           <div className="stat"><AnimatedNumber target={models.length} /><span className="stat-label">Models</span></div>
           <div className="stat-divider" />
           <div className="stat"><AnimatedNumber target={allProviders.length} /><span className="stat-label">Providers</span></div>
@@ -68,9 +91,14 @@ export default function Hero({
             <span className="stat-value stat-value-sm">{models.filter((m) => m.benchmarks).length}</span>
             <span className="stat-label">Benchmarked</span>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="hero-category-pills">
+        <motion.div
+          className="hero-category-pills"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           {categoryPills.map((c) => (
             <button
               key={c.key}
@@ -80,15 +108,25 @@ export default function Hero({
               {c.label}
             </button>
           ))}
-        </div>
+        </motion.div>
 
-        <div className="hero-quick-links">
+        <motion.div
+          className="hero-quick-links"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
           <Link to="/leaderboard" className="hero-link">🏆 Leaderboard</Link>
           <Link to="/calculator" className="hero-link">💰 Cost Calculator</Link>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="hero-showcase">
+      <motion.div
+        className="hero-showcase"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+      >
         <div className="showcase-col">
           <h3 className="showcase-title">🔥 Featured</h3>
           <div className="showcase-list">
@@ -113,7 +151,7 @@ export default function Hero({
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

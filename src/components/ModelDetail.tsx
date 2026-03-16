@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import type { AIModel } from '../types'
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard'
@@ -98,7 +99,13 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
 
       <div className="detail-grid">
         {/* Specifications */}
-        <div className="detail-card">
+        <motion.div
+          className="detail-card"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+        >
           <h3>📊 Specifications</h3>
           <dl className="spec-list">
             <div className="spec-row"><dt>Parameters</dt><dd>{model.parameters}</dd></div>
@@ -120,10 +127,16 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
             {model.lastUpdated && <div className="spec-row"><dt>Data Updated</dt><dd>{model.lastUpdated}</dd></div>}
             <div className="spec-row"><dt>License</dt><dd className="capitalize">{model.license}</dd></div>
           </dl>
-        </div>
+        </motion.div>
 
         {/* Pricing */}
-        <div className="detail-card">
+        <motion.div
+          className="detail-card"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           <h3>💰 Pricing</h3>
           <dl className="spec-list">
             <div className="spec-row"><dt>Input</dt><dd>{model.pricing.input}</dd></div>
@@ -137,11 +150,17 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
               </dd>
             </div>
           </dl>
-        </div>
+        </motion.div>
 
         {/* Modalities */}
         {(model.inputModalities || model.outputModalities) && (
-          <div className="detail-card detail-card-wide">
+          <motion.div
+            className="detail-card detail-card-wide"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+          >
             <h3>🔄 Input / Output Modalities</h3>
             <div className="modalities-grid">
               <div>
@@ -161,12 +180,18 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Benchmarks */}
         {hasBenchmarks && (
-          <div className="detail-card detail-card-wide">
+          <motion.div
+            className="detail-card detail-card-wide"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+          >
             <h3>📈 Benchmark Scores</h3>
             <div className="benchmark-layout">
               <div className="benchmark-bars">
@@ -201,33 +226,57 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
               </div>
               <RadarChart benchmarks={model.benchmarks!} />
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Strengths & Limitations */}
-        <div className="detail-card">
+        <motion.div
+          className="detail-card"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+        >
           <h3>✅ Strengths</h3>
           <ul className="detail-list strengths-list">
             {model.strengths.map((s) => <li key={s}>{s}</li>)}
           </ul>
-        </div>
-        <div className="detail-card">
+        </motion.div>
+        <motion.div
+          className="detail-card"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           <h3>⚠️ Limitations</h3>
           <ul className="detail-list limitations-list">
             {model.limitations.map((l) => <li key={l}>{l}</li>)}
           </ul>
-        </div>
+        </motion.div>
 
         {/* Use Cases */}
-        <div className="detail-card detail-card-wide">
+        <motion.div
+          className="detail-card detail-card-wide"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+        >
           <h3>🎯 Use Cases</h3>
           <div className="use-case-grid">
             {model.useCases.map((u) => <div key={u} className="use-case-item">{u}</div>)}
           </div>
-        </div>
+        </motion.div>
 
         {/* API & Documentation */}
-        <div className="detail-card detail-card-wide">
+        <motion.div
+          className="detail-card detail-card-wide"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+        >
           <h3>🔗 API & Documentation</h3>
           <dl className="spec-list">
             <div className="spec-row">
@@ -244,23 +293,35 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
               <dd><a href={model.documentationUrl} target="_blank" rel="noopener noreferrer" className="doc-link">{model.documentationUrl} ↗</a></dd>
             </div>
           </dl>
-        </div>
+        </motion.div>
 
         {/* Rate Limits */}
         {model.rateLimits && (
-          <div className="detail-card">
+          <motion.div
+            className="detail-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+          >
             <h3>🚦 Rate Limits</h3>
             <dl className="spec-list">
               {model.rateLimits.rpm && <div className="spec-row"><dt>Requests/min</dt><dd>{model.rateLimits.rpm}</dd></div>}
               {model.rateLimits.tpm && <div className="spec-row"><dt>Tokens/min</dt><dd>{model.rateLimits.tpm}</dd></div>}
               {model.rateLimits.notes && <div className="spec-row"><dt>Notes</dt><dd>{model.rateLimits.notes}</dd></div>}
             </dl>
-          </div>
+          </motion.div>
         )}
 
         {/* Version History */}
         {model.versions && model.versions.length > 0 && (
-          <div className="detail-card">
+          <motion.div
+            className="detail-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+          >
             <h3>📋 Version History</h3>
             <div className="version-list">
               {model.versions.map((v) => (
@@ -273,12 +334,18 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* Code Snippets */}
         {model.codeSnippets && model.codeSnippets.length > 0 && (
-          <div className="detail-card detail-card-wide">
+          <motion.div
+            className="detail-card detail-card-wide"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+          >
             <h3>⚡ Quick Start</h3>
             <div className="code-snippets">
               {model.codeSnippets.map((snippet) => (
@@ -290,7 +357,7 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
                 />
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
 

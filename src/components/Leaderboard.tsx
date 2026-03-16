@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import type { AIModel } from '../types'
 import { models } from '../data/models'
@@ -67,41 +68,47 @@ export default function Leaderboard() {
           const pct = (score / maxScore) * 100
 
           return (
-            <button
+            <motion.div
               key={m.id}
-              className="lb-row"
-              onClick={() => handleModelClick(m)}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
             >
-              <span className="lb-rank">#{i + 1}</span>
-              <div className="lb-model-info">
-                <span className="lb-model-name">{m.name}</span>
-                <span className="lb-model-provider">
-                  <span
-                    className="provider-dot"
-                    style={{ background: m.providerColor }}
+              <button
+                className="lb-row"
+                onClick={() => handleModelClick(m)}
+              >
+                <span className="lb-rank">#{i + 1}</span>
+                <div className="lb-model-info">
+                  <span className="lb-model-name">{m.name}</span>
+                  <span className="lb-model-provider">
+                    <span
+                      className="provider-dot"
+                      style={{ background: m.providerColor }}
+                    />
+                    {m.provider}
+                  </span>
+                </div>
+                <div className="lb-bar-container">
+                  <div
+                    className="lb-bar"
+                    style={{
+                      width: `${pct}%`,
+                      background: i === 0
+                        ? 'linear-gradient(90deg, #f59e0b, #f97316)'
+                        : i === 1
+                          ? 'linear-gradient(90deg, #94a3b8, #cbd5e1)'
+                          : i === 2
+                            ? 'linear-gradient(90deg, #b45309, #d97706)'
+                            : 'var(--accent)',
+                    }}
                   />
-                  {m.provider}
+                </div>
+                <span className="lb-score">
+                  {activeBenchmark === 'mtBench' ? score.toFixed(1) : score.toFixed(1)}
                 </span>
-              </div>
-              <div className="lb-bar-container">
-                <div
-                  className="lb-bar"
-                  style={{
-                    width: `${pct}%`,
-                    background: i === 0
-                      ? 'linear-gradient(90deg, #f59e0b, #f97316)'
-                      : i === 1
-                        ? 'linear-gradient(90deg, #94a3b8, #cbd5e1)'
-                        : i === 2
-                          ? 'linear-gradient(90deg, #b45309, #d97706)'
-                          : 'var(--accent)',
-                  }}
-                />
-              </div>
-              <span className="lb-score">
-                {activeBenchmark === 'mtBench' ? score.toFixed(1) : score.toFixed(1)}
-              </span>
-            </button>
+              </button>
+            </motion.div>
           )
         })}
       </div>

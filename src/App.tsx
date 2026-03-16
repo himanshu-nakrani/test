@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } from 'react'
+import { motion } from 'framer-motion'
 import { Routes, Route, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import type { AIModel, FilterState, ViewMode, ModelCategory, PricingTier, LicenseType } from './types'
 import { models } from './data/models'
@@ -228,6 +229,7 @@ function HomePage({
                         isCompare={compareSet.has(model.id)}
                         onToggleCompare={toggleCompare}
                         searchQuery={filters.search}
+                        index={idx}
                       />
                     </div>
                   ))}
@@ -291,7 +293,14 @@ function ModelDetailPage() {
   }
 
   return (
-    <main className="main page-transition" role="main">
+    <motion.main
+      className="main"
+      role="main"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+    >
       <JsonLd data={{
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
@@ -306,7 +315,7 @@ function ModelDetailPage() {
         isFav={isFav(model.id)}
         onToggleFav={toggleFav}
       />
-    </main>
+    </motion.main>
   )
 }
 
@@ -331,26 +340,40 @@ function ComparePage({
 
   if (compareModels.length < 2) {
     return (
-      <main className="main page-transition" role="main">
+      <motion.main
+        className="main"
+        role="main"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3 }}
+      >
         <div className="no-results">
           <span className="no-results-icon">⚖️</span>
           <h3>Not enough models to compare</h3>
           <p>Select at least 2 models from the home page, or provide model IDs via URL query.</p>
           <button className="back-btn" onClick={() => navigate('/')}>← Back to models</button>
         </div>
-      </main>
+      </motion.main>
     )
   }
 
   return (
-    <main className="main page-transition" role="main">
+    <motion.main
+      className="main"
+      role="main"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+    >
       <Suspense fallback={<LoadingSpinner />}>
         <CompareView
           models={compareModels}
           onRemove={toggleCompare}
         />
       </Suspense>
-    </main>
+    </motion.main>
   )
 }
 
@@ -394,51 +417,56 @@ function App() {
       <div id="main-content">
         <Routes>
           <Route path="/" element={
-            <div className="page-transition">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
               <HomePage
                 compareSet={compareSet}
                 toggleCompare={toggleCompare}
                 showFavOnly={showFavOnly}
               />
-            </div>
+            </motion.div>
           } />
           <Route path="/models/:id" element={
             <ModelDetailPage />
           } />
           <Route path="/leaderboard" element={
-            <main className="main page-transition" role="main">
+            <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
               <Suspense fallback={<LoadingSpinner />}>
                 <Leaderboard />
               </Suspense>
-            </main>
+            </motion.main>
           } />
           <Route path="/calculator" element={
-            <main className="main page-transition" role="main">
+            <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
               <Suspense fallback={<LoadingSpinner />}>
                 <CostCalculator />
               </Suspense>
-            </main>
+            </motion.main>
           } />
           <Route path="/guides" element={
-            <main className="main page-transition" role="main">
+            <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
               <Suspense fallback={<LoadingSpinner />}>
                 <ComparisonGuides />
               </Suspense>
-            </main>
+            </motion.main>
           } />
           <Route path="/guides/:id" element={
-            <main className="main page-transition" role="main">
+            <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
               <Suspense fallback={<LoadingSpinner />}>
                 <ComparisonGuides />
               </Suspense>
-            </main>
+            </motion.main>
           } />
           <Route path="/analytics" element={
-            <main className="main page-transition" role="main">
+            <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
               <Suspense fallback={<LoadingSpinner />}>
                 <Analytics />
               </Suspense>
-            </main>
+            </motion.main>
           } />
           <Route path="/compare" element={
             <ComparePage
