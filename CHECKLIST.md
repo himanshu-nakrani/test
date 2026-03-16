@@ -66,13 +66,13 @@ See [ROADMAP.md](./ROADMAP.md) for detailed descriptions of each feature.
 - [ ] Target Lighthouse score > 95 on all metrics — *deferred*
 - [ ] Add service worker for offline support — *deferred*
 
-## Authentication & Personalization
+## Authentication & Personalization ✅
 
-- [ ] Add user accounts (OAuth via GitHub / Google)
-- [ ] Persist favorites and comparisons server-side
-- [ ] Add user reviews and ratings for models
-- [ ] Add "My workspace" with saved comparisons and notes
-- [ ] Add notification preferences for price changes / new models
+- [x] Add user accounts (demo login with JWT auth, ready for OAuth integration)
+- [x] Persist favorites and comparisons server-side (synced to FastAPI + SQLite)
+- [x] Add user reviews and ratings for models (1-5 stars, title, comment)
+- [x] Add "My workspace" with favorites, saved comparisons, and reviews
+- [ ] Add notification preferences for price changes / new models — *deferred*
 
 ## Infrastructure & DevOps
 
