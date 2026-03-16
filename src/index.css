@@ -1,0 +1,97 @@
+/* ===== Light Theme ===== */
+:root,
+[data-theme='light'] {
+  --bg: #fafbfc;
+  --bg-translucent: rgba(250, 251, 252, 0.9);
+  --surface: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --border: #e5e7eb;
+  --border-hover: #d1d5db;
+  --card-bg: #ffffff;
+  --card-hover: #f9fafb;
+  --hover-bg: #f3f4f6;
+  --accent: #6366f1;
+  --accent-light: rgba(99, 102, 241, 0.1);
+  --accent-text: #4f46e5;
+  --section-alt-bg: #f1f5f9;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --badge-new: #059669;
+  --badge-new-bg: #ecfdf5;
+  --badge-featured: #d97706;
+  --badge-featured-bg: #fffbeb;
+  --strength-bg: #ecfdf5;
+  --strength-color: #065f46;
+  --limitation-bg: #fef2f2;
+  --limitation-color: #991b1b;
+  --mono: ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  --chip-bg: #f1f5f9;
+  --chip-active-bg: #6366f1;
+  --chip-active-color: #ffffff;
+}
+
+/* ===== Dark Theme ===== */
+[data-theme='dark'] {
+  --bg: #0b0d14;
+  --bg-translucent: rgba(11, 13, 20, 0.9);
+  --surface: #12141d;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --border: #1e293b;
+  --border-hover: #334155;
+  --card-bg: #151822;
+  --card-hover: #1a1e2e;
+  --hover-bg: #1e293b;
+  --accent: #818cf8;
+  --accent-light: rgba(129, 140, 248, 0.12);
+  --accent-text: #a5b4fc;
+  --section-alt-bg: #0f1119;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --badge-new: #34d399;
+  --badge-new-bg: rgba(52, 211, 153, 0.1);
+  --badge-featured: #fbbf24;
+  --badge-featured-bg: rgba(251, 191, 36, 0.1);
+  --strength-bg: rgba(16, 185, 129, 0.1);
+  --strength-color: #6ee7b7;
+  --limitation-bg: rgba(239, 68, 68, 0.1);
+  --limitation-color: #fca5a5;
+  --chip-bg: #1e293b;
+  --chip-active-bg: #818cf8;
+  --chip-active-color: #0f172a;
+}
+
+/* ===== Reset ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background 0.3s, color 0.3s;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+}

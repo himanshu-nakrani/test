@@ -1,0 +1,102 @@
+import { useEffect, useRef } from 'react'
+import type { AppPage } from '../types'
+
+interface HeaderProps {
+  search: string
+  onSearchChange: (value: string) => void
+  darkMode: boolean
+  onToggleDark: () => void
+  onLogoClick: () => void
+  modelCount: number
+  compareCount: number
+  onCompareClick: () => void
+  favCount: number
+  showFavOnly: boolean
+  onToggleFav: () => void
+  onNavigate: (page: AppPage) => void
+  activePage: AppPage
+}
+
+export default function Header({
+  search,
+  onSearchChange,
+  darkMode,
+  onToggleDark,
+  onLogoClick,
+  modelCount,
+  compareCount,
+  onCompareClick,
+  favCount,
+  showFavOnly,
+  onToggleFav,
+  onNavigate,
+  activePage,
+}: HeaderProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        inputRef.current?.focus()
+      }
+      if (e.key === 'Escape') inputRef.current?.blur()
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [])
+
+  return (
+    <header className="header">
+      <button className="logo" onClick={onLogoClick}>
+        <span className="logo-icon">🤖</span>
+        <span className="logo-text">NeuralAtlas</span>
+      </button>
+
+      <nav className="header-nav">
+        <button className={`nav-link ${activePage === 'home' ? 'active' : ''}`} onClick={onLogoClick}>Models</button>
+        <button className={`nav-link ${activePage === 'leaderboard' ? 'active' : ''}`} onClick={() => onNavigate('leaderboard')}>Leaderboard</button>
+        <button className={`nav-link ${activePage === 'calculator' ? 'active' : ''}`} onClick={() => onNavigate('calculator')}>Pricing</button>
+      </nav>
+
+      <div className="header-search">
+        <span className="search-icon">🔍</span>
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder={`Search ${modelCount} models...`}
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="search-input"
+        />
+        {search ? (
+          <button className="search-clear" onClick={() => onSearchChange('')}>✕</button>
+        ) : (
+          <kbd className="search-kbd">⌘K</kbd>
+        )}
+      </div>
+
+      <div className="header-actions">
+        <button
+          className={`header-btn fav-toggle-btn ${showFavOnly ? 'active' : ''}`}
+          onClick={onToggleFav}
+          title="Show favorites"
+        >
+          {showFavOnly ? '★' : '☆'}
+          {favCount > 0 && <span className="header-badge">{favCount}</span>}
+        </button>
+        <button
+          className={`header-btn compare-btn ${compareCount > 0 ? 'has-items' : ''}`}
+          onClick={onCompareClick}
+          disabled={compareCount < 2}
+          title={compareCount < 2 ? 'Select 2+ models to compare' : `Compare ${compareCount} models`}
+        >
+          ⚖️{compareCount > 0 && <span className="header-badge">{compareCount}</span>}
+        </button>
+        <button className="header-btn theme-toggle" onClick={onToggleDark} aria-label="Toggle theme">
+          {darkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
+    </header>
+  )
+}
