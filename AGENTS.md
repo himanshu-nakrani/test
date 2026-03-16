@@ -7,7 +7,16 @@ Single-service React + TypeScript app built with Vite. All commands are in `pack
 - **Test:** `pnpm test` (Vitest with jsdom + @testing-library/react)
 - **Build:** `pnpm build` (TypeScript check + Vite production build)
 
-No external services, databases, or Docker containers are required.
+No external services, databases, or Docker containers are required for the frontend.
+
+### Python Backend (FastAPI)
+
+The `backend/` directory contains a FastAPI app serving the model catalog from SQLite.
+
+- **Dependencies:** `pip3 install -r backend/requirements.txt`
+- **Seed DB:** `python3 backend/seed.py` (reads `public/api/models.json`; run `pnpm generate-api` first if that file is missing)
+- **Run:** `python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000`
+- **DB file:** `backend/neural_atlas.db` (git-ignored; recreated by seed script)
 
 The app uses React Router (BrowserRouter) with `basename` from `import.meta.env.BASE_URL`. Tests must wrap `<App />` in `<MemoryRouter>` (see `App.test.tsx`). The Vite dev server handles SPA fallback for client-side routing automatically.
 
