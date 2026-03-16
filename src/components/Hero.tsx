@@ -1,6 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
-import type { AIModel, AppPage } from '../types'
+import { Link, useNavigate } from 'react-router-dom'
+import type { AIModel } from '../types'
 import { models, allProviders } from '../data/models'
+
+const categoryPills = [
+  { key: 'chat', label: '💬 Chat' },
+  { key: 'code', label: '💻 Code' },
+  { key: 'reasoning', label: '🧠 Reasoning' },
+  { key: 'vision', label: '👁️ Vision' },
+  { key: 'image', label: '🎨 Image' },
+  { key: 'audio', label: '🎵 Audio' },
+  { key: 'embedding', label: '📐 Embedding' },
+  { key: 'video', label: '🎬 Video' },
+] as const
 
 function AnimatedNumber({ target }: { target: number }) {
   const [value, setValue] = useState(0)
@@ -26,11 +38,10 @@ function AnimatedNumber({ target }: { target: number }) {
 
 export default function Hero({
   onModelClick,
-  onNavigate,
 }: {
   onModelClick: (m: AIModel) => void
-  onNavigate: (page: AppPage) => void
 }) {
+  const navigate = useNavigate()
   const openCount = models.filter((m) => m.license !== 'proprietary').length
   const recent = [...models].sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()).slice(0, 5)
   const featured = models.filter((m) => m.isFeatured).slice(0, 5)
@@ -59,9 +70,21 @@ export default function Hero({
           </div>
         </div>
 
+        <div className="hero-category-pills">
+          {categoryPills.map((c) => (
+            <button
+              key={c.key}
+              className="hero-category-pill"
+              onClick={() => navigate(`/?categories=${c.key}`)}
+            >
+              {c.label}
+            </button>
+          ))}
+        </div>
+
         <div className="hero-quick-links">
-          <button className="hero-link" onClick={() => onNavigate('leaderboard')}>🏆 Leaderboard</button>
-          <button className="hero-link" onClick={() => onNavigate('calculator')}>💰 Cost Calculator</button>
+          <Link to="/leaderboard" className="hero-link">🏆 Leaderboard</Link>
+          <Link to="/calculator" className="hero-link">💰 Cost Calculator</Link>
         </div>
       </div>
 

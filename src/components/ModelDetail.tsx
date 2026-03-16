@@ -1,12 +1,12 @@
+import { Link, useNavigate } from 'react-router-dom'
 import type { AIModel } from '../types'
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard'
+import { usePageTitle } from '../hooks/usePageTitle'
 import { models } from '../data/models'
 import CodeBlock from './CodeBlock'
 
 interface ModelDetailProps {
   model: AIModel
-  onBack: () => void
-  onModelClick: (model: AIModel) => void
   isFav: boolean
   onToggleFav: (id: string) => void
 }
@@ -21,9 +21,12 @@ const modalityLabel: Record<string, string> = {
   video: '🎥 Video', code: '💻 Code', embeddings: '📐 Embeddings',
 }
 
-export default function ModelDetail({ model, onBack, onModelClick, isFav, onToggleFav }: ModelDetailProps) {
+export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailProps) {
+  const navigate = useNavigate()
   const { copy: copyEndpoint, copied: copiedEndpoint } = useCopyToClipboard()
   const { copy: copyName, copied: copiedName } = useCopyToClipboard()
+
+  usePageTitle(model.name)
 
   const related = models
     .filter(
@@ -36,10 +39,22 @@ export default function ModelDetail({ model, onBack, onModelClick, isFav, onTogg
 
   const hasBenchmarks = model.benchmarks && Object.values(model.benchmarks).some((v) => v != null)
 
+  const handleModelClick = (m: AIModel) => {
+    navigate(`/models/${m.id}`)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <div className="model-detail">
       <div className="detail-top-bar">
-        <button className="back-btn" onClick={onBack}>← Back to all models</button>
+        <div className="detail-top-left">
+          <nav className="breadcrumbs">
+            <Link to="/" className="breadcrumb-link">Models</Link>
+            <span className="breadcrumb-sep">&gt;</span>
+            <span className="breadcrumb-current">{model.name}</span>
+          </nav>
+          <Link to="/" className="back-btn">← Back to all models</Link>
+        </div>
         <button
           className={`fav-btn fav-btn-lg ${isFav ? 'is-fav' : ''}`}
           onClick={() => onToggleFav(model.id)}
@@ -281,7 +296,7 @@ export default function ModelDetail({ model, onBack, onModelClick, isFav, onTogg
           <h2>Related Models</h2>
           <div className="related-grid">
             {related.map((r) => (
-              <button key={r.id} className="related-card" onClick={() => { onModelClick(r); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
+              <button key={r.id} className="related-card" onClick={() => handleModelClick(r)}>
                 <div className="related-provider">
                   <span className="provider-dot" style={{ background: r.providerColor }} />{r.provider}
                 </div>

@@ -1,10 +1,14 @@
 import { useState, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { models } from '../data/models'
+import { usePageTitle } from '../hooks/usePageTitle'
 
-export default function CostCalculator({ onBack }: { onBack: () => void }) {
+export default function CostCalculator() {
   const [inputTokens, setInputTokens] = useState(1000000)
   const [outputTokens, setOutputTokens] = useState(500000)
   const [requestsPerDay, setRequestsPerDay] = useState(100)
+
+  usePageTitle('Cost Calculator')
 
   const pricedModels = useMemo(
     () =>
@@ -42,9 +46,9 @@ export default function CostCalculator({ onBack }: { onBack: () => void }) {
 
   return (
     <div className="calculator-page">
-      <button className="back-btn" onClick={onBack}>
+      <Link to="/" className="back-btn">
         ← Back to models
-      </button>
+      </Link>
 
       <div className="calc-hero">
         <h1>💰 Cost Calculator</h1>

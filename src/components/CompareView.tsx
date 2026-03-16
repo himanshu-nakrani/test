@@ -1,10 +1,10 @@
+import { useNavigate } from 'react-router-dom'
 import type { AIModel } from '../types'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 interface CompareViewProps {
   models: AIModel[]
-  onClose: () => void
   onRemove: (id: string) => void
-  onModelClick: (model: AIModel) => void
 }
 
 const categoryEmoji: Record<string, string> = {
@@ -12,8 +12,15 @@ const categoryEmoji: Record<string, string> = {
   embedding: '📐', image: '🎨', audio: '🎵', video: '🎬',
 }
 
-export default function CompareView({ models, onClose, onRemove, onModelClick }: CompareViewProps) {
+export default function CompareView({ models, onRemove }: CompareViewProps) {
+  const navigate = useNavigate()
+  usePageTitle('Compare Models')
+
   if (models.length < 2) return null
+
+  const handleModelClick = (m: AIModel) => {
+    navigate(`/models/${m.id}`)
+  }
 
   const rows: { label: string; render: (m: AIModel) => React.ReactNode }[] = [
     {
@@ -87,7 +94,7 @@ export default function CompareView({ models, onClose, onRemove, onModelClick }:
     <div className="compare-view">
       <div className="compare-header">
         <h2>⚖️ Model Comparison</h2>
-        <button className="compare-close" onClick={onClose}>✕ Close</button>
+        <button className="compare-close" onClick={() => navigate('/')}>✕ Close</button>
       </div>
 
       <div className="compare-table-wrap">
@@ -97,7 +104,7 @@ export default function CompareView({ models, onClose, onRemove, onModelClick }:
               <th className="compare-label-col"></th>
               {models.map((m) => (
                 <th key={m.id} className="compare-model-col">
-                  <button className="compare-model-header" onClick={() => onModelClick(m)}>
+                  <button className="compare-model-header" onClick={() => handleModelClick(m)}>
                     <span className="compare-model-name">{m.name}</span>
                     <span className="compare-view-detail">View details →</span>
                   </button>

@@ -1,7 +1,9 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
-import type { AIModel, FilterState, ViewMode, AppPage } from './types'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
+import { Routes, Route, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import type { AIModel, FilterState, ViewMode, ModelCategory, PricingTier, LicenseType } from './types'
 import { models } from './data/models'
 import { useFavorites } from './hooks/useFavorites'
+import { usePageTitle } from './hooks/usePageTitle'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Filters from './components/Filters'
@@ -12,11 +14,11 @@ import CompareView from './components/CompareView'
 import Leaderboard from './components/Leaderboard'
 import CostCalculator from './components/CostCalculator'
 import ComparisonGuides from './components/ComparisonGuides'
+import NotFound from './components/NotFound'
+import BackToTop from './components/BackToTop'
 import './App.css'
 
-const defaultFilters: FilterState = {
-  search: '', providers: [], categories: [], pricingTiers: [], licenses: [], sortBy: 'name',
-}
+const ITEMS_PER_PAGE = 12
 
 const contextToNumber = (ctx: string): number => {
   if (ctx === 'N/A') return 0
@@ -28,29 +30,65 @@ const contextToNumber = (ctx: string): number => {
 
 const priceTierOrder: Record<string, number> = { free: 0, low: 1, medium: 2, high: 3, premium: 4 }
 
-function App() {
-  const [darkMode, setDarkMode] = useState(() => {
-    try { return localStorage.getItem('neural-atlas-theme') === 'dark' } catch { return false }
-  })
-  const [filters, setFilters] = useState<FilterState>(defaultFilters)
-  const [selectedModel, setSelectedModel] = useState<AIModel | null>(null)
+function parseFiltersFromParams(params: URLSearchParams): FilterState {
+  return {
+    search: params.get('search') || '',
+    providers: params.get('providers') ? params.get('providers')!.split(',') : [],
+    categories: params.get('categories') ? params.get('categories')!.split(',') as ModelCategory[] : [],
+    pricingTiers: params.get('pricing') ? params.get('pricing')!.split(',') as PricingTier[] : [],
+    licenses: params.get('licenses') ? params.get('licenses')!.split(',') as LicenseType[] : [],
+    sortBy: (params.get('sort') as FilterState['sortBy']) || 'name',
+    minContext: params.get('minContext') ? +params.get('minContext')! : undefined,
+    minMmlu: params.get('minMmlu') ? +params.get('minMmlu')! : undefined,
+  }
+}
+
+function filtersToParams(filters: FilterState, page: number): Record<string, string> {
+  const p: Record<string, string> = {}
+  if (filters.search) p.search = filters.search
+  if (filters.providers.length) p.providers = filters.providers.join(',')
+  if (filters.categories.length) p.categories = filters.categories.join(',')
+  if (filters.pricingTiers.length) p.pricing = filters.pricingTiers.join(',')
+  if (filters.licenses.length) p.licenses = filters.licenses.join(',')
+  if (filters.sortBy !== 'name') p.sort = filters.sortBy
+  if (filters.minContext) p.minContext = String(filters.minContext)
+  if (filters.minMmlu) p.minMmlu = String(filters.minMmlu)
+  if (page > 1) p.page = String(page)
+  return p
+}
+
+/* ===== Home Page ===== */
+function HomePage({
+  compareSet,
+  toggleCompare,
+  showFavOnly,
+}: {
+  compareSet: Set<string>
+  toggleCompare: (id: string) => void
+  showFavOnly: boolean
+}) {
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [showFilters, setShowFilters] = useState(false)
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
-  const [compareSet, setCompareSet] = useState<Set<string>>(new Set())
-  const [page, setPage] = useState<AppPage>('home')
-  const [showFavOnly, setShowFavOnly] = useState(false)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const [focusIdx, setFocusIdx] = useState(-1)
 
-  const { toggle: toggleFav, isFav, count: favCount } = useFavorites()
+  const filters = useMemo(() => parseFiltersFromParams(searchParams), [searchParams])
+  const currentPage = +(searchParams.get('page') || '1')
 
-  useEffect(() => {
-    const theme = darkMode ? 'dark' : 'light'
-    document.documentElement.setAttribute('data-theme', theme)
-    try { localStorage.setItem('neural-atlas-theme', theme) } catch { /* noop */ }
-  }, [darkMode])
+  usePageTitle('')
 
-  const toggleCompare = useCallback((id: string) => {
-    setCompareSet((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next })
-  }, [])
+  const { toggle: toggleFav, isFav } = useFavorites()
+
+  const updateFilters = useCallback((newFilters: FilterState) => {
+    setSearchParams(filtersToParams(newFilters, 1), { replace: true })
+  }, [setSearchParams])
+
+  const setPage = useCallback((p: number) => {
+    setSearchParams(filtersToParams(filters, p), { replace: true })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [filters, setSearchParams])
 
   const filtered = useMemo(() => {
     let result = [...models]
@@ -82,92 +120,299 @@ function App() {
     return result
   }, [filters, showFavOnly, isFav])
 
-  const compareModels = useMemo(() => models.filter((m) => compareSet.has(m.id)), [compareSet])
+  const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE))
+  const safePage = Math.min(currentPage, totalPages)
+  const paginatedModels = filtered.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE)
 
-  const handleModelClick = (model: AIModel) => { setSelectedModel(model); setPage('detail'); window.scrollTo({ top: 0, behavior: 'smooth' }) }
-  const handleBack = () => { setSelectedModel(null); setPage('home') }
-  const handleSearch = (value: string) => { setFilters((f) => ({ ...f, search: value })); if (page !== 'home') { setSelectedModel(null); setPage('home') } }
-  const handleCompareClick = () => { if (compareSet.size >= 2) setPage('compare') }
-  const handleNavigate = (p: AppPage) => { setSelectedModel(null); setPage(p); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  const handleModelClick = useCallback((model: AIModel) => {
+    navigate(`/models/${model.id}`)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [navigate])
 
-  const renderPage = () => {
-    switch (page) {
-      case 'detail':
-        return selectedModel ? (
-          <main className="main">
-            <ModelDetail model={selectedModel} onBack={handleBack} onModelClick={handleModelClick} isFav={isFav(selectedModel.id)} onToggleFav={toggleFav} />
-          </main>
-        ) : null
-      case 'compare':
-        return (
-          <main className="main">
-            <CompareView models={compareModels} onClose={() => setPage('home')} onRemove={toggleCompare} onModelClick={handleModelClick} />
-          </main>
-        )
-      case 'leaderboard':
-        return (
-          <main className="main">
-            <Leaderboard onBack={handleBack} onModelClick={handleModelClick} />
-          </main>
-        )
-      case 'calculator':
-        return (
-          <main className="main">
-            <CostCalculator onBack={handleBack} />
-          </main>
-        )
-      case 'guides':
-        return (
-          <main className="main">
-            <ComparisonGuides onBack={handleBack} onModelClick={handleModelClick} />
-          </main>
-        )
-      default:
-        return (
-          <>
-            <Hero onModelClick={handleModelClick} onNavigate={handleNavigate} />
-            <main className="main">
-              <button className="mobile-filter-toggle" onClick={() => setShowFilters(!showFilters)}>
-                {showFilters ? '✕ Hide Filters' : '☰ Filters & Sort'}
-              </button>
-              <div className="content-layout">
-                <div className={`filters-container ${showFilters ? 'show' : ''}`}>
-                  <Filters filters={filters} onChange={setFilters} resultCount={filtered.length} viewMode={viewMode} onViewModeChange={setViewMode} />
+  useEffect(() => {
+    if (focusIdx < 0) return
+    const cards = gridRef.current?.querySelectorAll('.model-card')
+    if (cards && cards[focusIdx]) {
+      (cards[focusIdx] as HTMLElement).scrollIntoView({ block: 'nearest' })
+    }
+  }, [focusIdx])
+
+  const handleGridKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (viewMode !== 'grid' || paginatedModels.length === 0) return
+    const cols = Math.max(1, Math.floor((gridRef.current?.clientWidth || 900) / 300))
+    let next = focusIdx
+    switch (e.key) {
+      case 'ArrowRight': next = Math.min(focusIdx + 1, paginatedModels.length - 1); break
+      case 'ArrowLeft': next = Math.max(focusIdx - 1, 0); break
+      case 'ArrowDown': next = Math.min(focusIdx + cols, paginatedModels.length - 1); break
+      case 'ArrowUp': next = Math.max(focusIdx - cols, 0); break
+      case 'Enter':
+        if (focusIdx >= 0 && focusIdx < paginatedModels.length) handleModelClick(paginatedModels[focusIdx])
+        return
+      default: return
+    }
+    e.preventDefault()
+    setFocusIdx(next)
+  }, [viewMode, focusIdx, paginatedModels, handleModelClick])
+
+  const pageNumbers = useMemo(() => {
+    const pages: number[] = []
+    const maxShow = 5
+    let start = Math.max(1, safePage - Math.floor(maxShow / 2))
+    const end = Math.min(totalPages, start + maxShow - 1)
+    start = Math.max(1, end - maxShow + 1)
+    for (let i = start; i <= end; i++) pages.push(i)
+    return pages
+  }, [safePage, totalPages])
+
+  return (
+    <>
+      <Hero onModelClick={handleModelClick} />
+      <main className="main">
+        <button
+          className="mobile-filter-toggle"
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          {showFilters ? '✕ Hide Filters' : '☰ Filters & Sort'}
+        </button>
+
+        {showFilters && (
+          <div className="mobile-filter-backdrop" onClick={() => setShowFilters(false)} />
+        )}
+
+        <div className="content-layout">
+          <div className={`filters-container ${showFilters ? 'show' : ''}`}>
+            <button className="mobile-filter-close" onClick={() => setShowFilters(false)}>✕ Close</button>
+            <Filters
+              filters={filters}
+              onChange={updateFilters}
+              resultCount={filtered.length}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+            />
+          </div>
+
+          {filtered.length === 0 ? (
+            <div className="no-results">
+              <span className="no-results-icon">🔍</span><h3>No models found</h3><p>Try adjusting your search or filters.</p>
+            </div>
+          ) : viewMode === 'grid' ? (
+            <>
+              <div>
+                <div
+                  className="model-grid"
+                  ref={gridRef}
+                  tabIndex={0}
+                  onKeyDown={handleGridKeyDown}
+                  role="grid"
+                  aria-label="Model cards"
+                >
+                  {paginatedModels.map((model, idx) => (
+                    <div key={model.id} className={focusIdx === idx ? 'grid-card-focused' : ''}>
+                      <ModelCard
+                        model={model}
+                        onClick={handleModelClick}
+                        isFav={isFav(model.id)}
+                        onToggleFav={toggleFav}
+                        isCompare={compareSet.has(model.id)}
+                        onToggleCompare={toggleCompare}
+                        searchQuery={filters.search}
+                      />
+                    </div>
+                  ))}
                 </div>
-                {filtered.length === 0 ? (
-                  <div className="no-results">
-                    <span className="no-results-icon">🔍</span><h3>No models found</h3><p>Try adjusting your search or filters.</p>
-                    {showFavOnly && <button className="clear-fav-btn" onClick={() => setShowFavOnly(false)}>Show all models</button>}
+                {totalPages > 1 && (
+                  <div className="pagination">
+                    <button
+                      className="pagination-btn"
+                      disabled={safePage <= 1}
+                      onClick={() => setPage(safePage - 1)}
+                    >
+                      ← Previous
+                    </button>
+                    <div className="pagination-pages">
+                      {pageNumbers.map((p) => (
+                        <button
+                          key={p}
+                          className={`pagination-page ${p === safePage ? 'active' : ''}`}
+                          onClick={() => setPage(p)}
+                        >
+                          {p}
+                        </button>
+                      ))}
+                    </div>
+                    <button
+                      className="pagination-btn"
+                      disabled={safePage >= totalPages}
+                      onClick={() => setPage(safePage + 1)}
+                    >
+                      Next →
+                    </button>
                   </div>
-                ) : viewMode === 'grid' ? (
-                  <div className="model-grid">
-                    {filtered.map((model) => (
-                      <ModelCard key={model.id} model={model} onClick={handleModelClick} isFav={isFav(model.id)} onToggleFav={toggleFav} isCompare={compareSet.has(model.id)} onToggleCompare={toggleCompare} />
-                    ))}
-                  </div>
-                ) : (
-                  <ModelTable models={filtered} onClick={handleModelClick} isFav={isFav} onToggleFav={toggleFav} compareSet={compareSet} onToggleCompare={toggleCompare} />
                 )}
               </div>
-            </main>
-          </>
-        )
-    }
+            </>
+          ) : (
+            <ModelTable
+              models={filtered}
+              onClick={handleModelClick}
+              isFav={isFav}
+              onToggleFav={toggleFav}
+              compareSet={compareSet}
+              onToggleCompare={toggleCompare}
+            />
+          )}
+        </div>
+      </main>
+    </>
+  )
+}
+
+/* ===== Model Detail Page Wrapper ===== */
+function ModelDetailPage() {
+  const { id } = useParams()
+  const { isFav, toggle: toggleFav } = useFavorites()
+
+  const model = models.find((m) => m.id === id)
+
+  if (!model) {
+    return <NotFound />
   }
+
+  return (
+    <main className="main page-transition">
+      <ModelDetail
+        model={model}
+        isFav={isFav(model.id)}
+        onToggleFav={toggleFav}
+      />
+    </main>
+  )
+}
+
+/* ===== Compare Page ===== */
+function ComparePage({
+  compareSet,
+  toggleCompare,
+}: {
+  compareSet: Set<string>
+  toggleCompare: (id: string) => void
+}) {
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+
+  const modelIdsFromUrl = searchParams.get('models')?.split(',').filter(Boolean) || []
+  const urlModels = modelIdsFromUrl.map((id) => models.find((m) => m.id === id)).filter(Boolean) as AIModel[]
+
+  const compareModels = useMemo(() => {
+    if (urlModels.length >= 2) return urlModels
+    return models.filter((m) => compareSet.has(m.id))
+  }, [urlModels, compareSet])
+
+  if (compareModels.length < 2) {
+    return (
+      <main className="main page-transition">
+        <div className="no-results">
+          <span className="no-results-icon">⚖️</span>
+          <h3>Not enough models to compare</h3>
+          <p>Select at least 2 models from the home page, or provide model IDs via URL query.</p>
+          <button className="back-btn" onClick={() => navigate('/')}>← Back to models</button>
+        </div>
+      </main>
+    )
+  }
+
+  return (
+    <main className="main page-transition">
+      <CompareView
+        models={compareModels}
+        onRemove={toggleCompare}
+      />
+    </main>
+  )
+}
+
+/* ===== App Root ===== */
+function App() {
+  const [darkMode, setDarkMode] = useState(() => {
+    try { return localStorage.getItem('neural-atlas-theme') === 'dark' } catch { return false }
+  })
+  const [compareSet, setCompareSet] = useState<Set<string>>(new Set())
+  const [showFavOnly, setShowFavOnly] = useState(false)
+  const navigate = useNavigate()
+
+  const { count: favCount } = useFavorites()
+
+  useEffect(() => {
+    const theme = darkMode ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-theme', theme)
+    try { localStorage.setItem('neural-atlas-theme', theme) } catch { /* noop */ }
+  }, [darkMode])
+
+  const toggleCompare = useCallback((id: string) => {
+    setCompareSet((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next })
+  }, [])
+
+  const handleCompareClick = useCallback(() => {
+    if (compareSet.size >= 2) {
+      const ids = [...compareSet].join(',')
+      navigate(`/compare?models=${ids}`)
+    }
+  }, [compareSet, navigate])
 
   return (
     <div className="app">
       <Header
-        search={filters.search} onSearchChange={handleSearch} darkMode={darkMode}
-        onToggleDark={() => setDarkMode(!darkMode)} onLogoClick={handleBack} modelCount={models.length}
+        darkMode={darkMode}
+        onToggleDark={() => setDarkMode(!darkMode)} modelCount={models.length}
         compareCount={compareSet.size} onCompareClick={handleCompareClick} favCount={favCount}
         showFavOnly={showFavOnly} onToggleFav={() => setShowFavOnly(!showFavOnly)}
-        onNavigate={handleNavigate} activePage={page}
       />
-      {renderPage()}
+      <Routes>
+        <Route path="/" element={
+          <div className="page-transition">
+            <HomePage
+              compareSet={compareSet}
+              toggleCompare={toggleCompare}
+              showFavOnly={showFavOnly}
+            />
+          </div>
+        } />
+        <Route path="/models/:id" element={
+          <ModelDetailPage />
+        } />
+        <Route path="/leaderboard" element={
+          <main className="main page-transition">
+            <Leaderboard />
+          </main>
+        } />
+        <Route path="/calculator" element={
+          <main className="main page-transition">
+            <CostCalculator />
+          </main>
+        } />
+        <Route path="/guides" element={
+          <main className="main page-transition">
+            <ComparisonGuides />
+          </main>
+        } />
+        <Route path="/guides/:id" element={
+          <main className="main page-transition">
+            <ComparisonGuides />
+          </main>
+        } />
+        <Route path="/compare" element={
+          <ComparePage
+            compareSet={compareSet}
+            toggleCompare={toggleCompare}
+          />
+        } />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
       <footer className="footer">
         <p>NeuralAtlas — Explore {models.length} models from top AI providers &middot; {new Date().getFullYear()}</p>
       </footer>
+      <BackToTop />
     </div>
   )
 }

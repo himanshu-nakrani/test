@@ -1,6 +1,8 @@
 import { useState, useMemo } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import type { AIModel } from '../types'
 import { models } from '../data/models'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const BENCHMARKS = [
   { key: 'mmlu', label: 'MMLU', max: 100, description: 'Massive Multitask Language Understanding' },
@@ -11,14 +13,11 @@ const BENCHMARKS = [
 
 type BenchmarkKey = (typeof BENCHMARKS)[number]['key']
 
-export default function Leaderboard({
-  onBack,
-  onModelClick,
-}: {
-  onBack: () => void
-  onModelClick: (m: AIModel) => void
-}) {
+export default function Leaderboard() {
+  const navigate = useNavigate()
   const [activeBenchmark, setActiveBenchmark] = useState<BenchmarkKey>('mmlu')
+
+  usePageTitle('Leaderboard')
 
   const benchInfo = BENCHMARKS.find((b) => b.key === activeBenchmark)!
 
@@ -33,11 +32,15 @@ export default function Leaderboard({
 
   const maxScore = benchInfo.max
 
+  const handleModelClick = (m: AIModel) => {
+    navigate(`/models/${m.id}`)
+  }
+
   return (
     <div className="leaderboard-page">
-      <button className="back-btn" onClick={onBack}>
+      <Link to="/" className="back-btn">
         ← Back to models
-      </button>
+      </Link>
 
       <div className="lb-hero">
         <h1>🏆 AI Model Leaderboard</h1>
@@ -67,7 +70,7 @@ export default function Leaderboard({
             <button
               key={m.id}
               className="lb-row"
-              onClick={() => onModelClick(m)}
+              onClick={() => handleModelClick(m)}
             >
               <span className="lb-rank">#{i + 1}</span>
               <div className="lb-model-info">

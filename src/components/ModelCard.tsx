@@ -1,4 +1,5 @@
 import type { AIModel } from '../types'
+import Highlight from './Highlight'
 
 interface ModelCardProps {
   model: AIModel
@@ -7,6 +8,7 @@ interface ModelCardProps {
   onToggleFav: (id: string) => void
   isCompare: boolean
   onToggleCompare: (id: string) => void
+  searchQuery?: string
 }
 
 const categoryEmoji: Record<string, string> = {
@@ -27,6 +29,7 @@ export default function ModelCard({
   onToggleFav,
   isCompare,
   onToggleCompare,
+  searchQuery = '',
 }: ModelCardProps) {
   return (
     <div className={`model-card ${isCompare ? 'card-compare-selected' : ''}`}>
@@ -74,8 +77,12 @@ export default function ModelCard({
           </span>
         </div>
 
-        <h3 className="card-title">{model.name}</h3>
-        <p className="card-description">{model.description}</p>
+        <h3 className="card-title">
+          <Highlight text={model.name} query={searchQuery} />
+        </h3>
+        <p className="card-description">
+          <Highlight text={model.description} query={searchQuery} />
+        </p>
 
         <div className="card-categories">
           {model.categories.map((cat) => (
