@@ -68,15 +68,16 @@ export default function Header({
         <span className="logo-text">NeuralAtlas</span>
       </Link>
 
-      <nav className="header-nav">
-        <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>Models</Link>
-        <Link to="/leaderboard" className={`nav-link ${isActive('/leaderboard') ? 'active' : ''}`}>Leaderboard</Link>
-        <Link to="/calculator" className={`nav-link ${isActive('/calculator') ? 'active' : ''}`}>Pricing</Link>
-        <Link to="/guides" className={`nav-link ${isActive('/guides') ? 'active' : ''}`}>Guides</Link>
+      <nav className="header-nav" role="navigation" aria-label="Main navigation">
+        <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`} aria-current={isActive('/') ? 'page' : undefined}>Models</Link>
+        <Link to="/leaderboard" className={`nav-link ${isActive('/leaderboard') ? 'active' : ''}`} aria-current={isActive('/leaderboard') ? 'page' : undefined}>Leaderboard</Link>
+        <Link to="/calculator" className={`nav-link ${isActive('/calculator') ? 'active' : ''}`} aria-current={isActive('/calculator') ? 'page' : undefined}>Pricing</Link>
+        <Link to="/guides" className={`nav-link ${isActive('/guides') ? 'active' : ''}`} aria-current={isActive('/guides') ? 'page' : undefined}>Guides</Link>
+        <Link to="/analytics" className={`nav-link ${isActive('/analytics') ? 'active' : ''}`} aria-current={isActive('/analytics') ? 'page' : undefined}>Analytics</Link>
       </nav>
 
-      <div className="header-search">
-        <span className="search-icon">🔍</span>
+      <div className="header-search" role="search">
+        <span className="search-icon" aria-hidden="true">🔍</span>
         <input
           ref={inputRef}
           type="text"
@@ -84,9 +85,10 @@ export default function Header({
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
           className="search-input"
+          aria-label={`Search ${modelCount} models`}
         />
         {search ? (
-          <button className="search-clear" onClick={() => handleSearch('')}>✕</button>
+          <button className="search-clear" onClick={() => handleSearch('')} aria-label="Clear search">✕</button>
         ) : (
           <kbd className="search-kbd">⌘K</kbd>
         )}
@@ -96,6 +98,7 @@ export default function Header({
         <button
           className={`header-btn fav-toggle-btn ${showFavOnly ? 'active' : ''}`}
           onClick={onToggleFav}
+          aria-label="Show favorites"
           title="Show favorites"
         >
           {showFavOnly ? '★' : '☆'}
@@ -105,6 +108,7 @@ export default function Header({
           className={`header-btn compare-btn ${compareCount > 0 ? 'has-items' : ''}`}
           onClick={onCompareClick}
           disabled={compareCount < 2}
+          aria-label={compareCount < 2 ? 'Select 2+ models to compare' : `Compare ${compareCount} models`}
           title={compareCount < 2 ? 'Select 2+ models to compare' : `Compare ${compareCount} models`}
         >
           ⚖️{compareCount > 0 && <span className="header-badge">{compareCount}</span>}

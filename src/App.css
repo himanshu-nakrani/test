@@ -1575,3 +1575,241 @@ a.guide-card {
   text-decoration: none;
   color: inherit;
 }
+
+/* ===== Skip to Content ===== */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 0.5rem 0;
+  transition: top 0.2s;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* ===== Loading Spinner ===== */
+.loading-spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ===== Analytics Page ===== */
+.analytics-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.analytics-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.analytics-hero h1 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+}
+
+.analytics-hero p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.analytics-section {
+  margin-bottom: 3rem;
+}
+
+.analytics-section h2 {
+  font-size: 1.4rem;
+  margin: 0 0 0.25rem;
+}
+
+.analytics-section-desc {
+  color: var(--text-secondary);
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* ===== Scatter Plot ===== */
+.scatter-plot-container {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow: visible;
+}
+
+.scatter-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.scatter-tooltip {
+  position: absolute;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  pointer-events: none;
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.scatter-tooltip strong {
+  font-size: 0.9rem;
+}
+
+.scatter-tooltip span {
+  color: var(--text-secondary);
+}
+
+.scatter-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+.scatter-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.scatter-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.scatter-empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 2rem;
+}
+
+/* ===== Timeline ===== */
+.timeline-container {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+
+.timeline-track {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+  min-height: 120px;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.timeline-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 60px;
+}
+
+.timeline-month-label {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  transform: rotate(-45deg);
+  margin-top: 0.5rem;
+}
+
+.timeline-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+  padding: 0;
+}
+
+.timeline-dot:hover,
+.timeline-dot.active {
+  transform: scale(1.4);
+  border-color: var(--text-primary);
+}
+
+.timeline-tooltip {
+  position: sticky;
+  left: 50%;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+  margin-top: 0.75rem;
+  width: fit-content;
+}
+
+.timeline-tooltip strong {
+  font-size: 0.9rem;
+}
+
+.timeline-tooltip span {
+  color: var(--text-secondary);
+}

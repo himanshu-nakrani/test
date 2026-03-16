@@ -39,8 +39,9 @@ export default function ModelCard({
             type="checkbox"
             checked={isCompare}
             onChange={() => onToggleCompare(model.id)}
+            aria-label={`Compare ${model.name}`}
           />
-          <span className="compare-check-icon">{isCompare ? '☑' : '☐'}</span>
+          <span className="compare-check-icon" aria-hidden="true">{isCompare ? '☑' : '☐'}</span>
         </label>
         <button
           className={`fav-btn ${isFav ? 'is-fav' : ''}`}

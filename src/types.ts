@@ -85,7 +85,7 @@ export interface AIModel {
 
 export type ViewMode = 'grid' | 'table'
 
-export type AppPage = 'home' | 'detail' | 'compare' | 'leaderboard' | 'calculator' | 'guides'
+export type AppPage = 'home' | 'detail' | 'compare' | 'leaderboard' | 'calculator' | 'guides' | 'analytics'
 
 export interface FilterState {
   search: string

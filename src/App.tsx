@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } from 'react'
 import { Routes, Route, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import type { AIModel, FilterState, ViewMode, ModelCategory, PricingTier, LicenseType } from './types'
 import { models } from './data/models'
@@ -10,13 +10,17 @@ import Filters from './components/Filters'
 import ModelCard from './components/ModelCard'
 import ModelTable from './components/ModelTable'
 import ModelDetail from './components/ModelDetail'
-import CompareView from './components/CompareView'
-import Leaderboard from './components/Leaderboard'
-import CostCalculator from './components/CostCalculator'
-import ComparisonGuides from './components/ComparisonGuides'
 import NotFound from './components/NotFound'
 import BackToTop from './components/BackToTop'
+import LoadingSpinner from './components/LoadingSpinner'
+import JsonLd from './components/JsonLd'
 import './App.css'
+
+const Leaderboard = lazy(() => import('./components/Leaderboard'))
+const CostCalculator = lazy(() => import('./components/CostCalculator'))
+const ComparisonGuides = lazy(() => import('./components/ComparisonGuides'))
+const CompareView = lazy(() => import('./components/CompareView'))
+const Analytics = lazy(() => import('./components/Analytics'))
 
 const ITEMS_PER_PAGE = 12
 
@@ -167,8 +171,15 @@ function HomePage({
 
   return (
     <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "NeuralAtlas",
+        "url": "https://test-olive-pi-98.vercel.app",
+        "description": "Explore, compare, and discover AI models from top providers.",
+      }} />
       <Hero onModelClick={handleModelClick} />
-      <main className="main">
+      <main className="main" role="main">
         <button
           className="mobile-filter-toggle"
           onClick={() => setShowFilters(!showFilters)}
@@ -280,7 +291,16 @@ function ModelDetailPage() {
   }
 
   return (
-    <main className="main page-transition">
+    <main className="main page-transition" role="main">
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": model.name,
+        "applicationCategory": "AI Model",
+        "description": model.description,
+        "offers": { "@type": "Offer", "price": model.pricing.input },
+        "author": { "@type": "Organization", "name": model.provider },
+      }} />
       <ModelDetail
         model={model}
         isFav={isFav(model.id)}
@@ -311,7 +331,7 @@ function ComparePage({
 
   if (compareModels.length < 2) {
     return (
-      <main className="main page-transition">
+      <main className="main page-transition" role="main">
         <div className="no-results">
           <span className="no-results-icon">⚖️</span>
           <h3>Not enough models to compare</h3>
@@ -323,11 +343,13 @@ function ComparePage({
   }
 
   return (
-    <main className="main page-transition">
-      <CompareView
-        models={compareModels}
-        onRemove={toggleCompare}
-      />
+    <main className="main page-transition" role="main">
+      <Suspense fallback={<LoadingSpinner />}>
+        <CompareView
+          models={compareModels}
+          onRemove={toggleCompare}
+        />
+      </Suspense>
     </main>
   )
 }
@@ -362,53 +384,71 @@ function App() {
 
   return (
     <div className="app">
+      <a href="#main-content" className="skip-to-content">Skip to content</a>
       <Header
         darkMode={darkMode}
         onToggleDark={() => setDarkMode(!darkMode)} modelCount={models.length}
         compareCount={compareSet.size} onCompareClick={handleCompareClick} favCount={favCount}
         showFavOnly={showFavOnly} onToggleFav={() => setShowFavOnly(!showFavOnly)}
       />
-      <Routes>
-        <Route path="/" element={
-          <div className="page-transition">
-            <HomePage
+      <div id="main-content">
+        <Routes>
+          <Route path="/" element={
+            <div className="page-transition">
+              <HomePage
+                compareSet={compareSet}
+                toggleCompare={toggleCompare}
+                showFavOnly={showFavOnly}
+              />
+            </div>
+          } />
+          <Route path="/models/:id" element={
+            <ModelDetailPage />
+          } />
+          <Route path="/leaderboard" element={
+            <main className="main page-transition" role="main">
+              <Suspense fallback={<LoadingSpinner />}>
+                <Leaderboard />
+              </Suspense>
+            </main>
+          } />
+          <Route path="/calculator" element={
+            <main className="main page-transition" role="main">
+              <Suspense fallback={<LoadingSpinner />}>
+                <CostCalculator />
+              </Suspense>
+            </main>
+          } />
+          <Route path="/guides" element={
+            <main className="main page-transition" role="main">
+              <Suspense fallback={<LoadingSpinner />}>
+                <ComparisonGuides />
+              </Suspense>
+            </main>
+          } />
+          <Route path="/guides/:id" element={
+            <main className="main page-transition" role="main">
+              <Suspense fallback={<LoadingSpinner />}>
+                <ComparisonGuides />
+              </Suspense>
+            </main>
+          } />
+          <Route path="/analytics" element={
+            <main className="main page-transition" role="main">
+              <Suspense fallback={<LoadingSpinner />}>
+                <Analytics />
+              </Suspense>
+            </main>
+          } />
+          <Route path="/compare" element={
+            <ComparePage
               compareSet={compareSet}
               toggleCompare={toggleCompare}
-              showFavOnly={showFavOnly}
             />
-          </div>
-        } />
-        <Route path="/models/:id" element={
-          <ModelDetailPage />
-        } />
-        <Route path="/leaderboard" element={
-          <main className="main page-transition">
-            <Leaderboard />
-          </main>
-        } />
-        <Route path="/calculator" element={
-          <main className="main page-transition">
-            <CostCalculator />
-          </main>
-        } />
-        <Route path="/guides" element={
-          <main className="main page-transition">
-            <ComparisonGuides />
-          </main>
-        } />
-        <Route path="/guides/:id" element={
-          <main className="main page-transition">
-            <ComparisonGuides />
-          </main>
-        } />
-        <Route path="/compare" element={
-          <ComparePage
-            compareSet={compareSet}
-            toggleCompare={toggleCompare}
-          />
-        } />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          } />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
       <footer className="footer">
         <p>NeuralAtlas — Explore {models.length} models from top AI providers &middot; {new Date().getFullYear()}</p>
       </footer>

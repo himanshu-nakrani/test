@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Generated files
+public/api/
+public/sitemap.xml
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

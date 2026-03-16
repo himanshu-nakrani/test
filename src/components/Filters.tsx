@@ -42,7 +42,7 @@ export default function Filters({ filters, onChange, resultCount, viewMode, onVi
     <aside className="filters">
       <div className="filters-header">
         <h2>Filters</h2>
-        <span className="result-count">{resultCount} models</span>
+        <span className="result-count" aria-live="polite">{resultCount} models</span>
       </div>
 
       <div className="view-mode-switch">

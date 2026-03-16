@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, within } from '@testing-library/react'
+import { render, screen, fireEvent, within, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect, beforeEach } from 'vitest'
 import App from './App'
@@ -73,14 +73,18 @@ describe('NeuralAtlas', () => {
     expect(document.querySelector('.model-grid')).toBeTruthy()
   })
 
-  it('navigates to leaderboard page', () => {
+  it('navigates to leaderboard page', async () => {
     renderApp('/leaderboard')
-    expect(screen.getByText(/AI Model Leaderboard/i)).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText(/AI Model Leaderboard/i)).toBeInTheDocument()
+    })
   })
 
-  it('navigates to cost calculator page', () => {
+  it('navigates to cost calculator page', async () => {
     renderApp('/calculator')
-    expect(screen.getByText(/Cost Calculator/i)).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText(/Cost Calculator/i)).toBeInTheDocument()
+    })
   })
 
   it('toggles favorites on model cards', () => {
