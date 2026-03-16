@@ -5,17 +5,17 @@ See [ROADMAP.md](./ROADMAP.md) for detailed descriptions of each feature.
 
 ---
 
-## High Priority
+## High Priority ✅
 
-- [ ] Fix Vercel deployment (set correct production branch or merge PR)
-- [ ] Add URL-based routing with React Router (`/models/gpt-4o`, `/leaderboard`, `/calculator`)
-- [ ] Add deep-linkable comparison URLs (`/compare?models=gpt-4o,claude-4-sonnet`)
-- [ ] Add shareable filter URLs (`/models?provider=openai&category=reasoning`)
-- [ ] Add OpenGraph meta tags for rich social previews
-- [ ] Add `<title>` per page (model name on detail pages, etc.)
-- [ ] Move model data to a JSON file (`public/models.json`) with fetch-based loading
-- [ ] Add loading skeletons / suspense boundaries
-- [ ] Add 404 page for unknown routes
+- [ ] Fix Vercel deployment (set correct production branch or merge PR) — *user action required*
+- [x] Add URL-based routing with React Router (`/models/gpt-4o`, `/leaderboard`, `/calculator`)
+- [x] Add deep-linkable comparison URLs (`/compare?models=gpt-4o,claude-4-sonnet`)
+- [x] Add shareable filter URLs (`/?provider=openai&category=reasoning`)
+- [x] Add OpenGraph meta tags for rich social previews
+- [x] Add `<title>` per page (model name on detail pages, etc.)
+- [ ] Move model data to a JSON file (`public/models.json`) with fetch-based loading — *deferred: low impact for static site*
+- [x] Add loading skeletons / suspense boundaries
+- [x] Add 404 page for unknown routes
 
 ## Data & Content ✅
 
@@ -30,20 +30,20 @@ See [ROADMAP.md](./ROADMAP.md) for detailed descriptions of each feature.
 - [x] Add model size / download size for open-weight models
 - [x] Write comparison guides (GPT-4o vs Claude 4 Sonnet, GPT-4.1 vs Gemini 2.5 Pro, o3 vs DeepSeek R1, Claude 4 Opus vs o3, Llama 4 Maverick vs GPT-4o)
 
-## UI/UX
+## UI/UX ✅
 
-- [ ] Add interactive benchmark charts (radar, scatter) using Recharts or Chart.js
-- [ ] Add price-vs-performance scatter plot
-- [ ] Add model release timeline visualization
-- [ ] Add pagination or infinite scroll for model grid (performance at 100+ models)
-- [ ] Add keyboard navigation for model grid (arrow keys, Enter to open)
-- [ ] Add "Back to top" button on long pages
-- [ ] Add breadcrumb navigation on detail pages
-- [ ] Add search result highlighting (bold matched text)
-- [ ] Add category quick-filter pills on hero section
-- [ ] Add smooth page transitions / animations between views
-- [ ] Add tooltip previews on hover for model cards
-- [ ] Improve mobile filter UX (bottom sheet / drawer instead of toggle)
+- [x] Add interactive benchmark radar chart on model detail pages
+- [ ] Add price-vs-performance scatter plot — *deferred*
+- [ ] Add model release timeline visualization — *deferred*
+- [x] Add pagination for model grid (12 per page, URL-synced)
+- [x] Add keyboard navigation for model grid (arrow keys, Enter to open)
+- [x] Add "Back to top" floating button
+- [x] Add breadcrumb navigation on detail pages
+- [x] Add search result highlighting (bold matched text)
+- [x] Add category quick-filter pills on hero section
+- [x] Add smooth page transitions / animations between views
+- [ ] Add tooltip previews on hover for model cards — *deferred*
+- [x] Improve mobile filter UX (slide-in drawer with backdrop)
 
 ## Developer Features
 

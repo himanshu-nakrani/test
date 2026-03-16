@@ -4,6 +4,7 @@ import { useCopyToClipboard } from '../hooks/useCopyToClipboard'
 import { usePageTitle } from '../hooks/usePageTitle'
 import { models } from '../data/models'
 import CodeBlock from './CodeBlock'
+import RadarChart from './RadarChart'
 
 interface ModelDetailProps {
   model: AIModel
@@ -167,35 +168,38 @@ export default function ModelDetail({ model, isFav, onToggleFav }: ModelDetailPr
         {hasBenchmarks && (
           <div className="detail-card detail-card-wide">
             <h3>📈 Benchmark Scores</h3>
-            <div className="benchmark-grid">
-              {model.benchmarks!.mmlu != null && (
-                <div className="benchmark-item">
-                  <div className="bench-label">MMLU</div>
-                  <div className="bench-bar-bg"><div className="bench-bar" style={{ width: `${model.benchmarks!.mmlu}%` }} /></div>
-                  <div className="bench-score">{model.benchmarks!.mmlu!.toFixed(1)}</div>
-                </div>
-              )}
-              {model.benchmarks!.humanEval != null && (
-                <div className="benchmark-item">
-                  <div className="bench-label">HumanEval</div>
-                  <div className="bench-bar-bg"><div className="bench-bar bench-bar-green" style={{ width: `${model.benchmarks!.humanEval}%` }} /></div>
-                  <div className="bench-score">{model.benchmarks!.humanEval!.toFixed(1)}</div>
-                </div>
-              )}
-              {model.benchmarks!.gsm8k != null && (
-                <div className="benchmark-item">
-                  <div className="bench-label">GSM8K</div>
-                  <div className="bench-bar-bg"><div className="bench-bar bench-bar-purple" style={{ width: `${model.benchmarks!.gsm8k}%` }} /></div>
-                  <div className="bench-score">{model.benchmarks!.gsm8k!.toFixed(1)}</div>
-                </div>
-              )}
-              {model.benchmarks!.mtBench != null && (
-                <div className="benchmark-item">
-                  <div className="bench-label">MT-Bench</div>
-                  <div className="bench-bar-bg"><div className="bench-bar bench-bar-orange" style={{ width: `${(model.benchmarks!.mtBench! / 10) * 100}%` }} /></div>
-                  <div className="bench-score">{model.benchmarks!.mtBench!.toFixed(1)}/10</div>
-                </div>
-              )}
+            <div className="benchmark-layout">
+              <div className="benchmark-bars">
+                {model.benchmarks!.mmlu != null && (
+                  <div className="benchmark-item">
+                    <div className="bench-label">MMLU</div>
+                    <div className="bench-bar-bg"><div className="bench-bar" style={{ width: `${model.benchmarks!.mmlu}%` }} /></div>
+                    <div className="bench-score">{model.benchmarks!.mmlu!.toFixed(1)}</div>
+                  </div>
+                )}
+                {model.benchmarks!.humanEval != null && (
+                  <div className="benchmark-item">
+                    <div className="bench-label">HumanEval</div>
+                    <div className="bench-bar-bg"><div className="bench-bar bench-bar-green" style={{ width: `${model.benchmarks!.humanEval}%` }} /></div>
+                    <div className="bench-score">{model.benchmarks!.humanEval!.toFixed(1)}</div>
+                  </div>
+                )}
+                {model.benchmarks!.gsm8k != null && (
+                  <div className="benchmark-item">
+                    <div className="bench-label">GSM8K</div>
+                    <div className="bench-bar-bg"><div className="bench-bar bench-bar-purple" style={{ width: `${model.benchmarks!.gsm8k}%` }} /></div>
+                    <div className="bench-score">{model.benchmarks!.gsm8k!.toFixed(1)}</div>
+                  </div>
+                )}
+                {model.benchmarks!.mtBench != null && (
+                  <div className="benchmark-item">
+                    <div className="bench-label">MT-Bench</div>
+                    <div className="bench-bar-bg"><div className="bench-bar bench-bar-orange" style={{ width: `${(model.benchmarks!.mtBench! / 10) * 100}%` }} /></div>
+                    <div className="bench-score">{model.benchmarks!.mtBench!.toFixed(1)}/10</div>
+                  </div>
+                )}
+              </div>
+              <RadarChart benchmarks={model.benchmarks!} />
             </div>
           </div>
         )}
