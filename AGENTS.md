@@ -17,6 +17,8 @@ The `backend/` directory contains a FastAPI app serving the model catalog from S
 - **Seed DB:** `python3 backend/seed.py` (reads `public/api/models.json`; run `pnpm generate-api` first if that file is missing)
 - **Run:** `python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000`
 - **DB file:** `backend/neural_atlas.db` (git-ignored; recreated by seed script)
+- **Auth:** JWT-based via `backend/auth.py`. Demo login at `POST /api/auth/demo-login` accepts any username/password. Token goes in `Authorization: Bearer <token>` header.
+- **DB schema changes:** If you modify `db_models.py`, delete the DB and re-seed: `rm -f backend/neural_atlas.db && python3 backend/seed.py`
 
 The app uses React Router (BrowserRouter) with `basename` from `import.meta.env.BASE_URL`. Tests must wrap `<App />` in `<MemoryRouter>` (see `App.test.tsx`). The Vite dev server handles SPA fallback for client-side routing automatically.
 
