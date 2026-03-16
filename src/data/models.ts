@@ -13,8 +13,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'vision', 'code', 'reasoning'],
     parameters: '~200B (estimated)',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-05-13',
-    pricing: { input: '$2.50 / 1M tokens', output: '$10.00 / 1M tokens' },
+    pricing: { input: '$2.50 / 1M tokens', output: '$10.00 / 1M tokens', inputPerMillion: 2.5, outputPerMillion: 10.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -37,6 +38,23 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.openai.com/v1/chat/completions',
     documentationUrl: 'https://platform.openai.com/docs/models/gpt-4o',
     isFeatured: true,
+    inputModalities: ['text', 'image', 'audio'],
+    outputModalities: ['text', 'audio'],
+    latency: 'Fast',
+    tags: ['coding', 'vision', 'function-calling', 'multilingual', 'multimodal', 'agents'],
+    benchmarks: { mmlu: 88.7, humanEval: 90.2, gsm8k: 95.8, mtBench: 9.3 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `import openai\n\nclient = openai.OpenAI()\nresponse = client.chat.completions.create(\n    model="gpt-4o",\n    messages=[{"role": "user", "content": "Hello!"}]\n)\nprint(response.choices[0].message.content)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.openai.com/v1/chat/completions \\\n  -H "Authorization: Bearer $OPENAI_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"gpt-4o","messages":[{"role":"user","content":"Hello!"}]}'`,
+      },
+    ],
   },
   {
     id: 'gpt-4o-mini',
@@ -49,8 +67,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'vision', 'code'],
     parameters: '~8B (estimated)',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-07-18',
-    pricing: { input: '$0.15 / 1M tokens', output: '$0.60 / 1M tokens' },
+    pricing: { input: '$0.15 / 1M tokens', output: '$0.60 / 1M tokens', inputPerMillion: 0.15, outputPerMillion: 0.60 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -72,6 +91,11 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.openai.com/v1/chat/completions',
     documentationUrl: 'https://platform.openai.com/docs/models/gpt-4o-mini',
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['coding', 'vision', 'function-calling', 'multilingual'],
+    benchmarks: { mmlu: 82.0, humanEval: 87.0, gsm8k: 93.2, mtBench: 8.6 },
   },
   {
     id: 'o3',
@@ -84,8 +108,9 @@ export const models: AIModel[] = [
     categories: ['reasoning', 'code', 'chat'],
     parameters: 'Undisclosed',
     contextWindow: '200K tokens',
+    contextTokens: 200000,
     releaseDate: '2025-04-16',
-    pricing: { input: '$10.00 / 1M tokens', output: '$40.00 / 1M tokens' },
+    pricing: { input: '$10.00 / 1M tokens', output: '$40.00 / 1M tokens', inputPerMillion: 10.0, outputPerMillion: 40.0 },
     pricingTier: 'premium',
     license: 'proprietary',
     strengths: [
@@ -109,6 +134,23 @@ export const models: AIModel[] = [
     documentationUrl: 'https://platform.openai.com/docs/models/o3',
     isNew: true,
     isFeatured: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Slow',
+    tags: ['reasoning', 'coding', 'multilingual', 'agents'],
+    benchmarks: { mmlu: 96.0, humanEval: 97.0, gsm8k: 99.0, mtBench: 9.5 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `import openai\n\nclient = openai.OpenAI()\nresponse = client.chat.completions.create(\n    model="o3",\n    messages=[{"role": "user", "content": "Solve: What is the integral of x^2 * e^x dx?"}]\n)\nprint(response.choices[0].message.content)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.openai.com/v1/chat/completions \\\n  -H "Authorization: Bearer $OPENAI_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"o3","messages":[{"role":"user","content":"Solve: What is the integral of x^2 * e^x dx?"}]}'`,
+      },
+    ],
   },
   {
     id: 'o3-mini',
@@ -121,8 +163,9 @@ export const models: AIModel[] = [
     categories: ['reasoning', 'code'],
     parameters: 'Undisclosed',
     contextWindow: '200K tokens',
+    contextTokens: 200000,
     releaseDate: '2025-01-31',
-    pricing: { input: '$1.10 / 1M tokens', output: '$4.40 / 1M tokens' },
+    pricing: { input: '$1.10 / 1M tokens', output: '$4.40 / 1M tokens', inputPerMillion: 1.10, outputPerMillion: 4.40 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -145,6 +188,11 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.openai.com/v1/chat/completions',
     documentationUrl: 'https://platform.openai.com/docs/models/o3-mini',
     isNew: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['reasoning', 'coding'],
+    benchmarks: { mmlu: 86.9, humanEval: 92.0, gsm8k: 97.0, mtBench: 8.8 },
   },
   {
     id: 'dall-e-3',
@@ -157,6 +205,7 @@ export const models: AIModel[] = [
     categories: ['image'],
     parameters: 'Undisclosed',
     contextWindow: 'N/A',
+    contextTokens: 0,
     releaseDate: '2023-10-01',
     pricing: { input: '$0.040 / image (1024x1024)', output: '$0.080 / image (1792x1024)' },
     pricingTier: 'medium',
@@ -180,6 +229,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.openai.com/v1/images/generations',
     documentationUrl: 'https://platform.openai.com/docs/models/dall-e',
+    inputModalities: ['text'],
+    outputModalities: ['image'],
+    latency: 'Medium',
+    tags: ['creative', 'multimodal'],
   },
   {
     id: 'whisper',
@@ -192,6 +245,7 @@ export const models: AIModel[] = [
     categories: ['audio'],
     parameters: '1.5B',
     contextWindow: '30 sec chunks',
+    contextTokens: 0,
     releaseDate: '2023-03-01',
     pricing: { input: '$0.006 / minute', output: 'N/A' },
     pricingTier: 'low',
@@ -215,6 +269,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.openai.com/v1/audio/transcriptions',
     documentationUrl: 'https://platform.openai.com/docs/models/whisper',
+    inputModalities: ['audio'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['multilingual', 'open-source'],
   },
   {
     id: 'text-embedding-3-large',
@@ -227,8 +285,9 @@ export const models: AIModel[] = [
     categories: ['embedding'],
     parameters: 'Undisclosed',
     contextWindow: '8,191 tokens',
+    contextTokens: 8191,
     releaseDate: '2024-01-25',
-    pricing: { input: '$0.13 / 1M tokens', output: 'N/A' },
+    pricing: { input: '$0.13 / 1M tokens', output: 'N/A', inputPerMillion: 0.13 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -250,6 +309,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.openai.com/v1/embeddings',
     documentationUrl: 'https://platform.openai.com/docs/models/embeddings',
+    inputModalities: ['text'],
+    outputModalities: ['embeddings'],
+    latency: 'Fast',
+    tags: ['RAG', 'multilingual'],
   },
 
   // ===== Anthropic =====
@@ -264,8 +327,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning', 'code', 'vision'],
     parameters: 'Undisclosed',
     contextWindow: '200K tokens',
+    contextTokens: 200000,
     releaseDate: '2025-03-01',
-    pricing: { input: '$15.00 / 1M tokens', output: '$75.00 / 1M tokens' },
+    pricing: { input: '$15.00 / 1M tokens', output: '$75.00 / 1M tokens', inputPerMillion: 15.0, outputPerMillion: 75.0 },
     pricingTier: 'premium',
     license: 'proprietary',
     strengths: [
@@ -289,6 +353,23 @@ export const models: AIModel[] = [
     documentationUrl: 'https://docs.anthropic.com/en/docs/about-claude/models',
     isNew: true,
     isFeatured: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Slow',
+    tags: ['reasoning', 'coding', 'vision', 'function-calling', 'agents', 'long-context', 'enterprise'],
+    benchmarks: { mmlu: 89.0, humanEval: 90.0, gsm8k: 96.2, mtBench: 9.4 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `import anthropic\n\nclient = anthropic.Anthropic()\nmessage = client.messages.create(\n    model="claude-4-opus-20250301",\n    max_tokens=1024,\n    messages=[{"role": "user", "content": "Hello!"}]\n)\nprint(message.content[0].text)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.anthropic.com/v1/messages \\\n  -H "x-api-key: $ANTHROPIC_API_KEY" \\\n  -H "anthropic-version: 2023-06-01" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"claude-4-opus-20250301","max_tokens":1024,"messages":[{"role":"user","content":"Hello!"}]}'`,
+      },
+    ],
   },
   {
     id: 'claude-4-sonnet',
@@ -301,8 +382,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning', 'code', 'vision'],
     parameters: 'Undisclosed',
     contextWindow: '200K tokens',
+    contextTokens: 200000,
     releaseDate: '2025-03-01',
-    pricing: { input: '$3.00 / 1M tokens', output: '$15.00 / 1M tokens' },
+    pricing: { input: '$3.00 / 1M tokens', output: '$15.00 / 1M tokens', inputPerMillion: 3.0, outputPerMillion: 15.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -326,6 +408,23 @@ export const models: AIModel[] = [
     documentationUrl: 'https://docs.anthropic.com/en/docs/about-claude/models',
     isNew: true,
     isFeatured: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['coding', 'reasoning', 'vision', 'function-calling', 'agents', 'enterprise'],
+    benchmarks: { mmlu: 88.5, humanEval: 92.0, gsm8k: 95.5, mtBench: 9.2 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `import anthropic\n\nclient = anthropic.Anthropic()\nmessage = client.messages.create(\n    model="claude-4-sonnet-20250301",\n    max_tokens=1024,\n    messages=[{"role": "user", "content": "Hello!"}]\n)\nprint(message.content[0].text)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.anthropic.com/v1/messages \\\n  -H "x-api-key: $ANTHROPIC_API_KEY" \\\n  -H "anthropic-version: 2023-06-01" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"claude-4-sonnet-20250301","max_tokens":1024,"messages":[{"role":"user","content":"Hello!"}]}'`,
+      },
+    ],
   },
   {
     id: 'claude-3-5-haiku',
@@ -338,8 +437,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'code'],
     parameters: 'Undisclosed',
     contextWindow: '200K tokens',
+    contextTokens: 200000,
     releaseDate: '2024-11-04',
-    pricing: { input: '$0.80 / 1M tokens', output: '$4.00 / 1M tokens' },
+    pricing: { input: '$0.80 / 1M tokens', output: '$4.00 / 1M tokens', inputPerMillion: 0.80, outputPerMillion: 4.0 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -361,6 +461,11 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.anthropic.com/v1/messages',
     documentationUrl: 'https://docs.anthropic.com/en/docs/about-claude/models',
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['coding', 'function-calling', 'edge'],
+    benchmarks: { mmlu: 78.0, humanEval: 84.0, gsm8k: 89.0, mtBench: 8.4 },
   },
 
   // ===== Google =====
@@ -375,8 +480,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning', 'code', 'vision'],
     parameters: 'Undisclosed',
     contextWindow: '1M tokens',
+    contextTokens: 1000000,
     releaseDate: '2025-03-25',
-    pricing: { input: '$1.25 / 1M tokens', output: '$10.00 / 1M tokens' },
+    pricing: { input: '$1.25 / 1M tokens', output: '$10.00 / 1M tokens', inputPerMillion: 1.25, outputPerMillion: 10.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -400,6 +506,23 @@ export const models: AIModel[] = [
     documentationUrl: 'https://ai.google.dev/gemini-api/docs/models#gemini-2.5-pro',
     isNew: true,
     isFeatured: true,
+    inputModalities: ['text', 'image', 'audio', 'video'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['reasoning', 'coding', 'vision', 'multimodal', 'long-context', 'agents', 'function-calling'],
+    benchmarks: { mmlu: 90.0, humanEval: 93.0, gsm8k: 96.5, mtBench: 9.4 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `from google import genai\n\nclient = genai.Client()\nresponse = client.models.generate_content(\n    model="gemini-2.5-pro",\n    contents="Hello!"\n)\nprint(response.text)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=$GEMINI_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"contents":[{"parts":[{"text":"Hello!"}]}]}'`,
+      },
+    ],
   },
   {
     id: 'gemini-2-0-flash',
@@ -412,8 +535,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'vision', 'code', 'audio'],
     parameters: 'Undisclosed',
     contextWindow: '1M tokens',
+    contextTokens: 1000000,
     releaseDate: '2025-02-05',
-    pricing: { input: '$0.10 / 1M tokens', output: '$0.40 / 1M tokens' },
+    pricing: { input: '$0.10 / 1M tokens', output: '$0.40 / 1M tokens', inputPerMillion: 0.10, outputPerMillion: 0.40 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -436,6 +560,11 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash',
     documentationUrl: 'https://ai.google.dev/gemini-api/docs/models#gemini-2.0-flash',
     isNew: true,
+    inputModalities: ['text', 'image', 'audio', 'video'],
+    outputModalities: ['text', 'image', 'audio'],
+    latency: 'Fast',
+    tags: ['multimodal', 'function-calling', 'agents', 'long-context'],
+    benchmarks: { mmlu: 85.0, humanEval: 88.0, gsm8k: 92.5, mtBench: 8.8 },
   },
   {
     id: 'gemini-embedding',
@@ -448,6 +577,7 @@ export const models: AIModel[] = [
     categories: ['embedding'],
     parameters: 'Undisclosed',
     contextWindow: '8,192 tokens',
+    contextTokens: 8192,
     releaseDate: '2025-03-01',
     pricing: { input: 'Free (rate limited)', output: 'N/A', free: true },
     pricingTier: 'free',
@@ -471,6 +601,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding',
     documentationUrl: 'https://ai.google.dev/gemini-api/docs/models#gemini-embedding',
+    inputModalities: ['text'],
+    outputModalities: ['embeddings'],
+    latency: 'Fast',
+    tags: ['RAG', 'multilingual'],
   },
 
   // ===== Meta =====
@@ -485,6 +619,7 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'reasoning', 'vision'],
     parameters: '400B total / 17B active',
     contextWindow: '1M tokens',
+    contextTokens: 1000000,
     releaseDate: '2025-04-05',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -510,6 +645,23 @@ export const models: AIModel[] = [
     documentationUrl: 'https://llama.meta.com/',
     isNew: true,
     isFeatured: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['open-source', 'coding', 'reasoning', 'vision', 'long-context', 'multilingual'],
+    benchmarks: { mmlu: 87.5, humanEval: 89.5, gsm8k: 93.0, mtBench: 8.9 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `import openai\n\nclient = openai.OpenAI(\n    base_url="https://api.together.xyz/v1",\n    api_key="YOUR_TOGETHER_API_KEY"\n)\nresponse = client.chat.completions.create(\n    model="meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",\n    messages=[{"role": "user", "content": "Hello!"}]\n)\nprint(response.choices[0].message.content)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.together.xyz/v1/chat/completions \\\n  -H "Authorization: Bearer $TOGETHER_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8","messages":[{"role":"user","content":"Hello!"}]}'`,
+      },
+    ],
   },
   {
     id: 'llama-3-3-70b',
@@ -522,6 +674,7 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'reasoning'],
     parameters: '70B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-12-06',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -545,6 +698,11 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'Self-hosted or via providers',
     documentationUrl: 'https://llama.meta.com/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['open-source', 'coding', 'reasoning', 'multilingual'],
+    benchmarks: { mmlu: 86.0, humanEval: 87.0, gsm8k: 91.0, mtBench: 8.7 },
   },
 
   // ===== Mistral =====
@@ -559,8 +717,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning', 'code'],
     parameters: '123B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-11-18',
-    pricing: { input: '$2.00 / 1M tokens', output: '$6.00 / 1M tokens' },
+    pricing: { input: '$2.00 / 1M tokens', output: '$6.00 / 1M tokens', inputPerMillion: 2.0, outputPerMillion: 6.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -582,6 +741,23 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.mistral.ai/v1/chat/completions',
     documentationUrl: 'https://docs.mistral.ai/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['coding', 'reasoning', 'function-calling', 'multilingual', 'enterprise'],
+    benchmarks: { mmlu: 84.0, humanEval: 85.0, gsm8k: 91.0, mtBench: 8.6 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `from mistralai import Mistral\n\nclient = Mistral(api_key="YOUR_MISTRAL_API_KEY")\nresponse = client.chat.complete(\n    model="mistral-large-latest",\n    messages=[{"role": "user", "content": "Hello!"}]\n)\nprint(response.choices[0].message.content)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.mistral.ai/v1/chat/completions \\\n  -H "Authorization: Bearer $MISTRAL_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"mistral-large-latest","messages":[{"role":"user","content":"Hello!"}]}'`,
+      },
+    ],
   },
   {
     id: 'codestral',
@@ -594,8 +770,9 @@ export const models: AIModel[] = [
     categories: ['code'],
     parameters: '22B',
     contextWindow: '32K tokens',
+    contextTokens: 32000,
     releaseDate: '2024-05-29',
-    pricing: { input: '$0.30 / 1M tokens', output: '$0.90 / 1M tokens' },
+    pricing: { input: '$0.30 / 1M tokens', output: '$0.90 / 1M tokens', inputPerMillion: 0.30, outputPerMillion: 0.90 },
     pricingTier: 'low',
     license: 'open-weights',
     strengths: [
@@ -617,6 +794,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://codestral.mistral.ai/v1/fim/completions',
     documentationUrl: 'https://docs.mistral.ai/capabilities/code_generation/',
+    inputModalities: ['text', 'code'],
+    outputModalities: ['text', 'code'],
+    latency: 'Fast',
+    tags: ['coding', 'open-source'],
   },
   {
     id: 'mistral-small',
@@ -629,8 +810,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'code'],
     parameters: '24B',
     contextWindow: '32K tokens',
+    contextTokens: 32000,
     releaseDate: '2025-01-30',
-    pricing: { input: '$0.10 / 1M tokens', output: '$0.30 / 1M tokens' },
+    pricing: { input: '$0.10 / 1M tokens', output: '$0.30 / 1M tokens', inputPerMillion: 0.10, outputPerMillion: 0.30 },
     pricingTier: 'low',
     license: 'open-weights',
     strengths: [
@@ -652,6 +834,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.mistral.ai/v1/chat/completions',
     documentationUrl: 'https://docs.mistral.ai/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['open-source', 'multilingual', 'edge'],
   },
 
   // ===== xAI =====
@@ -666,8 +852,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning', 'code'],
     parameters: 'Undisclosed',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-02-18',
-    pricing: { input: '$3.00 / 1M tokens', output: '$15.00 / 1M tokens' },
+    pricing: { input: '$3.00 / 1M tokens', output: '$15.00 / 1M tokens', inputPerMillion: 3.0, outputPerMillion: 15.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -690,6 +877,23 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.x.ai/v1/chat/completions',
     documentationUrl: 'https://docs.x.ai/',
     isNew: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['reasoning', 'coding', 'search', 'function-calling'],
+    benchmarks: { mmlu: 88.0, humanEval: 89.0, gsm8k: 94.0, mtBench: 9.1 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `import openai\n\nclient = openai.OpenAI(\n    base_url="https://api.x.ai/v1",\n    api_key="YOUR_XAI_API_KEY"\n)\nresponse = client.chat.completions.create(\n    model="grok-3",\n    messages=[{"role": "user", "content": "Hello!"}]\n)\nprint(response.choices[0].message.content)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.x.ai/v1/chat/completions \\\n  -H "Authorization: Bearer $XAI_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"grok-3","messages":[{"role":"user","content":"Hello!"}]}'`,
+      },
+    ],
   },
   {
     id: 'grok-2',
@@ -702,8 +906,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'vision', 'code'],
     parameters: 'Undisclosed',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-08-13',
-    pricing: { input: '$2.00 / 1M tokens', output: '$10.00 / 1M tokens' },
+    pricing: { input: '$2.00 / 1M tokens', output: '$10.00 / 1M tokens', inputPerMillion: 2.0, outputPerMillion: 10.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -725,6 +930,11 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.x.ai/v1/chat/completions',
     documentationUrl: 'https://docs.x.ai/',
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['vision', 'function-calling', 'search'],
+    benchmarks: { mmlu: 85.5, humanEval: 86.0, gsm8k: 90.0, mtBench: 8.7 },
   },
 
   // ===== DeepSeek =====
@@ -739,8 +949,9 @@ export const models: AIModel[] = [
     categories: ['reasoning', 'code', 'chat'],
     parameters: '671B (MoE, 37B active)',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-01-20',
-    pricing: { input: '$0.55 / 1M tokens', output: '$2.19 / 1M tokens' },
+    pricing: { input: '$0.55 / 1M tokens', output: '$2.19 / 1M tokens', inputPerMillion: 0.55, outputPerMillion: 2.19 },
     pricingTier: 'low',
     license: 'open-source',
     strengths: [
@@ -764,6 +975,23 @@ export const models: AIModel[] = [
     documentationUrl: 'https://api-docs.deepseek.com/',
     isNew: true,
     isFeatured: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Slow',
+    tags: ['reasoning', 'coding', 'open-source'],
+    benchmarks: { mmlu: 90.8, humanEval: 96.3, gsm8k: 97.3, mtBench: 8.9 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `import openai\n\nclient = openai.OpenAI(\n    base_url="https://api.deepseek.com/v1",\n    api_key="YOUR_DEEPSEEK_API_KEY"\n)\nresponse = client.chat.completions.create(\n    model="deepseek-reasoner",\n    messages=[{"role": "user", "content": "Solve: What is 27^(1/3) + 15?"}]\n)\nprint(response.choices[0].message.content)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.deepseek.com/v1/chat/completions \\\n  -H "Authorization: Bearer $DEEPSEEK_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"Solve: What is 27^(1/3) + 15?"}]}'`,
+      },
+    ],
   },
   {
     id: 'deepseek-v3',
@@ -776,8 +1004,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'reasoning'],
     parameters: '671B (MoE, 37B active)',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-12-26',
-    pricing: { input: '$0.27 / 1M tokens', output: '$1.10 / 1M tokens' },
+    pricing: { input: '$0.27 / 1M tokens', output: '$1.10 / 1M tokens', inputPerMillion: 0.27, outputPerMillion: 1.10 },
     pricingTier: 'low',
     license: 'open-source',
     strengths: [
@@ -799,6 +1028,11 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.deepseek.com/v1/chat/completions',
     documentationUrl: 'https://api-docs.deepseek.com/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['coding', 'reasoning', 'open-source', 'multilingual'],
+    benchmarks: { mmlu: 87.1, humanEval: 89.0, gsm8k: 93.5, mtBench: 8.8 },
   },
 
   // ===== Cohere =====
@@ -813,8 +1047,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning'],
     parameters: '104B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-04-04',
-    pricing: { input: '$2.50 / 1M tokens', output: '$10.00 / 1M tokens' },
+    pricing: { input: '$2.50 / 1M tokens', output: '$10.00 / 1M tokens', inputPerMillion: 2.5, outputPerMillion: 10.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -836,6 +1071,11 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.cohere.com/v2/chat',
     documentationUrl: 'https://docs.cohere.com/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['RAG', 'function-calling', 'multilingual', 'enterprise'],
+    benchmarks: { mmlu: 81.0, humanEval: 80.0, gsm8k: 88.0, mtBench: 8.3 },
   },
 
   // ===== Stability AI =====
@@ -850,6 +1090,7 @@ export const models: AIModel[] = [
     categories: ['image'],
     parameters: '8B (Large) / 2.5B (Medium)',
     contextWindow: 'N/A',
+    contextTokens: 0,
     releaseDate: '2024-10-22',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -873,6 +1114,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.stability.ai/v2beta/stable-image/generate',
     documentationUrl: 'https://platform.stability.ai/docs/api-reference',
+    inputModalities: ['text', 'image'],
+    outputModalities: ['image'],
+    latency: 'Medium',
+    tags: ['creative', 'open-source', 'multimodal'],
   },
 
   // ===== Perplexity =====
@@ -887,8 +1132,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning'],
     parameters: 'Undisclosed',
     contextWindow: '200K tokens',
+    contextTokens: 200000,
     releaseDate: '2025-02-01',
-    pricing: { input: '$3.00 / 1M tokens', output: '$15.00 / 1M tokens' },
+    pricing: { input: '$3.00 / 1M tokens', output: '$15.00 / 1M tokens', inputPerMillion: 3.0, outputPerMillion: 15.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -911,6 +1157,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.perplexity.ai/chat/completions',
     documentationUrl: 'https://docs.perplexity.ai/',
     isNew: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['search', 'RAG', 'reasoning'],
   },
 
   // ===== ElevenLabs =====
@@ -925,6 +1175,7 @@ export const models: AIModel[] = [
     categories: ['audio'],
     parameters: 'Undisclosed',
     contextWindow: 'N/A',
+    contextTokens: 0,
     releaseDate: '2024-01-01',
     pricing: { input: '$0.30 / 1K characters', output: 'N/A' },
     pricingTier: 'medium',
@@ -948,6 +1199,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.elevenlabs.io/v1/text-to-speech',
     documentationUrl: 'https://elevenlabs.io/docs/api-reference',
+    inputModalities: ['text'],
+    outputModalities: ['audio'],
+    latency: 'Fast',
+    tags: ['multilingual', 'creative'],
   },
 
   // ===== Runway =====
@@ -962,6 +1217,7 @@ export const models: AIModel[] = [
     categories: ['video'],
     parameters: 'Undisclosed',
     contextWindow: 'N/A',
+    contextTokens: 0,
     releaseDate: '2024-06-17',
     pricing: { input: '$0.05 / second of video', output: 'N/A' },
     pricingTier: 'high',
@@ -985,6 +1241,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.dev.runwayml.com/v1/image_to_video',
     documentationUrl: 'https://docs.dev.runwayml.com/',
+    inputModalities: ['text', 'image'],
+    outputModalities: ['video'],
+    latency: 'Slow',
+    tags: ['creative', 'multimodal'],
   },
 
   // ===== OpenAI (additional) =====
@@ -999,8 +1259,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'reasoning', 'vision'],
     parameters: 'Undisclosed',
     contextWindow: '1M tokens',
+    contextTokens: 1000000,
     releaseDate: '2025-04-14',
-    pricing: { input: '$2.00 / 1M tokens', output: '$8.00 / 1M tokens' },
+    pricing: { input: '$2.00 / 1M tokens', output: '$8.00 / 1M tokens', inputPerMillion: 2.0, outputPerMillion: 8.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -1024,6 +1285,23 @@ export const models: AIModel[] = [
     documentationUrl: 'https://platform.openai.com/docs/models/gpt-4.1',
     isNew: true,
     isFeatured: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['coding', 'reasoning', 'vision', 'function-calling', 'long-context', 'agents'],
+    benchmarks: { mmlu: 89.0, humanEval: 93.5, gsm8k: 96.0, mtBench: 9.3 },
+    codeSnippets: [
+      {
+        language: 'python',
+        label: 'Python',
+        code: `import openai\n\nclient = openai.OpenAI()\nresponse = client.chat.completions.create(\n    model="gpt-4.1",\n    messages=[{"role": "user", "content": "Hello!"}]\n)\nprint(response.choices[0].message.content)`,
+      },
+      {
+        language: 'curl',
+        label: 'cURL',
+        code: `curl https://api.openai.com/v1/chat/completions \\\n  -H "Authorization: Bearer $OPENAI_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{"model":"gpt-4.1","messages":[{"role":"user","content":"Hello!"}]}'`,
+      },
+    ],
   },
   {
     id: 'gpt-4-1-mini',
@@ -1036,8 +1314,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'vision'],
     parameters: 'Undisclosed',
     contextWindow: '1M tokens',
+    contextTokens: 1000000,
     releaseDate: '2025-04-14',
-    pricing: { input: '$0.40 / 1M tokens', output: '$1.60 / 1M tokens' },
+    pricing: { input: '$0.40 / 1M tokens', output: '$1.60 / 1M tokens', inputPerMillion: 0.40, outputPerMillion: 1.60 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -1060,6 +1339,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.openai.com/v1/chat/completions',
     documentationUrl: 'https://platform.openai.com/docs/models/gpt-4.1-mini',
     isNew: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['coding', 'vision', 'function-calling', 'long-context'],
   },
   {
     id: 'gpt-4-1-nano',
@@ -1072,8 +1355,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'code'],
     parameters: 'Undisclosed',
     contextWindow: '1M tokens',
+    contextTokens: 1000000,
     releaseDate: '2025-04-14',
-    pricing: { input: '$0.10 / 1M tokens', output: '$0.40 / 1M tokens' },
+    pricing: { input: '$0.10 / 1M tokens', output: '$0.40 / 1M tokens', inputPerMillion: 0.10, outputPerMillion: 0.40 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -1096,6 +1380,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.openai.com/v1/chat/completions',
     documentationUrl: 'https://platform.openai.com/docs/models/gpt-4.1-nano',
     isNew: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['edge', 'function-calling', 'long-context'],
   },
   {
     id: 'o4-mini',
@@ -1108,8 +1396,9 @@ export const models: AIModel[] = [
     categories: ['reasoning', 'code', 'vision'],
     parameters: 'Undisclosed',
     contextWindow: '200K tokens',
+    contextTokens: 200000,
     releaseDate: '2025-04-16',
-    pricing: { input: '$1.10 / 1M tokens', output: '$4.40 / 1M tokens' },
+    pricing: { input: '$1.10 / 1M tokens', output: '$4.40 / 1M tokens', inputPerMillion: 1.10, outputPerMillion: 4.40 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -1132,6 +1421,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.openai.com/v1/chat/completions',
     documentationUrl: 'https://platform.openai.com/docs/models/o4-mini',
     isNew: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['reasoning', 'coding', 'vision', 'function-calling', 'agents'],
   },
   {
     id: 'sora',
@@ -1144,6 +1437,7 @@ export const models: AIModel[] = [
     categories: ['video'],
     parameters: 'Undisclosed',
     contextWindow: 'N/A',
+    contextTokens: 0,
     releaseDate: '2025-02-28',
     pricing: { input: 'Included in ChatGPT Plus', output: 'N/A' },
     pricingTier: 'high',
@@ -1168,6 +1462,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.openai.com/v1/video/generations',
     documentationUrl: 'https://platform.openai.com/docs/models/sora',
     isNew: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['video'],
+    latency: 'Slow',
+    tags: ['creative', 'multimodal'],
   },
 
   // ===== Anthropic (additional) =====
@@ -1182,8 +1480,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning', 'code', 'vision'],
     parameters: 'Undisclosed',
     contextWindow: '200K tokens',
+    contextTokens: 200000,
     releaseDate: '2024-10-22',
-    pricing: { input: '$3.00 / 1M tokens', output: '$15.00 / 1M tokens' },
+    pricing: { input: '$3.00 / 1M tokens', output: '$15.00 / 1M tokens', inputPerMillion: 3.0, outputPerMillion: 15.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -1205,6 +1504,11 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.anthropic.com/v1/messages',
     documentationUrl: 'https://docs.anthropic.com/en/docs/about-claude/models',
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['coding', 'reasoning', 'vision', 'function-calling', 'agents'],
+    benchmarks: { mmlu: 88.7, humanEval: 92.0, gsm8k: 96.4, mtBench: 9.1 },
   },
 
   // ===== Google (additional) =====
@@ -1219,8 +1523,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'vision', 'code', 'audio'],
     parameters: 'Undisclosed',
     contextWindow: '2M tokens',
+    contextTokens: 2000000,
     releaseDate: '2024-05-24',
-    pricing: { input: '$1.25 / 1M tokens', output: '$5.00 / 1M tokens' },
+    pricing: { input: '$1.25 / 1M tokens', output: '$5.00 / 1M tokens', inputPerMillion: 1.25, outputPerMillion: 5.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -1242,6 +1547,11 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro',
     documentationUrl: 'https://ai.google.dev/gemini-api/docs/models#gemini-1.5-pro',
+    inputModalities: ['text', 'image', 'audio', 'video'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['multimodal', 'long-context', 'vision', 'multilingual'],
+    benchmarks: { mmlu: 85.9, humanEval: 84.1, gsm8k: 91.7, mtBench: 8.7 },
   },
   {
     id: 'imagen-3',
@@ -1254,6 +1564,7 @@ export const models: AIModel[] = [
     categories: ['image'],
     parameters: 'Undisclosed',
     contextWindow: 'N/A',
+    contextTokens: 0,
     releaseDate: '2024-08-01',
     pricing: { input: '$0.04 / image', output: 'N/A' },
     pricingTier: 'medium',
@@ -1277,6 +1588,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://generativelanguage.googleapis.com/v1beta/models/imagen-3',
     documentationUrl: 'https://ai.google.dev/gemini-api/docs/imagen',
+    inputModalities: ['text'],
+    outputModalities: ['image'],
+    latency: 'Medium',
+    tags: ['creative', 'multimodal'],
   },
 
   // ===== Meta (additional) =====
@@ -1291,6 +1606,7 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'reasoning'],
     parameters: '109B total / 17B active',
     contextWindow: '10M tokens',
+    contextTokens: 10000000,
     releaseDate: '2025-04-05',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -1315,6 +1631,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'Self-hosted or via providers (Together, Fireworks, etc.)',
     documentationUrl: 'https://llama.meta.com/',
     isNew: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['open-source', 'long-context', 'coding', 'reasoning'],
   },
   {
     id: 'llama-3-1-405b',
@@ -1327,6 +1647,7 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'reasoning'],
     parameters: '405B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-07-23',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -1350,6 +1671,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'Self-hosted or via providers',
     documentationUrl: 'https://llama.meta.com/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Slow',
+    tags: ['open-source', 'coding', 'reasoning', 'multilingual'],
   },
 
   // ===== Mistral (additional) =====
@@ -1364,8 +1689,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'vision', 'code', 'reasoning'],
     parameters: '124B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-11-18',
-    pricing: { input: '$2.00 / 1M tokens', output: '$6.00 / 1M tokens' },
+    pricing: { input: '$2.00 / 1M tokens', output: '$6.00 / 1M tokens', inputPerMillion: 2.0, outputPerMillion: 6.0 },
     pricingTier: 'medium',
     license: 'open-weights',
     strengths: [
@@ -1387,6 +1713,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.mistral.ai/v1/chat/completions',
     documentationUrl: 'https://docs.mistral.ai/',
+    inputModalities: ['text', 'image'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['vision', 'coding', 'reasoning', 'open-source', 'multimodal'],
   },
   {
     id: 'mistral-medium',
@@ -1399,8 +1729,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'code'],
     parameters: 'Undisclosed',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-01-15',
-    pricing: { input: '$0.40 / 1M tokens', output: '$2.00 / 1M tokens' },
+    pricing: { input: '$0.40 / 1M tokens', output: '$2.00 / 1M tokens', inputPerMillion: 0.40, outputPerMillion: 2.0 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -1422,6 +1753,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.mistral.ai/v1/chat/completions',
     documentationUrl: 'https://docs.mistral.ai/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['multilingual', 'function-calling'],
   },
 
   // ===== Microsoft =====
@@ -1436,6 +1771,7 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning', 'code'],
     parameters: '14B',
     contextWindow: '16K tokens',
+    contextTokens: 16000,
     releaseDate: '2024-12-12',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -1459,6 +1795,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'Self-hosted or via Azure AI',
     documentationUrl: 'https://azure.microsoft.com/en-us/products/phi',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['reasoning', 'open-source', 'edge', 'coding'],
   },
   {
     id: 'phi-4-mini',
@@ -1471,6 +1811,7 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'reasoning'],
     parameters: '3.8B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-02-27',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -1495,6 +1836,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'Self-hosted or via Azure AI',
     documentationUrl: 'https://azure.microsoft.com/en-us/products/phi',
     isNew: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['open-source', 'edge', 'coding', 'reasoning'],
   },
 
   // ===== Amazon =====
@@ -1509,8 +1854,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'vision', 'reasoning', 'code'],
     parameters: 'Undisclosed',
     contextWindow: '300K tokens',
+    contextTokens: 300000,
     releaseDate: '2024-12-03',
-    pricing: { input: '$0.80 / 1M tokens', output: '$3.20 / 1M tokens' },
+    pricing: { input: '$0.80 / 1M tokens', output: '$3.20 / 1M tokens', inputPerMillion: 0.80, outputPerMillion: 3.20 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -1532,6 +1878,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://bedrock-runtime.amazonaws.com',
     documentationUrl: 'https://docs.aws.amazon.com/nova/',
+    inputModalities: ['text', 'image', 'video'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['multimodal', 'vision', 'enterprise', 'RAG'],
   },
   {
     id: 'nova-lite',
@@ -1544,8 +1894,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'vision'],
     parameters: 'Undisclosed',
     contextWindow: '300K tokens',
+    contextTokens: 300000,
     releaseDate: '2024-12-03',
-    pricing: { input: '$0.06 / 1M tokens', output: '$0.24 / 1M tokens' },
+    pricing: { input: '$0.06 / 1M tokens', output: '$0.24 / 1M tokens', inputPerMillion: 0.06, outputPerMillion: 0.24 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -1567,6 +1918,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://bedrock-runtime.amazonaws.com',
     documentationUrl: 'https://docs.aws.amazon.com/nova/',
+    inputModalities: ['text', 'image', 'video'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['multimodal', 'vision', 'enterprise'],
   },
 
   // ===== Alibaba =====
@@ -1581,6 +1936,7 @@ export const models: AIModel[] = [
     categories: ['chat', 'code', 'reasoning'],
     parameters: '72B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-09-19',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -1604,6 +1960,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',
     documentationUrl: 'https://qwen.readthedocs.io/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['open-source', 'coding', 'multilingual', 'reasoning'],
   },
   {
     id: 'qwen-2-5-coder-32b',
@@ -1616,6 +1976,7 @@ export const models: AIModel[] = [
     categories: ['code'],
     parameters: '32B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-11-11',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -1639,6 +2000,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'Self-hosted or via providers',
     documentationUrl: 'https://qwen.readthedocs.io/',
+    inputModalities: ['text', 'code'],
+    outputModalities: ['text', 'code'],
+    latency: 'Fast',
+    tags: ['coding', 'open-source'],
   },
   {
     id: 'qwq-32b',
@@ -1651,6 +2016,7 @@ export const models: AIModel[] = [
     categories: ['reasoning', 'code', 'chat'],
     parameters: '32B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-03-06',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -1675,6 +2041,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'Self-hosted or via providers',
     documentationUrl: 'https://qwen.readthedocs.io/',
     isNew: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Slow',
+    tags: ['reasoning', 'coding', 'open-source'],
   },
 
   // ===== AI21 Labs =====
@@ -1689,8 +2059,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'reasoning', 'code'],
     parameters: '94B (MoE, 39B active)',
     contextWindow: '256K tokens',
+    contextTokens: 256000,
     releaseDate: '2024-08-22',
-    pricing: { input: '$2.00 / 1M tokens', output: '$8.00 / 1M tokens' },
+    pricing: { input: '$2.00 / 1M tokens', output: '$8.00 / 1M tokens', inputPerMillion: 2.0, outputPerMillion: 8.0 },
     pricingTier: 'medium',
     license: 'open-weights',
     strengths: [
@@ -1712,6 +2083,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.ai21.com/studio/v1/chat/completions',
     documentationUrl: 'https://docs.ai21.com/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['long-context', 'open-source', 'reasoning'],
   },
 
   // ===== Midjourney =====
@@ -1726,6 +2101,7 @@ export const models: AIModel[] = [
     categories: ['image'],
     parameters: 'Undisclosed',
     contextWindow: 'N/A',
+    contextTokens: 0,
     releaseDate: '2024-08-01',
     pricing: { input: '$10/mo Basic plan', output: 'N/A' },
     pricingTier: 'medium',
@@ -1749,6 +2125,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'Discord bot or web interface',
     documentationUrl: 'https://docs.midjourney.com/',
+    inputModalities: ['text', 'image'],
+    outputModalities: ['image'],
+    latency: 'Medium',
+    tags: ['creative', 'multimodal'],
   },
 
   // ===== Inflection =====
@@ -1763,6 +2143,7 @@ export const models: AIModel[] = [
     categories: ['chat'],
     parameters: 'Undisclosed',
     contextWindow: '32K tokens',
+    contextTokens: 32000,
     releaseDate: '2024-03-07',
     pricing: { input: 'Free (Pi app)', output: 'N/A', free: true },
     pricingTier: 'free',
@@ -1786,6 +2167,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'Via Pi app or Inflection API',
     documentationUrl: 'https://pi.ai/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['creative', 'multilingual'],
   },
 
   // ===== Cohere (additional) =====
@@ -1800,8 +2185,9 @@ export const models: AIModel[] = [
     categories: ['embedding'],
     parameters: 'Undisclosed',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-03-12',
-    pricing: { input: '$0.10 / 1M tokens', output: 'N/A' },
+    pricing: { input: '$0.10 / 1M tokens', output: 'N/A', inputPerMillion: 0.10 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -1824,6 +2210,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.cohere.com/v2/embed',
     documentationUrl: 'https://docs.cohere.com/',
     isNew: true,
+    inputModalities: ['text', 'image'],
+    outputModalities: ['embeddings'],
+    latency: 'Fast',
+    tags: ['RAG', 'multilingual', 'multimodal'],
   },
 
   // ===== Perplexity (additional) =====
@@ -1838,8 +2228,9 @@ export const models: AIModel[] = [
     categories: ['chat'],
     parameters: 'Undisclosed',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-02-01',
-    pricing: { input: '$1.00 / 1M tokens', output: '$1.00 / 1M tokens' },
+    pricing: { input: '$1.00 / 1M tokens', output: '$1.00 / 1M tokens', inputPerMillion: 1.0, outputPerMillion: 1.0 },
     pricingTier: 'low',
     license: 'proprietary',
     strengths: [
@@ -1861,6 +2252,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.perplexity.ai/chat/completions',
     documentationUrl: 'https://docs.perplexity.ai/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Fast',
+    tags: ['search', 'RAG'],
   },
   {
     id: 'sonar-reasoning-pro',
@@ -1873,8 +2268,9 @@ export const models: AIModel[] = [
     categories: ['reasoning', 'chat'],
     parameters: 'Undisclosed',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-02-18',
-    pricing: { input: '$2.00 / 1M tokens', output: '$8.00 / 1M tokens' },
+    pricing: { input: '$2.00 / 1M tokens', output: '$8.00 / 1M tokens', inputPerMillion: 2.0, outputPerMillion: 8.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -1897,6 +2293,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://api.perplexity.ai/chat/completions',
     documentationUrl: 'https://docs.perplexity.ai/',
     isNew: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Slow',
+    tags: ['search', 'reasoning', 'RAG'],
   },
 
   // ===== Suno =====
@@ -1911,6 +2311,7 @@ export const models: AIModel[] = [
     categories: ['audio'],
     parameters: 'Undisclosed',
     contextWindow: 'N/A',
+    contextTokens: 0,
     releaseDate: '2024-11-22',
     pricing: { input: 'Free tier / $10/mo Pro', output: 'N/A' },
     pricingTier: 'low',
@@ -1934,6 +2335,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://apibox.erweima.ai/api/v1/generate',
     documentationUrl: 'https://suno.com/',
+    inputModalities: ['text'],
+    outputModalities: ['audio'],
+    latency: 'Medium',
+    tags: ['creative'],
   },
 
   // ===== NVIDIA =====
@@ -1948,6 +2353,7 @@ export const models: AIModel[] = [
     categories: ['reasoning', 'code', 'chat'],
     parameters: '253B',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2025-03-18',
     pricing: { input: 'Free (open weights)', output: 'Free (open weights)', free: true },
     pricingTier: 'free',
@@ -1972,6 +2378,10 @@ export const models: AIModel[] = [
     apiEndpoint: 'https://integrate.api.nvidia.com/v1/chat/completions',
     documentationUrl: 'https://build.nvidia.com/',
     isNew: true,
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['reasoning', 'coding', 'open-source', 'agents'],
   },
 
   // ===== Writer =====
@@ -1986,8 +2396,9 @@ export const models: AIModel[] = [
     categories: ['chat', 'code'],
     parameters: 'Undisclosed',
     contextWindow: '128K tokens',
+    contextTokens: 128000,
     releaseDate: '2024-09-18',
-    pricing: { input: '$1.00 / 1M tokens', output: '$5.00 / 1M tokens' },
+    pricing: { input: '$1.00 / 1M tokens', output: '$5.00 / 1M tokens', inputPerMillion: 1.0, outputPerMillion: 5.0 },
     pricingTier: 'medium',
     license: 'proprietary',
     strengths: [
@@ -2009,6 +2420,10 @@ export const models: AIModel[] = [
     ],
     apiEndpoint: 'https://api.writer.com/v1/chat',
     documentationUrl: 'https://dev.writer.com/docs/',
+    inputModalities: ['text'],
+    outputModalities: ['text'],
+    latency: 'Medium',
+    tags: ['enterprise', 'creative', 'RAG'],
   },
 ]
 
