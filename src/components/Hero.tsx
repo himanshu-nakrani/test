@@ -38,9 +38,9 @@ export default function Hero({
   return (
     <section className="hero-section">
       <div className="hero-content">
-        <div className="hero-eyebrow">✨ Your go-to AI model reference</div>
+        <div className="hero-eyebrow">✨ Navigate the AI landscape</div>
         <h1 className="hero-title">
-          The Complete<span className="gradient-text"> AI Models </span>Directory
+          <span className="gradient-text">NeuralAtlas</span> — The AI Models Directory
         </h1>
         <p className="hero-subtitle">
           Explore, compare, and discover {models.length} AI models from {allProviders.length} providers.

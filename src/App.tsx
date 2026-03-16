@@ -29,7 +29,7 @@ const priceTierOrder: Record<string, number> = { free: 0, low: 1, medium: 2, hig
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
-    try { return localStorage.getItem('ai-hub-theme') === 'dark' } catch { return false }
+    try { return localStorage.getItem('neural-atlas-theme') === 'dark' } catch { return false }
   })
   const [filters, setFilters] = useState<FilterState>(defaultFilters)
   const [selectedModel, setSelectedModel] = useState<AIModel | null>(null)
@@ -44,7 +44,7 @@ function App() {
   useEffect(() => {
     const theme = darkMode ? 'dark' : 'light'
     document.documentElement.setAttribute('data-theme', theme)
-    try { localStorage.setItem('ai-hub-theme', theme) } catch { /* noop */ }
+    try { localStorage.setItem('neural-atlas-theme', theme) } catch { /* noop */ }
   }, [darkMode])
 
   const toggleCompare = useCallback((id: string) => {
@@ -159,7 +159,7 @@ function App() {
       />
       {renderPage()}
       <footer className="footer">
-        <p>AI Models Hub — Explore {models.length} models from top AI providers &middot; {new Date().getFullYear()}</p>
+        <p>NeuralAtlas — Explore {models.length} models from top AI providers &middot; {new Date().getFullYear()}</p>
       </footer>
     </div>
   )

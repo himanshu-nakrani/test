@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 
-const STORAGE_KEY = 'ai-hub-favorites'
+const STORAGE_KEY = 'neural-atlas-favorites'
 
 function loadFavorites(): Set<string> {
   try {

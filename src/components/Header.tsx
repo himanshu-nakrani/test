@@ -50,7 +50,7 @@ export default function Header({
     <header className="header">
       <button className="logo" onClick={onLogoClick}>
         <span className="logo-icon">🤖</span>
-        <span className="logo-text">AI Models Hub</span>
+        <span className="logo-text">NeuralAtlas</span>
       </button>
 
       <nav className="header-nav">

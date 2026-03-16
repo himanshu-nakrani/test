@@ -7,7 +7,7 @@ beforeEach(() => {
   localStorage.clear()
 })
 
-describe('AI Models Hub', () => {
+describe('NeuralAtlas', () => {
   it('renders the hero section with stats and showcase', () => {
     render(<App />)
     const hero = document.querySelector('.hero-section')!

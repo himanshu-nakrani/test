@@ -1,6 +1,6 @@
-# AI Models Hub — Production Roadmap
+# NeuralAtlas — Production Roadmap
 
-Features and improvements to make the AI Models Hub production-grade.
+Features and improvements to make NeuralAtlas production-grade.
 
 ---
 
