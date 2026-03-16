@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import type { AppPage } from '../types'
 
 interface HeaderProps {
   search: string
@@ -12,6 +13,8 @@ interface HeaderProps {
   favCount: number
   showFavOnly: boolean
   onToggleFav: () => void
+  onNavigate: (page: AppPage) => void
+  activePage: AppPage
 }
 
 export default function Header({
@@ -26,6 +29,8 @@ export default function Header({
   favCount,
   showFavOnly,
   onToggleFav,
+  onNavigate,
+  activePage,
 }: HeaderProps) {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -48,6 +53,12 @@ export default function Header({
         <span className="logo-text">AI Models Hub</span>
       </button>
 
+      <nav className="header-nav">
+        <button className={`nav-link ${activePage === 'home' ? 'active' : ''}`} onClick={onLogoClick}>Models</button>
+        <button className={`nav-link ${activePage === 'leaderboard' ? 'active' : ''}`} onClick={() => onNavigate('leaderboard')}>Leaderboard</button>
+        <button className={`nav-link ${activePage === 'calculator' ? 'active' : ''}`} onClick={() => onNavigate('calculator')}>Pricing</button>
+      </nav>
+
       <div className="header-search">
         <span className="search-icon">🔍</span>
         <input
@@ -59,9 +70,7 @@ export default function Header({
           className="search-input"
         />
         {search ? (
-          <button className="search-clear" onClick={() => onSearchChange('')}>
-            ✕
-          </button>
+          <button className="search-clear" onClick={() => onSearchChange('')}>✕</button>
         ) : (
           <kbd className="search-kbd">⌘K</kbd>
         )}
@@ -76,28 +85,15 @@ export default function Header({
           {showFavOnly ? '★' : '☆'}
           {favCount > 0 && <span className="header-badge">{favCount}</span>}
         </button>
-
         <button
           className={`header-btn compare-btn ${compareCount > 0 ? 'has-items' : ''}`}
           onClick={onCompareClick}
           disabled={compareCount < 2}
-          title={
-            compareCount < 2
-              ? 'Select 2+ models to compare'
-              : `Compare ${compareCount} models`
-          }
+          title={compareCount < 2 ? 'Select 2+ models to compare' : `Compare ${compareCount} models`}
         >
-          ⚖️
-          {compareCount > 0 && (
-            <span className="header-badge">{compareCount}</span>
-          )}
+          ⚖️{compareCount > 0 && <span className="header-badge">{compareCount}</span>}
         </button>
-
-        <button
-          className="header-btn theme-toggle"
-          onClick={onToggleDark}
-          aria-label="Toggle theme"
-        >
+        <button className="header-btn theme-toggle" onClick={onToggleDark} aria-label="Toggle theme">
           {darkMode ? '☀️' : '🌙'}
         </button>
       </div>

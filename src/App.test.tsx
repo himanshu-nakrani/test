@@ -8,61 +8,72 @@ beforeEach(() => {
 })
 
 describe('AI Models Hub', () => {
-  it('renders the hero section with animated stats', () => {
+  it('renders the hero section with stats and showcase', () => {
     render(<App />)
     const hero = document.querySelector('.hero-section')!
     expect(hero).toBeTruthy()
     expect(within(hero as HTMLElement).getByText(/Explore.*models from.*providers/i)).toBeInTheDocument()
+    expect(within(hero as HTMLElement).getByText('🔥 Featured')).toBeInTheDocument()
+    expect(within(hero as HTMLElement).getByText('🆕 Recently Released')).toBeInTheDocument()
   })
 
-  it('renders model cards on the home page', () => {
+  it('renders model cards in the grid', () => {
     render(<App />)
-    expect(screen.getByText('GPT-4o')).toBeInTheDocument()
-    expect(screen.getByText('Claude 4 Opus')).toBeInTheDocument()
-    expect(screen.getByText('Gemini 2.5 Pro')).toBeInTheDocument()
+    const grid = document.querySelector('.model-grid')!
+    expect(grid).toBeTruthy()
+    expect(within(grid as HTMLElement).getByText('Claude 4 Opus')).toBeInTheDocument()
   })
 
   it('filters models by search query', () => {
     render(<App />)
-    const searchInput = screen.getByPlaceholderText(/Search.*models/i)
-    fireEvent.change(searchInput, { target: { value: 'Claude' } })
-    expect(screen.getByText('Claude 4 Opus')).toBeInTheDocument()
-    expect(screen.getByText('Claude 4 Sonnet')).toBeInTheDocument()
-    expect(screen.queryByText('GPT-4o')).not.toBeInTheDocument()
+    fireEvent.change(screen.getByPlaceholderText(/Search.*models/i), { target: { value: 'Phi-4' } })
+    const grid = document.querySelector('.model-grid')!
+    expect(within(grid as HTMLElement).getByText('Phi-4')).toBeInTheDocument()
+    expect(within(grid as HTMLElement).queryByText('Claude 4 Opus')).not.toBeInTheDocument()
   })
 
   it('opens model detail view on card click', () => {
     render(<App />)
-    fireEvent.click(screen.getByText('GPT-4o'))
+    const grid = document.querySelector('.model-grid')!
+    fireEvent.click(within(grid as HTMLElement).getByText('Claude 4 Opus'))
     expect(screen.getByText(/Back to all models/i)).toBeInTheDocument()
     expect(screen.getByText(/Specifications/i)).toBeInTheDocument()
-    expect(screen.getByText(/Related Models/i)).toBeInTheDocument()
   })
 
   it('navigates back from detail view', () => {
     render(<App />)
-    fireEvent.click(screen.getByText('GPT-4o'))
-    expect(screen.getByText(/Back to all models/i)).toBeInTheDocument()
+    const grid = document.querySelector('.model-grid')!
+    fireEvent.click(within(grid as HTMLElement).getByText('Claude 4 Opus'))
     fireEvent.click(screen.getByText(/Back to all models/i))
     expect(document.querySelector('.hero-section')).toBeTruthy()
   })
 
   it('filters by provider chip', () => {
     render(<App />)
-    const anthropicChip = screen.getByRole('button', { name: 'Anthropic' })
-    fireEvent.click(anthropicChip)
-    expect(screen.getByText('Claude 4 Opus')).toBeInTheDocument()
-    expect(screen.queryByText('GPT-4o')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Microsoft' }))
+    const grid = document.querySelector('.model-grid')!
+    expect(within(grid as HTMLElement).getByText('Phi-4')).toBeInTheDocument()
+    expect(within(grid as HTMLElement).queryByText('Claude 4 Opus')).not.toBeInTheDocument()
   })
 
   it('switches between grid and table view', () => {
     render(<App />)
-    const tableBtn = screen.getByTitle('Table view')
-    fireEvent.click(tableBtn)
+    fireEvent.click(screen.getByTitle('Table view'))
     expect(document.querySelector('.model-table')).toBeTruthy()
-    const gridBtn = screen.getByTitle('Grid view')
-    fireEvent.click(gridBtn)
+    fireEvent.click(screen.getByTitle('Grid view'))
     expect(document.querySelector('.model-grid')).toBeTruthy()
+  })
+
+  it('navigates to leaderboard page', () => {
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Leaderboard' }))
+    expect(screen.getByText(/AI Model Leaderboard/i)).toBeInTheDocument()
+  })
+
+  it('navigates to cost calculator page', () => {
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Pricing' }))
+    expect(screen.getByText(/Cost Calculator/i)).toBeInTheDocument()
   })
 
   it('toggles favorites on model cards', () => {

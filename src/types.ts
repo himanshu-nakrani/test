@@ -4,10 +4,30 @@ export type PricingTier = 'free' | 'low' | 'medium' | 'high' | 'premium'
 
 export type LicenseType = 'proprietary' | 'open-source' | 'open-weights'
 
+export type Modality = 'text' | 'image' | 'audio' | 'video' | 'code' | 'embeddings'
+
 export interface ModelPricing {
   input: string
   output: string
   free?: boolean
+  inputPerMillion?: number
+  outputPerMillion?: number
+}
+
+export interface BenchmarkScores {
+  mmlu?: number
+  humanEval?: number
+  gsm8k?: number
+  mtBench?: number
+  arc?: number
+  hellaswag?: number
+  [key: string]: number | undefined
+}
+
+export interface CodeSnippet {
+  language: 'python' | 'javascript' | 'curl'
+  label: string
+  code: string
 }
 
 export interface AIModel {
@@ -20,6 +40,7 @@ export interface AIModel {
   categories: ModelCategory[]
   parameters: string
   contextWindow: string
+  contextTokens?: number
   releaseDate: string
   pricing: ModelPricing
   pricingTier: PricingTier
@@ -31,9 +52,17 @@ export interface AIModel {
   documentationUrl: string
   isNew?: boolean
   isFeatured?: boolean
+  inputModalities?: Modality[]
+  outputModalities?: Modality[]
+  latency?: string
+  benchmarks?: BenchmarkScores
+  codeSnippets?: CodeSnippet[]
+  tags?: string[]
 }
 
 export type ViewMode = 'grid' | 'table'
+
+export type AppPage = 'home' | 'detail' | 'compare' | 'leaderboard' | 'calculator'
 
 export interface FilterState {
   search: string
@@ -42,4 +71,7 @@ export interface FilterState {
   pricingTiers: PricingTier[]
   licenses: LicenseType[]
   sortBy: 'name' | 'provider' | 'date' | 'context' | 'price'
+  minContext?: number
+  maxContext?: number
+  minMmlu?: number
 }
