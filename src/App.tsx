@@ -410,7 +410,7 @@ function App() {
 
   return (
     <AuthProvider>
-    <div className="app">
+    <div className="app container-fluid px-0">
       <a href="#main-content" className="skip-to-content">Skip to content</a>
       <Header
         darkMode={darkMode}
