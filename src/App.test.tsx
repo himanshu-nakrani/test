@@ -1,6 +1,15 @@
-import { render, screen, fireEvent, within } from '@testing-library/react'
+import { render, screen, fireEvent, within, waitFor } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect, beforeEach } from 'vitest'
 import App from './App'
+
+function renderApp(initialRoute = '/') {
+  return render(
+    <MemoryRouter initialEntries={[initialRoute]}>
+      <App />
+    </MemoryRouter>,
+  )
+}
 
 beforeEach(() => {
   window.scrollTo = () => {}
@@ -9,31 +18,31 @@ beforeEach(() => {
 
 describe('NeuralAtlas', () => {
   it('renders the hero section with stats and showcase', () => {
-    render(<App />)
+    renderApp()
     const hero = document.querySelector('.hero-section')!
     expect(hero).toBeTruthy()
     expect(within(hero as HTMLElement).getByText(/Explore.*models from.*providers/i)).toBeInTheDocument()
-    expect(within(hero as HTMLElement).getByText('🔥 Featured')).toBeInTheDocument()
-    expect(within(hero as HTMLElement).getByText('🆕 Recently Released')).toBeInTheDocument()
+    expect(within(hero as HTMLElement).getByText(/Featured/)).toBeInTheDocument()
+    expect(within(hero as HTMLElement).getByText(/Recently Released/)).toBeInTheDocument()
   })
 
   it('renders model cards in the grid', () => {
-    render(<App />)
+    renderApp()
     const grid = document.querySelector('.model-grid')!
     expect(grid).toBeTruthy()
     expect(within(grid as HTMLElement).getByText('Claude 4 Opus')).toBeInTheDocument()
   })
 
   it('filters models by search query', () => {
-    render(<App />)
+    renderApp()
     fireEvent.change(screen.getByPlaceholderText(/Search.*models/i), { target: { value: 'Phi-4' } })
     const grid = document.querySelector('.model-grid')!
-    expect(within(grid as HTMLElement).getByText('Phi-4')).toBeInTheDocument()
+    expect(within(grid as HTMLElement).getAllByText('Phi-4').length).toBeGreaterThan(0)
     expect(within(grid as HTMLElement).queryByText('Claude 4 Opus')).not.toBeInTheDocument()
   })
 
   it('opens model detail view on card click', () => {
-    render(<App />)
+    renderApp()
     const grid = document.querySelector('.model-grid')!
     fireEvent.click(within(grid as HTMLElement).getByText('Claude 4 Opus'))
     expect(screen.getByText(/Back to all models/i)).toBeInTheDocument()
@@ -41,7 +50,7 @@ describe('NeuralAtlas', () => {
   })
 
   it('navigates back from detail view', () => {
-    render(<App />)
+    renderApp()
     const grid = document.querySelector('.model-grid')!
     fireEvent.click(within(grid as HTMLElement).getByText('Claude 4 Opus'))
     fireEvent.click(screen.getByText(/Back to all models/i))
@@ -49,7 +58,7 @@ describe('NeuralAtlas', () => {
   })
 
   it('filters by provider chip', () => {
-    render(<App />)
+    renderApp()
     fireEvent.click(screen.getByRole('button', { name: 'Microsoft' }))
     const grid = document.querySelector('.model-grid')!
     expect(within(grid as HTMLElement).getByText('Phi-4')).toBeInTheDocument()
@@ -57,30 +66,37 @@ describe('NeuralAtlas', () => {
   })
 
   it('switches between grid and table view', () => {
-    render(<App />)
+    renderApp()
     fireEvent.click(screen.getByTitle('Table view'))
     expect(document.querySelector('.model-table')).toBeTruthy()
     fireEvent.click(screen.getByTitle('Grid view'))
     expect(document.querySelector('.model-grid')).toBeTruthy()
   })
 
-  it('navigates to leaderboard page', () => {
-    render(<App />)
-    fireEvent.click(screen.getByRole('button', { name: 'Leaderboard' }))
-    expect(screen.getByText(/AI Model Leaderboard/i)).toBeInTheDocument()
+  it('navigates to leaderboard page', async () => {
+    renderApp('/leaderboard')
+    await waitFor(() => {
+      expect(screen.getByText(/AI Model Leaderboard/i)).toBeInTheDocument()
+    })
   })
 
-  it('navigates to cost calculator page', () => {
-    render(<App />)
-    fireEvent.click(screen.getByRole('button', { name: 'Pricing' }))
-    expect(screen.getByText(/Cost Calculator/i)).toBeInTheDocument()
+  it('navigates to cost calculator page', async () => {
+    renderApp('/calculator')
+    await waitFor(() => {
+      expect(screen.getByText(/Cost Calculator/i)).toBeInTheDocument()
+    })
   })
 
   it('toggles favorites on model cards', () => {
-    render(<App />)
+    renderApp()
     const favButtons = document.querySelectorAll('.fav-btn')
     expect(favButtons.length).toBeGreaterThan(0)
     fireEvent.click(favButtons[0])
     expect(favButtons[0].classList.contains('is-fav')).toBe(true)
+  })
+
+  it('renders 404 page for unknown routes', () => {
+    renderApp('/nonexistent')
+    expect(screen.getByText('404')).toBeInTheDocument()
   })
 })

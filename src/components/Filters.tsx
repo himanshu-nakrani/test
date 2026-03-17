@@ -1,3 +1,4 @@
+import { LayoutGrid, List, X, MessageSquare, Brain, Code, Eye, Layers, Image, Music, Video } from 'lucide-react'
 import type { ModelCategory, PricingTier, LicenseType, FilterState, ViewMode } from '../types'
 import { allProviders, allCategories } from '../data/models'
 
@@ -9,9 +10,19 @@ interface FiltersProps {
   onViewModeChange: (mode: ViewMode) => void
 }
 
+const categoryIcons: Record<ModelCategory, React.ReactNode> = {
+  chat: <MessageSquare size={14} aria-hidden="true" />,
+  reasoning: <Brain size={14} aria-hidden="true" />,
+  code: <Code size={14} aria-hidden="true" />,
+  vision: <Eye size={14} aria-hidden="true" />,
+  embedding: <Layers size={14} aria-hidden="true" />,
+  image: <Image size={14} aria-hidden="true" />,
+  audio: <Music size={14} aria-hidden="true" />,
+  video: <Video size={14} aria-hidden="true" />,
+}
 const categoryLabels: Record<ModelCategory, string> = {
-  chat: '💬 Chat', reasoning: '🧠 Reasoning', code: '💻 Code', vision: '👁️ Vision',
-  embedding: '📐 Embedding', image: '🎨 Image Gen', audio: '🎵 Audio', video: '🎬 Video',
+  chat: 'Chat', reasoning: 'Reasoning', code: 'Code', vision: 'Vision',
+  embedding: 'Embedding', image: 'Image Gen', audio: 'Audio', video: 'Video',
 }
 const pricingLabels: Record<PricingTier, string> = {
   free: 'Free', low: '$ Low', medium: '$$ Medium', high: '$$$ High', premium: '$$$$ Premium',
@@ -42,15 +53,15 @@ export default function Filters({ filters, onChange, resultCount, viewMode, onVi
     <aside className="filters">
       <div className="filters-header">
         <h2>Filters</h2>
-        <span className="result-count">{resultCount} models</span>
+        <span className="result-count" aria-live="polite">{resultCount} models</span>
       </div>
 
       <div className="view-mode-switch">
-        <button className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`} onClick={() => onViewModeChange('grid')} title="Grid view">▦ Grid</button>
-        <button className={`view-btn ${viewMode === 'table' ? 'active' : ''}`} onClick={() => onViewModeChange('table')} title="Table view">≡ Table</button>
+        <button className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`} onClick={() => onViewModeChange('grid')} title="Grid view"><LayoutGrid size={14} aria-hidden="true" /> Grid</button>
+        <button className={`view-btn ${viewMode === 'table' ? 'active' : ''}`} onClick={() => onViewModeChange('table')} title="Table view"><List size={14} aria-hidden="true" /> Table</button>
       </div>
 
-      {hasActive && <button className="clear-filters" onClick={clearAll}>✕ Clear all filters</button>}
+      {hasActive && <button className="clear-filters" onClick={clearAll}><X size={14} aria-hidden="true" /> Clear all filters</button>}
 
       <div className="filter-section">
         <h3>Provider</h3>
@@ -65,7 +76,7 @@ export default function Filters({ filters, onChange, resultCount, viewMode, onVi
         <h3>Category</h3>
         <div className="filter-chips">
           {allCategories.map((c) => (
-            <button key={c} className={`chip ${filters.categories.includes(c) ? 'active' : ''}`} onClick={() => onChange({ ...filters, categories: toggle(filters.categories, c) })}>{categoryLabels[c]}</button>
+            <button key={c} className={`chip ${filters.categories.includes(c) ? 'active' : ''}`} onClick={() => onChange({ ...filters, categories: toggle(filters.categories, c) })}>{categoryIcons[c]} {categoryLabels[c]}</button>
           ))}
         </div>
       </div>

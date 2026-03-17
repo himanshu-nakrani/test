@@ -1,6 +1,10 @@
 import { useState, useMemo } from 'react'
+import { motion } from 'framer-motion'
+import { Link, useNavigate } from 'react-router-dom'
+import { Trophy, ArrowLeft } from 'lucide-react'
 import type { AIModel } from '../types'
 import { models } from '../data/models'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const BENCHMARKS = [
   { key: 'mmlu', label: 'MMLU', max: 100, description: 'Massive Multitask Language Understanding' },
@@ -11,14 +15,11 @@ const BENCHMARKS = [
 
 type BenchmarkKey = (typeof BENCHMARKS)[number]['key']
 
-export default function Leaderboard({
-  onBack,
-  onModelClick,
-}: {
-  onBack: () => void
-  onModelClick: (m: AIModel) => void
-}) {
+export default function Leaderboard() {
+  const navigate = useNavigate()
   const [activeBenchmark, setActiveBenchmark] = useState<BenchmarkKey>('mmlu')
+
+  usePageTitle('Leaderboard')
 
   const benchInfo = BENCHMARKS.find((b) => b.key === activeBenchmark)!
 
@@ -33,14 +34,18 @@ export default function Leaderboard({
 
   const maxScore = benchInfo.max
 
+  const handleModelClick = (m: AIModel) => {
+    navigate(`/models/${m.id}`)
+  }
+
   return (
     <div className="leaderboard-page">
-      <button className="back-btn" onClick={onBack}>
-        ← Back to models
-      </button>
+      <Link to="/" className="back-btn">
+        <ArrowLeft size={16} aria-hidden="true" /> Back to models
+      </Link>
 
       <div className="lb-hero">
-        <h1>🏆 AI Model Leaderboard</h1>
+        <h1><Trophy size={24} aria-hidden="true" /> AI Model Leaderboard</h1>
         <p>Compare models by benchmark performance. Click a model to view details.</p>
       </div>
 
@@ -64,41 +69,47 @@ export default function Leaderboard({
           const pct = (score / maxScore) * 100
 
           return (
-            <button
+            <motion.div
               key={m.id}
-              className="lb-row"
-              onClick={() => onModelClick(m)}
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
             >
-              <span className="lb-rank">#{i + 1}</span>
-              <div className="lb-model-info">
-                <span className="lb-model-name">{m.name}</span>
-                <span className="lb-model-provider">
-                  <span
-                    className="provider-dot"
-                    style={{ background: m.providerColor }}
+              <button
+                className="lb-row"
+                onClick={() => handleModelClick(m)}
+              >
+                <span className="lb-rank">#{i + 1}</span>
+                <div className="lb-model-info">
+                  <span className="lb-model-name">{m.name}</span>
+                  <span className="lb-model-provider">
+                    <span
+                      className="provider-dot"
+                      style={{ background: m.providerColor }}
+                    />
+                    {m.provider}
+                  </span>
+                </div>
+                <div className="lb-bar-container">
+                  <div
+                    className="lb-bar"
+                    style={{
+                      width: `${pct}%`,
+                      background: i === 0
+                        ? 'linear-gradient(90deg, #f59e0b, #f97316)'
+                        : i === 1
+                          ? 'linear-gradient(90deg, #94a3b8, #cbd5e1)'
+                          : i === 2
+                            ? 'linear-gradient(90deg, #b45309, #d97706)'
+                            : 'var(--accent)',
+                    }}
                   />
-                  {m.provider}
+                </div>
+                <span className="lb-score">
+                  {activeBenchmark === 'mtBench' ? score.toFixed(1) : score.toFixed(1)}
                 </span>
-              </div>
-              <div className="lb-bar-container">
-                <div
-                  className="lb-bar"
-                  style={{
-                    width: `${pct}%`,
-                    background: i === 0
-                      ? 'linear-gradient(90deg, #f59e0b, #f97316)'
-                      : i === 1
-                        ? 'linear-gradient(90deg, #94a3b8, #cbd5e1)'
-                        : i === 2
-                          ? 'linear-gradient(90deg, #b45309, #d97706)'
-                          : 'var(--accent)',
-                  }}
-                />
-              </div>
-              <span className="lb-score">
-                {activeBenchmark === 'mtBench' ? score.toFixed(1) : score.toFixed(1)}
-              </span>
-            </button>
+              </button>
+            </motion.div>
           )
         })}
       </div>

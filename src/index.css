@@ -1,97 +1,118 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 /* ===== Light Theme ===== */
 :root,
 [data-theme='light'] {
-  --bg: #fafbfc;
-  --bg-translucent: rgba(250, 251, 252, 0.9);
+  --bg: #fafafa;
+  --bg-translucent: rgba(250, 250, 250, 0.85);
   --surface: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-tertiary: #9ca3af;
-  --border: #e5e7eb;
-  --border-hover: #d1d5db;
+  --surface-raised: #ffffff;
+  --text-primary: #09090b;
+  --text-secondary: #71717a;
+  --text-tertiary: #a1a1aa;
+  --border: #e4e4e7;
+  --border-hover: #d4d4d8;
   --card-bg: #ffffff;
-  --card-hover: #f9fafb;
-  --hover-bg: #f3f4f6;
-  --accent: #6366f1;
-  --accent-light: rgba(99, 102, 241, 0.1);
-  --accent-text: #4f46e5;
-  --section-alt-bg: #f1f5f9;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --card-hover: #fafafa;
+  --hover-bg: #f4f4f5;
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-light: rgba(124, 58, 237, 0.06);
+  --accent-text: #6d28d9;
+  --accent-gradient: linear-gradient(135deg, #7c3aed, #a78bfa);
+  --section-alt-bg: linear-gradient(180deg, #fafafa 0%, #f4f4f5 100%);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --badge-new: #059669;
   --badge-new-bg: #ecfdf5;
   --badge-featured: #d97706;
   --badge-featured-bg: #fffbeb;
-  --strength-bg: #ecfdf5;
-  --strength-color: #065f46;
+  --strength-bg: #f0fdf4;
+  --strength-color: #166534;
   --limitation-bg: #fef2f2;
   --limitation-color: #991b1b;
-  --mono: ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
-  --chip-bg: #f1f5f9;
-  --chip-active-bg: #6366f1;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --chip-bg: #f4f4f5;
+  --chip-active-bg: #7c3aed;
   --chip-active-color: #ffffff;
+  --glow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+  --card-border: #e4e4e7;
+  --ring: 0 0 0 2px rgba(124, 58, 237, 0.2);
+  --hero-bg: linear-gradient(180deg, #f5f3ff 0%, #fafafa 60%);
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-sm: 8px;
 }
 
 /* ===== Dark Theme ===== */
 [data-theme='dark'] {
-  --bg: #0b0d14;
-  --bg-translucent: rgba(11, 13, 20, 0.9);
-  --surface: #12141d;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-tertiary: #64748b;
-  --border: #1e293b;
-  --border-hover: #334155;
-  --card-bg: #151822;
-  --card-hover: #1a1e2e;
-  --hover-bg: #1e293b;
-  --accent: #818cf8;
-  --accent-light: rgba(129, 140, 248, 0.12);
-  --accent-text: #a5b4fc;
-  --section-alt-bg: #0f1119;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --bg: #09090b;
+  --bg-translucent: rgba(9, 9, 11, 0.85);
+  --surface: #18181b;
+  --surface-raised: #1f1f23;
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --border: #27272a;
+  --border-hover: #3f3f46;
+  --card-bg: #18181b;
+  --card-hover: #1f1f23;
+  --hover-bg: #27272a;
+  --accent: #a78bfa;
+  --accent-hover: #8b5cf6;
+  --accent-light: rgba(167, 139, 250, 0.08);
+  --accent-text: #c4b5fd;
+  --accent-gradient: linear-gradient(135deg, #a78bfa, #c084fc);
+  --section-alt-bg: linear-gradient(180deg, #09090b 0%, #18181b 100%);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 1px 3px 0 rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+  --shadow-xl: 0 10px 15px -3px rgb(0 0 0 / 0.5);
   --badge-new: #34d399;
   --badge-new-bg: rgba(52, 211, 153, 0.1);
   --badge-featured: #fbbf24;
   --badge-featured-bg: rgba(251, 191, 36, 0.1);
-  --strength-bg: rgba(16, 185, 129, 0.1);
+  --strength-bg: rgba(16, 185, 129, 0.08);
   --strength-color: #6ee7b7;
-  --limitation-bg: rgba(239, 68, 68, 0.1);
+  --limitation-bg: rgba(239, 68, 68, 0.08);
   --limitation-color: #fca5a5;
-  --chip-bg: #1e293b;
-  --chip-active-bg: #818cf8;
-  --chip-active-color: #0f172a;
+  --chip-bg: #27272a;
+  --chip-active-bg: #a78bfa;
+  --chip-active-color: #09090b;
+  --glow: 0 0 0 3px rgba(167, 139, 250, 0.15);
+  --card-border: #27272a;
+  --ring: 0 0 0 2px rgba(167, 139, 250, 0.25);
+  --hero-bg: linear-gradient(180deg, #0f0a1f 0%, #09090b 60%);
 }
 
 /* ===== Reset ===== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+  letter-spacing: -0.011em;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-#root {
-  min-height: 100vh;
-}
+#root { min-height: 100vh; }
 
-button {
-  font-family: inherit;
-}
+button { font-family: inherit; letter-spacing: inherit; }
+
+::selection { background: var(--accent); color: #fff; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

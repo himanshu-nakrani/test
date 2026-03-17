@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react'
 import type { AIModel } from '../types'
 
 interface ModelTableProps {
@@ -52,7 +53,7 @@ export default function ModelTable({
                   className={`table-fav ${isFav(m.id) ? 'is-fav' : ''}`}
                   onClick={() => onToggleFav(m.id)}
                 >
-                  {isFav(m.id) ? '★' : '☆'}
+                  <Star size={16} fill={isFav(m.id) ? 'currentColor' : 'none'} aria-hidden="true" />
                 </button>
               </td>
               <td className="td-model">
