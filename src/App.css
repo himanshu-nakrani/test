@@ -24,8 +24,8 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.6rem 1.5rem;
-  padding-top: max(0.6rem, env(safe-area-inset-top));
+  padding: 0.5rem 1.5rem;
+  padding-top: max(0.5rem, env(safe-area-inset-top));
   padding-left: max(1.5rem, env(safe-area-inset-left));
   padding-right: max(1.5rem, env(safe-area-inset-right));
   position: sticky;
@@ -43,6 +43,7 @@
   gap: 0.5rem;
   font-weight: 700;
   font-size: 1.05rem;
+  letter-spacing: -0.01em;
   cursor: pointer;
   background: none;
   border: none;
@@ -165,8 +166,9 @@
 /* ===== Hero Section ===== */
 .hero-section {
   text-align: center;
-  padding: 3rem 1.5rem 2.25rem;
+  padding: 3.5rem 1.5rem 2.5rem;
   background: var(--section-alt-bg);
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.05) 0%, transparent 50%);
   border-bottom: 1px solid var(--card-border);
 }
 
@@ -179,15 +181,16 @@
 }
 
 .hero-title {
-  font-size: 2.6rem;
-  font-weight: 800;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   line-height: 1.15;
   margin: 0 0 0.85rem;
   color: var(--text-primary);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 30%, #a855f7 60%, #ec4899 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 40%, #c084fc 70%, #e879f9 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -216,6 +219,7 @@
   font-weight: 800;
   color: var(--accent);
   line-height: 1.2;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
@@ -271,7 +275,7 @@
   overflow-y: auto;
   background: var(--surface);
   border: 1px solid var(--card-border);
-  border-radius: 14px;
+  border-radius: var(--radius-lg, 16px);
   padding: 1.1rem;
   box-shadow: var(--shadow-sm);
 }
@@ -356,7 +360,7 @@
 .filter-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 
 .chip {
-  padding: 0.25rem 0.55rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 6px;
   border: 1px solid var(--border);
   background: var(--chip-bg);
@@ -420,8 +424,9 @@
   position: relative;
   background: var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 14px;
+  border-radius: var(--radius-lg, 16px);
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
   transition: border-color 0.2s;
 }
 
@@ -504,7 +509,7 @@
 
 .badge {
   padding: 0.15rem 0.6rem;
-  border-radius: 99px;
+  border-radius: 6px;
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -541,7 +546,7 @@
 .license-open-source { background: rgba(16, 185, 129, 0.1); color: #10b981; }
 .license-open-weights { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
 
-.card-title { margin: 0 0 0.3rem; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+.card-title { margin: 0 0 0.3rem; font-size: 1.1rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
 
 .card-description {
   margin: 0 0 0.6rem;
@@ -558,8 +563,8 @@
 
 .category-tag {
   font-size: 0.68rem;
-  padding: 0.18rem 0.45rem;
-  border-radius: 99px;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
   background: var(--accent-light);
   color: var(--accent);
   font-weight: 600;
@@ -835,7 +840,8 @@
 .detail-title {
   margin: 0 0 0.65rem;
   font-size: 2.1rem;
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -874,7 +880,7 @@
 .detail-card {
   background: var(--surface);
   border: 1px solid var(--card-border);
-  border-radius: 14px;
+  border-radius: var(--radius-lg, 16px);
   padding: 1.35rem;
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.2s;
@@ -1015,12 +1021,11 @@
 /* ===== Footer ===== */
 .footer {
   margin-top: auto;
-  padding: 1.25rem;
+  padding: 2rem;
   text-align: center;
   border-top: 1px solid var(--card-border);
   color: var(--text-tertiary);
-  font-size: 0.82rem;
-  background: var(--surface);
+  font-size: 0.78rem;
 }
 
 .footer p { margin: 0; }
@@ -1194,7 +1199,7 @@
   flex: 1; height: 22px; background: var(--hover-bg); border-radius: 6px; overflow: hidden;
 }
 .bench-bar {
-  height: 100%; border-radius: 6px; background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  height: 100%; border-radius: 6px; background: linear-gradient(90deg, #7c3aed, #a78bfa);
   transition: width 0.5s ease-out;
 }
 .bench-bar-green { background: linear-gradient(90deg, #10b981, #34d399); }
