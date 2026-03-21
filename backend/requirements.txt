@@ -1,0 +1,8 @@
+fastapi==0.135.1
+httpx==0.28.1
+pydantic==2.12.5
+pydantic_core==2.41.5
+PyJWT==2.7.0
+python-multipart==0.0.22
+SQLAlchemy==2.0.48
+uvicorn==0.42.0

@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from 'react'
+import { LayoutGrid, List, X, MessageSquare, Brain, Code, Eye, Layers, Image, Music, Video, BookmarkPlus, Trash2 } from 'lucide-react'
 import type { ModelCategory, PricingTier, LicenseType, FilterState, ViewMode } from '../types'
 import { allProviders, allCategories } from '../data/models'
 
@@ -9,9 +11,24 @@ interface FiltersProps {
   onViewModeChange: (mode: ViewMode) => void
 }
 
+interface FilterPreset {
+  name: string
+  filters: FilterState
+}
+
+const categoryIcons: Record<ModelCategory, React.ReactNode> = {
+  chat: <MessageSquare size={14} aria-hidden="true" />,
+  reasoning: <Brain size={14} aria-hidden="true" />,
+  code: <Code size={14} aria-hidden="true" />,
+  vision: <Eye size={14} aria-hidden="true" />,
+  embedding: <Layers size={14} aria-hidden="true" />,
+  image: <Image size={14} aria-hidden="true" />,
+  audio: <Music size={14} aria-hidden="true" />,
+  video: <Video size={14} aria-hidden="true" />,
+}
 const categoryLabels: Record<ModelCategory, string> = {
-  chat: '💬 Chat', reasoning: '🧠 Reasoning', code: '💻 Code', vision: '👁️ Vision',
-  embedding: '📐 Embedding', image: '🎨 Image Gen', audio: '🎵 Audio', video: '🎬 Video',
+  chat: 'Chat', reasoning: 'Reasoning', code: 'Code', vision: 'Vision',
+  embedding: 'Embedding', image: 'Image Gen', audio: 'Audio', video: 'Video',
 }
 const pricingLabels: Record<PricingTier, string> = {
   free: 'Free', low: '$ Low', medium: '$$ Medium', high: '$$$ High', premium: '$$$$ Premium',
@@ -30,6 +47,33 @@ const contextOptions = [
 
 export default function Filters({ filters, onChange, resultCount, viewMode, onViewModeChange }: FiltersProps) {
   const toggle = <T,>(arr: T[], item: T) => arr.includes(item) ? arr.filter((x) => x !== item) : [...arr, item]
+  const [presetName, setPresetName] = useState('')
+  const [presets, setPresets] = useState<FilterPreset[]>([])
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('neural-atlas-filter-presets')
+      if (!raw) return
+      const parsed = JSON.parse(raw) as FilterPreset[]
+      if (Array.isArray(parsed)) setPresets(parsed.slice(0, 8))
+    } catch {
+      // Ignore malformed local storage content.
+    }
+  }, [])
+
+  const savePresets = (next: FilterPreset[]) => {
+    setPresets(next)
+    try {
+      localStorage.setItem('neural-atlas-filter-presets', JSON.stringify(next))
+    } catch {
+      // Ignore quota/storage failures.
+    }
+  }
+
+  const activeFilterState = useMemo<FilterState>(() => ({
+    ...filters,
+    search: '',
+  }), [filters])
 
   const hasActive =
     filters.providers.length > 0 || filters.categories.length > 0 ||
@@ -37,20 +81,66 @@ export default function Filters({ filters, onChange, resultCount, viewMode, onVi
     (filters.minContext && filters.minContext > 0) || (filters.minMmlu && filters.minMmlu > 0)
 
   const clearAll = () => onChange({ ...filters, providers: [], categories: [], pricingTiers: [], licenses: [], minContext: undefined, minMmlu: undefined })
+  const savePreset = () => {
+    const name = presetName.trim()
+    if (!name) return
+    const deduped = presets.filter((p) => p.name.toLowerCase() !== name.toLowerCase())
+    savePresets([{ name, filters: activeFilterState }, ...deduped].slice(0, 8))
+    setPresetName('')
+  }
+
+  const removePreset = (name: string) => {
+    savePresets(presets.filter((p) => p.name !== name))
+  }
 
   return (
     <aside className="filters">
       <div className="filters-header">
         <h2>Filters</h2>
-        <span className="result-count">{resultCount} models</span>
+        <span className="result-count" aria-live="polite">{resultCount} models</span>
       </div>
 
       <div className="view-mode-switch">
-        <button className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`} onClick={() => onViewModeChange('grid')} title="Grid view">▦ Grid</button>
-        <button className={`view-btn ${viewMode === 'table' ? 'active' : ''}`} onClick={() => onViewModeChange('table')} title="Table view">≡ Table</button>
+        <button className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`} onClick={() => onViewModeChange('grid')} title="Grid view"><LayoutGrid size={14} aria-hidden="true" /> Grid</button>
+        <button className={`view-btn ${viewMode === 'table' ? 'active' : ''}`} onClick={() => onViewModeChange('table')} title="Table view"><List size={14} aria-hidden="true" /> Table</button>
       </div>
 
-      {hasActive && <button className="clear-filters" onClick={clearAll}>✕ Clear all filters</button>}
+      {hasActive && <button className="clear-filters" onClick={clearAll}><X size={14} aria-hidden="true" /> Clear all filters</button>}
+
+      <div className="filter-section">
+        <h3>Saved Presets</h3>
+        <div className="preset-save-row">
+          <input
+            className="preset-input"
+            placeholder="Preset name"
+            value={presetName}
+            onChange={(e) => setPresetName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                savePreset()
+              }
+            }}
+          />
+          <button className="preset-save-btn" onClick={savePreset} title="Save current filters">
+            <BookmarkPlus size={14} aria-hidden="true" />
+          </button>
+        </div>
+        {presets.length > 0 && (
+          <div className="preset-list">
+            {presets.map((preset) => (
+              <div key={preset.name} className="preset-item">
+                <button className="preset-chip" onClick={() => onChange({ ...preset.filters })}>
+                  {preset.name}
+                </button>
+                <button className="preset-delete-btn" onClick={() => removePreset(preset.name)} title="Delete preset">
+                  <Trash2 size={12} aria-hidden="true" />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       <div className="filter-section">
         <h3>Provider</h3>
@@ -65,7 +155,7 @@ export default function Filters({ filters, onChange, resultCount, viewMode, onVi
         <h3>Category</h3>
         <div className="filter-chips">
           {allCategories.map((c) => (
-            <button key={c} className={`chip ${filters.categories.includes(c) ? 'active' : ''}`} onClick={() => onChange({ ...filters, categories: toggle(filters.categories, c) })}>{categoryLabels[c]}</button>
+            <button key={c} className={`chip ${filters.categories.includes(c) ? 'active' : ''}`} onClick={() => onChange({ ...filters, categories: toggle(filters.categories, c) })}>{categoryIcons[c]} {categoryLabels[c]}</button>
           ))}
         </div>
       </div>
@@ -113,6 +203,19 @@ export default function Filters({ filters, onChange, resultCount, viewMode, onVi
       <div className="filter-section">
         <h3>Sort By</h3>
         <select className="sort-select" value={filters.sortBy} onChange={(e) => onChange({ ...filters, sortBy: e.target.value as FilterState['sortBy'] })}>
+          <option value="name">Name (A-Z)</option>
+          <option value="provider">Provider</option>
+          <option value="date">Release Date (Newest)</option>
+          <option value="context">Context Window</option>
+          <option value="price">Price (Low to High)</option>
+          <option value="trending">Trending (Recency + Quality)</option>
+        </select>
+        <select
+          className="sort-select secondary-sort"
+          value={filters.secondarySortBy || ''}
+          onChange={(e) => onChange({ ...filters, secondarySortBy: (e.target.value || undefined) as FilterState['secondarySortBy'] })}
+        >
+          <option value="">Secondary sort (optional)</option>
           <option value="name">Name (A-Z)</option>
           <option value="provider">Provider</option>
           <option value="date">Release Date (Newest)</option>

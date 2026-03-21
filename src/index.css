@@ -1,69 +1,81 @@
 /* ===== Light Theme ===== */
 :root,
 [data-theme='light'] {
-  --bg: #fafbfc;
-  --bg-translucent: rgba(250, 251, 252, 0.9);
+  --bg: #f8f9fa;
+  --bg-translucent: rgba(248, 249, 250, 0.86);
   --surface: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-tertiary: #9ca3af;
-  --border: #e5e7eb;
-  --border-hover: #d1d5db;
+  --surface-raised: #fdfefe;
+  --text-primary: #0d1117;
+  --text-secondary: #3d444d;
+  --text-tertiary: #656d76;
+  --border: #d0d7de;
+  --border-hover: #b1bac4;
   --card-bg: #ffffff;
-  --card-hover: #f9fafb;
-  --hover-bg: #f3f4f6;
-  --accent: #6366f1;
-  --accent-light: rgba(99, 102, 241, 0.1);
-  --accent-text: #4f46e5;
-  --section-alt-bg: #f1f5f9;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --badge-new: #059669;
-  --badge-new-bg: #ecfdf5;
-  --badge-featured: #d97706;
-  --badge-featured-bg: #fffbeb;
-  --strength-bg: #ecfdf5;
-  --strength-color: #065f46;
-  --limitation-bg: #fef2f2;
-  --limitation-color: #991b1b;
-  --mono: ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
-  --chip-bg: #f1f5f9;
-  --chip-active-bg: #6366f1;
+  --card-hover: #f6f8fa;
+  --hover-bg: #f0f6fc;
+  --accent: #0969da;
+  --accent-hover: #0860ca;
+  --accent-light: rgba(9, 105, 218, 0.1);
+  --accent-text: #033d8b;
+  --accent-gradient: linear-gradient(130deg, #0969da 0%, #1f6feb 45%, #0860ca 100%);
+  --section-alt-bg: linear-gradient(180deg, rgba(9, 105, 218, 0.05) 0%, rgba(248, 249, 250, 0.3) 100%);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 12px 36px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.1);
+  --badge-new: #1a7f37;
+  --badge-new-bg: #dafbe1;
+  --badge-featured: #fb8500;
+  --badge-featured-bg: #fff0dc;
+  --strength-bg: #f0f9ff;
+  --strength-color: #0369a1;
+  --limitation-bg: #fee2e2;
+  --limitation-color: #7f1d1d;
+  --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  --chip-bg: #eaeef2;
+  --chip-active-bg: #0969da;
   --chip-active-color: #ffffff;
+  --glow: 0 0 24px rgba(9, 105, 218, 0.12);
+  --card-border: rgba(0, 0, 0, 0.06);
 }
 
 /* ===== Dark Theme ===== */
 [data-theme='dark'] {
-  --bg: #0b0d14;
-  --bg-translucent: rgba(11, 13, 20, 0.9);
-  --surface: #12141d;
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-tertiary: #64748b;
-  --border: #1e293b;
-  --border-hover: #334155;
-  --card-bg: #151822;
-  --card-hover: #1a1e2e;
-  --hover-bg: #1e293b;
-  --accent: #818cf8;
-  --accent-light: rgba(129, 140, 248, 0.12);
-  --accent-text: #a5b4fc;
-  --section-alt-bg: #0f1119;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
-  --badge-new: #34d399;
-  --badge-new-bg: rgba(52, 211, 153, 0.1);
-  --badge-featured: #fbbf24;
-  --badge-featured-bg: rgba(251, 191, 36, 0.1);
-  --strength-bg: rgba(16, 185, 129, 0.1);
-  --strength-color: #6ee7b7;
-  --limitation-bg: rgba(239, 68, 68, 0.1);
-  --limitation-color: #fca5a5;
-  --chip-bg: #1e293b;
-  --chip-active-bg: #818cf8;
-  --chip-active-color: #0f172a;
+  --bg: #0d1117;
+  --bg-translucent: rgba(13, 17, 23, 0.86);
+  --surface: #161b22;
+  --surface-raised: #1c2128;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-tertiary: #6e7681;
+  --border: #30363d;
+  --border-hover: #444c56;
+  --card-bg: #0d1117;
+  --card-hover: #161b22;
+  --hover-bg: #1c2128;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --accent-light: rgba(88, 166, 255, 0.15);
+  --accent-text: #79c0ff;
+  --accent-gradient: linear-gradient(130deg, #58a6ff 0%, #79c0ff 45%, #3b82f6 100%);
+  --section-alt-bg: linear-gradient(180deg, rgba(22, 27, 34, 0.9) 0%, rgba(13, 17, 23, 0.95) 100%);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-xl: 0 12px 36px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3);
+  --badge-new: #3fb950;
+  --badge-new-bg: rgba(63, 185, 80, 0.12);
+  --badge-featured: #d29922;
+  --badge-featured-bg: rgba(210, 153, 34, 0.12);
+  --strength-bg: rgba(63, 185, 80, 0.1);
+  --strength-color: #56d364;
+  --limitation-bg: rgba(248, 81, 73, 0.1);
+  --limitation-color: #f85149;
+  --chip-bg: #21262d;
+  --chip-active-bg: #58a6ff;
+  --chip-active-color: #0d1117;
+  --glow: 0 0 24px rgba(88, 166, 255, 0.18);
+  --card-border: rgba(88, 166, 255, 0.1);
 }
 
 /* ===== Reset ===== */
@@ -73,25 +85,77 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(1200px circle at 8% -8%, rgba(91, 99, 255, 0.12), transparent 55%),
+    radial-gradient(900px circle at 95% 0%, rgba(186, 84, 245, 0.1), transparent 60%);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.35s ease, color 0.35s ease;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  text-rendering: optimizeLegibility;
 }
 
 #root {
   min-height: 100vh;
 }
 
+a {
+  color: inherit;
+}
+
 button {
   font-family: inherit;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--border-hover) 82%, transparent);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--accent) 35%, var(--border-hover));
+  background-clip: content-box;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
 }

@@ -1,10 +1,15 @@
 import { useState, useMemo } from 'react'
+import { Link } from 'react-router-dom'
+import { Calculator, ArrowLeft } from 'lucide-react'
 import { models } from '../data/models'
+import { usePageTitle } from '../hooks/usePageTitle'
 
-export default function CostCalculator({ onBack }: { onBack: () => void }) {
+export default function CostCalculator() {
   const [inputTokens, setInputTokens] = useState(1000000)
   const [outputTokens, setOutputTokens] = useState(500000)
   const [requestsPerDay, setRequestsPerDay] = useState(100)
+
+  usePageTitle('Cost Calculator')
 
   const pricedModels = useMemo(
     () =>
@@ -42,12 +47,12 @@ export default function CostCalculator({ onBack }: { onBack: () => void }) {
 
   return (
     <div className="calculator-page">
-      <button className="back-btn" onClick={onBack}>
-        ← Back to models
-      </button>
+      <Link to="/" className="back-btn">
+        <ArrowLeft size={16} aria-hidden="true" /> Back to models
+      </Link>
 
       <div className="calc-hero">
-        <h1>💰 Cost Calculator</h1>
+        <h1><Calculator size={24} aria-hidden="true" /> Cost Calculator</h1>
         <p>Estimate API costs across models based on your usage patterns.</p>
       </div>
 
