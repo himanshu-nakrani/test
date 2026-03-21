@@ -23,7 +23,7 @@
 .header {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 0.75rem 2rem;
   padding-top: max(0.75rem, env(safe-area-inset-top));
   padding-left: max(2rem, env(safe-area-inset-left));
@@ -34,6 +34,7 @@
   background: var(--bg);
   border-bottom: 1px solid var(--border);
   box-shadow: none;
+  flex-wrap: nowrap;
 }
 
 .logo {
@@ -49,6 +50,7 @@
   padding: 0.25rem;
   white-space: nowrap;
   transition: opacity 0.2s;
+  flex-shrink: 0;
 }
 
 .logo:hover { opacity: 0.7; }
@@ -66,10 +68,11 @@
 }
 
 .header-search {
-  flex: 0 1 400px;
+  flex: 1 1 250px;
   position: relative;
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .search-icon {
@@ -133,6 +136,7 @@
   align-items: center;
   gap: 0.5rem;
   margin-left: auto;
+  flex-shrink: 0;
 }
 
 .header-btn {
@@ -1195,10 +1199,17 @@
 }
 
 /* ===== Header Nav ===== */
-.header-nav { display: flex; gap: 0.25rem; }
+.header-nav { 
+  display: flex; 
+  gap: 0.25rem;
+  flex-shrink: 1;
+  min-width: 0;
+}
 .nav-link {
   background: none; border: none; color: var(--text-secondary); font-size: 0.82rem;
   font-weight: 600; padding: 0.35rem 0.65rem; border-radius: 6px; cursor: pointer; transition: all 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .nav-link:hover { color: var(--text-primary); background: var(--hover-bg); }
 .nav-link.active { color: var(--accent); background: var(--accent-light); }
@@ -1207,20 +1218,20 @@
     gap: 1rem;
     padding: 0.65rem 1.5rem;
   }
-  .header-search { max-width: 280px; }
+  .header-search { flex: 1 1 250px; }
   .header-nav { display: none; }
   .header-btn-label { display: none; }
 }
 
 @media (max-width: 768px) {
   .header {
-    gap: 0.75rem;
+    gap: 0.5rem;
     padding: 0.6rem 1rem;
   }
-  .header-search { max-width: 200px; font-size: 0.8rem; }
+  .header-search { flex: 1 1 180px; }
   .search-input { font-size: 0.85rem; padding: 0.45rem 2.5rem 0.45rem 2rem; }
-  .header-btn { padding: 0.35rem 0.45rem; }
-  .header-actions { gap: 0.25rem; }
+  .header-btn { padding: 0.35rem 0.45rem; font-size: 0.9rem; }
+  .header-actions { gap: 0.3rem; }
 }
 
 /* ===== Mobile Hamburger Menu ===== */
