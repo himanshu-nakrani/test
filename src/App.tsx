@@ -37,8 +37,37 @@ const contextToNumber = (ctx: string): number => {
 }
 
 const priceTierOrder: Record<string, number> = { free: 0, low: 1, medium: 2, high: 3, premium: 4 }
+const sortOrder: Array<'name' | 'provider' | 'date' | 'context' | 'price'> = ['name', 'provider', 'date', 'context', 'price']
+
+const compareBy = (a: AIModel, b: AIModel, sortBy: 'name' | 'provider' | 'date' | 'context' | 'price' | 'trending') => {
+  switch (sortBy) {
+    case 'name': return a.name.localeCompare(b.name)
+    case 'provider': return a.provider.localeCompare(b.provider) || a.name.localeCompare(b.name)
+    case 'date': return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
+    case 'context': return (b.contextTokens || contextToNumber(b.contextWindow)) - (a.contextTokens || contextToNumber(a.contextWindow))
+    case 'price': return priceTierOrder[a.pricingTier] - priceTierOrder[b.pricingTier]
+    case 'trending': {
+      // Higher recency + benchmark strength + lower cost rises first.
+      const ageInDaysA = Math.max(1, Math.floor((Date.now() - new Date(a.releaseDate).getTime()) / (1000 * 60 * 60 * 24)))
+      const ageInDaysB = Math.max(1, Math.floor((Date.now() - new Date(b.releaseDate).getTime()) / (1000 * 60 * 60 * 24)))
+      const recencyA = 1 / ageInDaysA
+      const recencyB = 1 / ageInDaysB
+      const benchmarkA = (a.benchmarks?.mmlu || 0) / 100
+      const benchmarkB = (b.benchmarks?.mmlu || 0) / 100
+      const pricePenaltyA = priceTierOrder[a.pricingTier] / 6
+      const pricePenaltyB = priceTierOrder[b.pricingTier] / 6
+      const featuredBoostA = a.isFeatured ? 0.15 : 0
+      const featuredBoostB = b.isFeatured ? 0.15 : 0
+      const scoreA = recencyA * 5 + benchmarkA * 2.5 - pricePenaltyA + featuredBoostA
+      const scoreB = recencyB * 5 + benchmarkB * 2.5 - pricePenaltyB + featuredBoostB
+      return scoreB - scoreA
+    }
+    default: return 0
+  }
+}
 
 function parseFiltersFromParams(params: URLSearchParams): FilterState {
+  const secondarySort = params.get('secondarySort') as FilterState['secondarySortBy'] | null
   return {
     search: params.get('search') || '',
     providers: params.get('providers') ? params.get('providers')!.split(',') : [],
@@ -46,6 +75,7 @@ function parseFiltersFromParams(params: URLSearchParams): FilterState {
     pricingTiers: params.get('pricing') ? params.get('pricing')!.split(',') as PricingTier[] : [],
     licenses: params.get('licenses') ? params.get('licenses')!.split(',') as LicenseType[] : [],
     sortBy: (params.get('sort') as FilterState['sortBy']) || 'name',
+    secondarySortBy: secondarySort || undefined,
     minContext: params.get('minContext') ? +params.get('minContext')! : undefined,
     minMmlu: params.get('minMmlu') ? +params.get('minMmlu')! : undefined,
   }
@@ -59,6 +89,7 @@ function filtersToParams(filters: FilterState, page: number): Record<string, str
   if (filters.pricingTiers.length) p.pricing = filters.pricingTiers.join(',')
   if (filters.licenses.length) p.licenses = filters.licenses.join(',')
   if (filters.sortBy !== 'name') p.sort = filters.sortBy
+  if (filters.secondarySortBy) p.secondarySort = filters.secondarySortBy
   if (filters.minContext) p.minContext = String(filters.minContext)
   if (filters.minMmlu) p.minMmlu = String(filters.minMmlu)
   if (page > 1) p.page = String(page)
@@ -79,6 +110,14 @@ function HomePage({
   const [searchParams, setSearchParams] = useSearchParams()
   const [showFilters, setShowFilters] = useState(false)
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
+  const [layoutDensity, setLayoutDensity] = useState<'comfortable' | 'compact'>(() => {
+    try {
+      const stored = localStorage.getItem('neural-atlas-density')
+      return stored === 'compact' ? 'compact' : 'comfortable'
+    } catch {
+      return 'comfortable'
+    }
+  })
   const gridRef = useRef<HTMLDivElement>(null)
   const [focusIdx, setFocusIdx] = useState(-1)
 
@@ -88,6 +127,14 @@ function HomePage({
   usePageTitle('')
 
   const { toggle: toggleFav, isFav } = useFavorites()
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('neural-atlas-density', layoutDensity)
+    } catch {
+      // Ignore storage failures.
+    }
+  }, [layoutDensity])
 
   const updateFilters = useCallback((newFilters: FilterState) => {
     setSearchParams(filtersToParams(newFilters, 1), { replace: true })
@@ -116,14 +163,11 @@ function HomePage({
     if (filters.minContext) result = result.filter((m) => (m.contextTokens || contextToNumber(m.contextWindow)) >= filters.minContext!)
     if (filters.minMmlu) result = result.filter((m) => m.benchmarks?.mmlu != null && m.benchmarks.mmlu >= filters.minMmlu!)
     result.sort((a, b) => {
-      switch (filters.sortBy) {
-        case 'name': return a.name.localeCompare(b.name)
-        case 'provider': return a.provider.localeCompare(b.provider) || a.name.localeCompare(b.name)
-        case 'date': return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
-        case 'context': return (b.contextTokens || contextToNumber(b.contextWindow)) - (a.contextTokens || contextToNumber(a.contextWindow))
-        case 'price': return priceTierOrder[a.pricingTier] - priceTierOrder[b.pricingTier]
-        default: return 0
-      }
+      const primary = compareBy(a, b, filters.sortBy)
+      if (primary !== 0) return primary
+      if (filters.secondarySortBy) return compareBy(a, b, filters.secondarySortBy)
+      const fallback = sortOrder.find((s) => s !== filters.sortBy)
+      return fallback ? compareBy(a, b, fallback) : 0
     })
     return result
   }, [filters, showFavOnly, isFav])
@@ -191,11 +235,36 @@ function HomePage({
           {showFilters ? <><X size={14} aria-hidden="true" /> Hide Filters</> : <><Menu size={14} aria-hidden="true" /> Filters &amp; Sort</>}
         </button>
 
+        <div className="results-topbar" aria-live="polite">
+          <div className="results-summary">
+            <strong>{filtered.length}</strong> model{filtered.length === 1 ? '' : 's'}
+            {filters.search && <span className="results-query">for "{filters.search}"</span>}
+          </div>
+          <div className="results-status">
+            <div className="density-toggle" role="group" aria-label="Card density">
+              <button
+                className={`density-btn ${layoutDensity === 'comfortable' ? 'active' : ''}`}
+                onClick={() => setLayoutDensity('comfortable')}
+              >
+                Comfortable
+              </button>
+              <button
+                className={`density-btn ${layoutDensity === 'compact' ? 'active' : ''}`}
+                onClick={() => setLayoutDensity('compact')}
+              >
+                Compact
+              </button>
+            </div>
+            {compareSet.size > 0 && <span className="results-pill">Comparing {compareSet.size}</span>}
+            {showFavOnly && <span className="results-pill">Favorites only</span>}
+          </div>
+        </div>
+
         {showFilters && (
           <div className="mobile-filter-backdrop" onClick={() => setShowFilters(false)} />
         )}
 
-        <div className="content-layout">
+        <div className={`content-layout density-${layoutDensity}`}>
           <div className={`filters-container ${showFilters ? 'show' : ''}`}>
             <button className="mobile-filter-close" onClick={() => setShowFilters(false)}><X size={14} aria-hidden="true" /> Close</button>
             <Filters
@@ -215,7 +284,7 @@ function HomePage({
             <>
               <div>
                 <div
-                  className="model-grid"
+                  className={`model-grid density-${layoutDensity}`}
                   ref={gridRef}
                   tabIndex={0}
                   onKeyDown={handleGridKeyDown}

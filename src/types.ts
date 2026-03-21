@@ -93,7 +93,8 @@ export interface FilterState {
   categories: ModelCategory[]
   pricingTiers: PricingTier[]
   licenses: LicenseType[]
-  sortBy: 'name' | 'provider' | 'date' | 'context' | 'price'
+  sortBy: 'name' | 'provider' | 'date' | 'context' | 'price' | 'trending'
+  secondarySortBy?: 'name' | 'provider' | 'date' | 'context' | 'price'
   minContext?: number
   maxContext?: number
   minMmlu?: number

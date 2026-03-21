@@ -29,6 +29,7 @@ export default function Header({
   const { isAuthenticated } = useAuth()
   const [showLogin, setShowLogin] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [recentSearches, setRecentSearches] = useState<string[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
   const location = useLocation()
   const navigate = useNavigate()
@@ -53,6 +54,17 @@ export default function Header({
     return () => window.removeEventListener('keydown', handler)
   }, [])
 
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('neural-atlas-recent-searches')
+      if (!raw) return
+      const parsed = JSON.parse(raw) as string[]
+      if (Array.isArray(parsed)) setRecentSearches(parsed.slice(0, 8))
+    } catch {
+      // Ignore malformed local storage content.
+    }
+  }, [])
+
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/'
     return location.pathname.startsWith(path)
@@ -70,6 +82,18 @@ export default function Header({
       }
       params.delete('page')
       setSearchParams(params, { replace: true })
+    }
+  }
+
+  const persistRecentSearch = (value: string) => {
+    const normalized = value.trim()
+    if (!normalized) return
+    const next = [normalized, ...recentSearches.filter((v) => v.toLowerCase() !== normalized.toLowerCase())].slice(0, 8)
+    setRecentSearches(next)
+    try {
+      localStorage.setItem('neural-atlas-recent-searches', JSON.stringify(next))
+    } catch {
+      // Ignore quota/storage failures.
     }
   }
 
@@ -102,9 +126,16 @@ export default function Header({
           placeholder={`Search ${modelCount} models...`}
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
+          onBlur={(e) => persistRecentSearch(e.target.value)}
           className="search-input"
           aria-label={`Search ${modelCount} models`}
+          list="recent-searches"
         />
+        {recentSearches.length > 0 && (
+          <datalist id="recent-searches">
+            {recentSearches.map((entry) => <option key={entry} value={entry} />)}
+          </datalist>
+        )}
         {search ? (
           <button className="search-clear" onClick={() => handleSearch('')} aria-label="Clear search"><X size={14} aria-hidden="true" /></button>
         ) : (
