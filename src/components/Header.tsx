@@ -109,10 +109,10 @@ export default function Header({
     <header className="header">
       <div className="header-brand">
         <Link to="/" className="logo" title="Go to NeuralAtlas homepage">
-          <span className="logo-icon"><Sparkles size={22} aria-hidden="true" /></span>
+          <span className="logo-icon"><Sparkles size={20} aria-hidden="true" /></span>
           <span className="logo-text">NeuralAtlas</span>
+          <span className="brand-tag">AI Model Directory</span>
         </Link>
-        <span className="brand-tag">AI Model Directory</span>
       </div>
 
       <nav className="header-nav" role="navigation" aria-label="Main navigation">
