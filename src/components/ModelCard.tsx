@@ -115,10 +115,16 @@ export default function ModelCard({
           </div>
           <div className="meta-item">
             <span className="meta-label">Pricing</span>
-            <span className="meta-value">
+            <span className="meta-value card-pricing-pill">
               {model.pricing.free ? 'Free' : model.pricingTier}
             </span>
           </div>
+        </div>
+        <div className="card-footer">
+          <span className="card-footer-link">Open model profile</span>
+          <span className="card-footer-date">
+            {new Date(model.releaseDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+          </span>
         </div>
       </button>
     </motion.div>

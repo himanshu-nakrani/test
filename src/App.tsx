@@ -1,12 +1,13 @@
 import { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
-import { Routes, Route, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Routes, Route, useNavigate, useParams, useSearchParams, Link } from 'react-router-dom'
 import { X, Menu, Search, Scale, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
 import type { AIModel, FilterState, ViewMode, ModelCategory, PricingTier, LicenseType } from './types'
 import { models } from './data/models'
 import { useFavorites } from './hooks/useFavorites'
 import { usePageTitle } from './hooks/usePageTitle'
 import { AuthProvider } from './hooks/useAuth'
+import ErrorBoundary from './components/ErrorBoundary'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import Filters from './components/Filters'
@@ -25,6 +26,8 @@ const ComparisonGuides = lazy(() => import('./components/ComparisonGuides'))
 const CompareView = lazy(() => import('./components/CompareView'))
 const Analytics = lazy(() => import('./components/Analytics'))
 const Workspace = lazy(() => import('./components/Workspace'))
+const Privacy = lazy(() => import('./components/Privacy'))
+const Terms = lazy(() => import('./components/Terms'))
 
 const ITEMS_PER_PAGE = 12
 
@@ -119,6 +122,7 @@ function HomePage({
     }
   })
   const gridRef = useRef<HTMLDivElement>(null)
+  const resultsTopbarRef = useRef<HTMLDivElement>(null)
   const [focusIdx, setFocusIdx] = useState(-1)
 
   const filters = useMemo(() => parseFiltersFromParams(searchParams), [searchParams])
@@ -142,7 +146,9 @@ function HomePage({
 
   const setPage = useCallback((p: number) => {
     setSearchParams(filtersToParams(filters, p), { replace: true })
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    requestAnimationFrame(() => {
+      resultsTopbarRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
   }, [filters, setSearchParams])
 
   const filtered = useMemo(() => {
@@ -235,7 +241,7 @@ function HomePage({
           {showFilters ? <><X size={14} aria-hidden="true" /> Hide Filters</> : <><Menu size={14} aria-hidden="true" /> Filters &amp; Sort</>}
         </button>
 
-        <div className="results-topbar" aria-live="polite">
+        <div className="results-topbar" aria-live="polite" ref={resultsTopbarRef}>
           <div className="results-summary">
             <strong>{filtered.length}</strong> model{filtered.length === 1 ? '' : 's'}
             {filters.search && <span className="results-query">for "{filters.search}"</span>}
@@ -478,12 +484,13 @@ function App() {
   }, [compareSet, navigate])
 
   return (
-    <AuthProvider>
-    <div className="app container-fluid px-0">
-      <a href="#main-content" className="skip-to-content">Skip to content</a>
-      <Header
-        darkMode={darkMode}
-        onToggleDark={() => setDarkMode(!darkMode)} modelCount={models.length}
+    <ErrorBoundary>
+      <AuthProvider>
+        <div className="app container-fluid px-0">
+          <a href="#main-content" className="skip-to-content">Skip to content</a>
+          <Header
+            darkMode={darkMode}
+            onToggleDark={() => setDarkMode(!darkMode)} modelCount={models.length}
         compareCount={compareSet.size} onCompareClick={handleCompareClick} favCount={favCount}
         showFavOnly={showFavOnly} onToggleFav={() => setShowFavOnly(!showFavOnly)}
       />
@@ -554,15 +561,30 @@ function App() {
               </Suspense>
             </motion.main>
           } />
+          <Route path="/privacy" element={
+            <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Privacy />
+              </Suspense>
+            </motion.main>
+          } />
+          <Route path="/terms" element={
+            <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Terms />
+              </Suspense>
+            </motion.main>
+          } />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <footer className="footer">
-        <p>NeuralAtlas — Explore {models.length} models from top AI providers &middot; {new Date().getFullYear()}</p>
+        <p>NeuralAtlas — Explore {models.length} models from top AI providers &middot; {new Date().getFullYear()} &middot; <Link to="/privacy">Privacy</Link> &middot; <Link to="/terms">Terms</Link></p>
       </footer>
       <BackToTop />
     </div>
     </AuthProvider>
+    </ErrorBoundary>
   )
 }
 

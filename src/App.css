@@ -3501,3 +3501,375 @@ a.guide-card {
     font-size: 0.66rem;
   }
 }
+
+/* ===== Enterprise Design System Overrides ===== */
+.app {
+  width: min(100%, 1720px);
+}
+
+.app::before {
+  opacity: 0.35;
+  background:
+    radial-gradient(460px circle at 8% -10%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 62%),
+    radial-gradient(620px circle at 96% 0%, color-mix(in oklab, #2b4ea3 8%, transparent), transparent 66%);
+}
+
+.header {
+  border-radius: 12px;
+  margin-top: 0.65rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+.hero-section {
+  border-radius: 14px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 96%, var(--accent) 4%) 0%, var(--surface) 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.hero-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.74rem;
+}
+
+.hero-title {
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  letter-spacing: -0.015em;
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, #1d4ed8 0%, #2563eb 42%, #1e40af 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 1rem;
+  color: color-mix(in oklab, var(--text-secondary) 94%, #0f172a);
+}
+
+.results-topbar,
+.filters,
+.table-wrapper,
+.compare-table-wrap,
+.calc-table-wrap,
+.detail-hero,
+.detail-card,
+.workspace-card,
+.review-card,
+.review-form-card,
+.guide-card,
+.login-modal {
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+}
+
+.header-btn,
+.nav-link,
+.hero-link,
+.chip,
+.pagination-btn,
+.pagination-page,
+.compare-close,
+.back-btn,
+.sort-select,
+.preset-chip {
+  border-radius: 8px;
+}
+
+.header-btn,
+.nav-link,
+.chip,
+.hero-link,
+.pagination-btn,
+.pagination-page {
+  min-height: 38px;
+  font-weight: 600;
+}
+
+.nav-link.active {
+  background: color-mix(in oklab, var(--accent) 12%, var(--surface));
+  color: var(--accent);
+}
+
+.results-pill {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.model-grid {
+  gap: 0.9rem;
+}
+
+.model-card {
+  border-radius: 10px;
+  border: 1px solid color-mix(in oklab, var(--card-border) 88%, #0f172a);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.model-card:hover {
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.09);
+  transform: translateY(-2px);
+}
+
+.card-title {
+  font-size: 1.02rem;
+}
+
+.card-description {
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.badge {
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.table-wrapper {
+  border: 1px solid var(--card-border);
+}
+
+.model-table th {
+  background: color-mix(in oklab, var(--surface) 86%, var(--accent) 14%);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border);
+}
+
+.model-table td {
+  font-size: 0.83rem;
+}
+
+.table-row:hover {
+  background: color-mix(in oklab, var(--accent) 7%, var(--surface));
+}
+
+.compare-table th,
+.compare-table td {
+  font-size: 0.84rem;
+}
+
+.compare-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.analytics-section h2,
+.guides-hero h1,
+.calc-hero h1,
+.lb-hero h1,
+.workspace-hero h1 {
+  letter-spacing: -0.01em;
+}
+
+.footer {
+  border-radius: 10px;
+  font-size: 0.8rem;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+}
+
+@media (max-width: 900px) {
+  .header,
+  .hero-section,
+  .results-topbar,
+  .filters,
+  .model-card,
+  .table-wrapper,
+  .compare-table-wrap,
+  .footer {
+    border-radius: 8px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+}
+
+/* ===== Premium Component Architecture ===== */
+.header {
+  display: grid;
+  grid-template-columns: auto minmax(300px, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+}
+
+.header-brand {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.brand-tag {
+  font-size: 0.64rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding-left: 0.2rem;
+}
+
+.header-nav {
+  justify-self: center;
+}
+
+.header-search {
+  max-width: 560px;
+}
+
+.header-actions {
+  justify-self: end;
+}
+
+.header-btn-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.hero-section {
+  padding: 2.4rem 1.6rem 1.6rem;
+}
+
+.hero-content {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.hero-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.metric-card {
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 0.75rem 0.55rem;
+  background: color-mix(in oklab, var(--surface) 88%, var(--accent) 12%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.hero-showcase {
+  max-width: 980px;
+  gap: 1rem;
+}
+
+.showcase-col {
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--surface) 94%, transparent);
+  padding: 0.8rem;
+}
+
+.showcase-title {
+  margin-bottom: 0.75rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.showcase-item {
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+}
+
+.filters {
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+}
+
+.filter-section {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+.filter-section h3 {
+  font-size: 0.69rem;
+}
+
+.model-card {
+  border-radius: 10px;
+}
+
+.card-toolbar {
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  padding-bottom: 0.5rem;
+}
+
+.card-badges {
+  margin-top: 0.1rem;
+}
+
+.card-pricing-pill {
+  border: 1px solid color-mix(in oklab, var(--accent) 28%, transparent);
+  border-radius: 999px;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-footer {
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed color-mix(in oklab, var(--border) 78%, transparent);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-footer-link {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.card-footer-date {
+  font-size: 0.68rem;
+  color: var(--text-tertiary);
+}
+
+.results-topbar {
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.table-wrapper,
+.compare-table-wrap,
+.calc-table-wrap {
+  border-radius: 10px;
+}
+
+.model-table th,
+.compare-label {
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+  .header {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .header-brand,
+  .header-nav,
+  .header-actions {
+    justify-self: stretch;
+  }
+
+  .brand-tag {
+    display: none;
+  }
+
+  .hero-metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -98,23 +98,26 @@ export default function Header({
   }
 
   const navLinks = [
-    { to: '/', label: 'Models' },
-    { to: '/leaderboard', label: 'Leaderboard' },
-    { to: '/calculator', label: 'Pricing' },
-    { to: '/guides', label: 'Guides' },
-    { to: '/analytics', label: 'Analytics' },
+    { to: '/', label: 'Models', title: 'Browse all AI models' },
+    { to: '/leaderboard', label: 'Leaderboard', title: 'Top performing models' },
+    { to: '/calculator', label: 'Pricing', title: 'Cost comparison calculator' },
+    { to: '/guides', label: 'Guides', title: 'Comparison guides and tutorials' },
+    { to: '/analytics', label: 'Analytics', title: 'Market trends and insights' },
   ]
 
   return (
     <header className="header">
-      <Link to="/" className="logo">
-        <span className="logo-icon"><Sparkles size={22} aria-hidden="true" /></span>
-        <span className="logo-text">NeuralAtlas</span>
-      </Link>
+      <div className="header-brand">
+        <Link to="/" className="logo" title="Go to NeuralAtlas homepage">
+          <span className="logo-icon"><Sparkles size={22} aria-hidden="true" /></span>
+          <span className="logo-text">NeuralAtlas</span>
+        </Link>
+        <span className="brand-tag">AI Model Directory</span>
+      </div>
 
       <nav className="header-nav" role="navigation" aria-label="Main navigation">
-        {navLinks.map(({ to, label }) => (
-          <Link key={to} to={to} className={`nav-link ${isActive(to) ? 'active' : ''}`} aria-current={isActive(to) ? 'page' : undefined}>{label}</Link>
+        {navLinks.map(({ to, label, title }) => (
+          <Link key={to} to={to} className={`nav-link ${isActive(to) ? 'active' : ''}`} aria-current={isActive(to) ? 'page' : undefined} title={title}>{label}</Link>
         ))}
       </nav>
 
@@ -123,7 +126,7 @@ export default function Header({
         <input
           ref={inputRef}
           type="text"
-          placeholder={`Search ${modelCount} models...`}
+          placeholder={`Search ${modelCount} models... (⌘K)`}
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
           onBlur={(e) => persistRecentSearch(e.target.value)}
@@ -137,9 +140,9 @@ export default function Header({
           </datalist>
         )}
         {search ? (
-          <button className="search-clear" onClick={() => handleSearch('')} aria-label="Clear search"><X size={14} aria-hidden="true" /></button>
+          <button className="search-clear" onClick={() => handleSearch('')} aria-label="Clear search" title="Clear search"><X size={14} aria-hidden="true" /></button>
         ) : (
-          <kbd className="search-kbd">⌘K</kbd>
+          <kbd className="search-kbd" title="Press ⌘K to search">⌘K</kbd>
         )}
       </div>
 
@@ -147,8 +150,8 @@ export default function Header({
         <button
           className={`header-btn fav-toggle-btn ${showFavOnly ? 'active' : ''}`}
           onClick={onToggleFav}
-          aria-label="Show favorites"
-          title="Show favorites"
+          aria-label={showFavOnly ? 'Show all models' : 'Show only favorites'}
+          title={showFavOnly ? 'Show all models' : `Show favorites (${favCount})`}
         >
           <Star size={18} fill={showFavOnly ? 'currentColor' : 'none'} aria-hidden="true" />
           {favCount > 0 && <span className="header-badge">{favCount}</span>}
@@ -160,15 +163,17 @@ export default function Header({
           aria-label={compareCount < 2 ? 'Select 2+ models to compare' : `Compare ${compareCount} models`}
           title={compareCount < 2 ? 'Select 2+ models to compare' : `Compare ${compareCount} models`}
         >
-          <Scale size={18} aria-hidden="true" />{compareCount > 0 && <span className="header-badge">{compareCount}</span>}
+          <Scale size={18} aria-hidden="true" />
+          <span className="header-btn-label">Compare</span>
+          {compareCount > 0 && <span className="header-badge">{compareCount}</span>}
         </button>
-        <button className="header-btn theme-toggle" onClick={onToggleDark} aria-label="Toggle theme">
+        <button className="header-btn theme-toggle" onClick={onToggleDark} aria-label={`Switch to ${darkMode ? 'light' : 'dark'} theme`} title={`Switch to ${darkMode ? 'light' : 'dark'} theme`}>
           {darkMode ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
         </button>
         {isAuthenticated ? (
           <UserMenu />
         ) : (
-          <button className="header-btn signin-btn" onClick={() => setShowLogin(true)}>
+          <button className="header-btn signin-btn" onClick={() => setShowLogin(true)} title="Sign in to save favorites and comparisons">
             Sign In
           </button>
         )}
@@ -177,6 +182,7 @@ export default function Header({
           onClick={() => setMenuOpen((v) => !v)}
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
+          title={menuOpen ? 'Close menu' : 'Open menu'}
         >
           {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
         </button>
@@ -186,13 +192,14 @@ export default function Header({
         <>
           <div className="mobile-nav-overlay" onClick={closeMenu} aria-hidden="true" />
           <nav className="mobile-nav-links" role="navigation" aria-label="Mobile navigation">
-            {navLinks.map(({ to, label }) => (
+            {navLinks.map(({ to, label, title }) => (
               <Link
                 key={to}
                 to={to}
                 className={`mobile-nav-link ${isActive(to) ? 'active' : ''}`}
                 onClick={closeMenu}
                 aria-current={isActive(to) ? 'page' : undefined}
+                title={title}
               >
                 {label}
               </Link>

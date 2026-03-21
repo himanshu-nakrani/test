@@ -77,18 +77,15 @@ export default function Hero({
           Find the perfect model for your project with benchmarks, pricing, and code snippets.
         </motion.p>
         <motion.div
-          className="hero-stats"
+          className="hero-stats hero-metrics-grid"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <div className="stat"><AnimatedNumber target={models.length} /><span className="stat-label">Models</span></div>
-          <div className="stat-divider" />
-          <div className="stat"><AnimatedNumber target={allProviders.length} /><span className="stat-label">Providers</span></div>
-          <div className="stat-divider" />
-          <div className="stat"><AnimatedNumber target={openCount} /><span className="stat-label">Open Models</span></div>
-          <div className="stat-divider" />
-          <div className="stat">
+          <div className="stat metric-card"><AnimatedNumber target={models.length} /><span className="stat-label">Models</span></div>
+          <div className="stat metric-card"><AnimatedNumber target={allProviders.length} /><span className="stat-label">Providers</span></div>
+          <div className="stat metric-card"><AnimatedNumber target={openCount} /><span className="stat-label">Open Models</span></div>
+          <div className="stat metric-card">
             <span className="stat-value stat-value-sm">{models.filter((m) => m.benchmarks).length}</span>
             <span className="stat-label">Benchmarked</span>
           </div>
@@ -99,12 +96,15 @@ export default function Hero({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
+          role="group"
+          aria-label="Quick filter by category"
         >
           {categoryPills.map((c) => (
             <button
               key={c.key}
               className="hero-category-pill"
               onClick={() => navigate(`/?categories=${c.key}`)}
+              aria-label={`Filter models by ${c.label} category`}
             >
               {c.icon} {c.label}
             </button>
@@ -130,10 +130,10 @@ export default function Hero({
       >
         <div className="showcase-col">
           <h3 className="showcase-title"><Flame size={16} aria-hidden="true" /> Featured</h3>
-          <div className="showcase-list">
+          <div className="showcase-list" role="list">
             {featured.map((m) => (
-              <button key={m.id} className="showcase-item" onClick={() => onModelClick(m)}>
-                <span className="provider-dot" style={{ background: m.providerColor }} />
+              <button key={m.id} className="showcase-item" onClick={() => onModelClick(m)} role="listitem" aria-label={`View details for ${m.name} by ${m.provider}`}>
+                <span className="provider-dot" style={{ background: m.providerColor }} aria-hidden="true" />
                 <span className="showcase-name">{m.name}</span>
                 <span className="showcase-provider">{m.provider}</span>
               </button>
@@ -142,10 +142,10 @@ export default function Hero({
         </div>
         <div className="showcase-col">
           <h3 className="showcase-title"><Clock size={16} aria-hidden="true" /> Recently Released</h3>
-          <div className="showcase-list">
+          <div className="showcase-list" role="list">
             {recent.map((m) => (
-              <button key={m.id} className="showcase-item" onClick={() => onModelClick(m)}>
-                <span className="provider-dot" style={{ background: m.providerColor }} />
+              <button key={m.id} className="showcase-item" onClick={() => onModelClick(m)} role="listitem" aria-label={`View details for ${m.name} by ${m.provider}`}>
+                <span className="provider-dot" style={{ background: m.providerColor }} aria-hidden="true" />
                 <span className="showcase-name">{m.name}</span>
                 <span className="showcase-provider">{m.provider}</span>
               </button>
