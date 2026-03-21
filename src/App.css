@@ -3379,3 +3379,125 @@ a.guide-card {
     gap: 0.35rem;
   }
 }
+
+/* ===== UI Optimization Pass ===== */
+.hero-title {
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+}
+
+.hero-subtitle {
+  max-width: 68ch;
+}
+
+.card-title,
+.guide-card h3,
+.workspace-card h2,
+.analytics-section h2 {
+  letter-spacing: -0.01em;
+}
+
+.card-description,
+.guide-card p,
+.analytics-section-desc,
+.review-card-comment {
+  color: color-mix(in oklab, var(--text-secondary) 92%, var(--text-primary));
+}
+
+.header-btn,
+.nav-link,
+.hero-link,
+.chip,
+.pagination-btn,
+.pagination-page,
+.compare-close,
+.back-btn {
+  min-height: 42px;
+}
+
+.model-grid {
+  align-items: stretch;
+}
+
+.model-card {
+  height: 100%;
+}
+
+.card-body {
+  height: calc(100% - 36px);
+}
+
+.results-topbar,
+.detail-hero,
+.detail-card,
+.workspace-card,
+.review-card,
+.guide-card,
+.table-wrapper,
+.compare-table-wrap,
+.calc-table-wrap {
+  backdrop-filter: saturate(120%) blur(2px);
+}
+
+.compare-actions {
+  row-gap: 0.45rem;
+}
+
+.compare-close {
+  white-space: nowrap;
+}
+
+.pagination {
+  margin-top: 1.6rem;
+}
+
+.footer {
+  font-size: 0.84rem;
+}
+
+@media (max-width: 900px) {
+  .hero-subtitle {
+    max-width: 56ch;
+  }
+
+  .header-btn,
+  .chip,
+  .hero-link,
+  .pagination-btn,
+  .pagination-page {
+    min-height: 40px;
+  }
+
+  .content-layout {
+    gap: 0.9rem;
+  }
+
+  .results-status {
+    width: 100%;
+  }
+
+  .density-toggle {
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-title {
+    line-height: 1.18;
+  }
+
+  .hero-subtitle {
+    font-size: 0.94rem;
+  }
+
+  .results-topbar {
+    width: 100%;
+  }
+
+  .results-status {
+    justify-content: flex-start;
+  }
+
+  .results-pill {
+    font-size: 0.66rem;
+  }
+}
