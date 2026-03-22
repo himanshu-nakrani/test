@@ -458,7 +458,17 @@ function ComparePage({
 /* ===== App Root ===== */
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
-    try { return localStorage.getItem('neural-atlas-theme') === 'dark' } catch { return false }
+    try {
+      const stored = localStorage.getItem('neural-atlas-theme')
+      if (stored !== null) {
+        return stored === 'dark'
+      }
+      // No stored preference, detect from system
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+    } catch {
+      // Fallback to system preference if localStorage fails
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
   })
   const [compareSet, setCompareSet] = useState<Set<string>>(new Set())
   const [showFavOnly, setShowFavOnly] = useState(false)
@@ -471,6 +481,23 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme)
     try { localStorage.setItem('neural-atlas-theme', theme) } catch { /* noop */ }
   }, [darkMode])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const handleChange = (e: MediaQueryListEvent) => {
+      try {
+        const stored = localStorage.getItem('neural-atlas-theme')
+        if (stored === null) {
+          setDarkMode(e.matches)
+        }
+      } catch {
+        // Ignore storage errors
+      }
+    }
+
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
 
   const toggleCompare = useCallback((id: string) => {
     setCompareSet((prev) => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next })
