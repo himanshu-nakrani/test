@@ -13,12 +13,12 @@
   --card-bg: #ffffff;
   --card-hover: #f6f8fa;
   --hover-bg: #f0f6fc;
-  --accent: #0969da;
-  --accent-hover: #0860ca;
-  --accent-light: rgba(9, 105, 218, 0.1);
-  --accent-text: #033d8b;
-  --accent-gradient: linear-gradient(130deg, #0969da 0%, #1f6feb 45%, #0860ca 100%);
-  --section-alt-bg: linear-gradient(180deg, rgba(9, 105, 218, 0.05) 0%, rgba(248, 249, 250, 0.3) 100%);
+  --accent: #4f46e5;
+  --accent-hover: #6366f1;
+  --accent-light: rgba(79, 70, 229, 0.1);
+  --accent-text: #3730a3;
+  --accent-gradient: linear-gradient(130deg, #4f46e5 0%, #6366f1 45%, #818cf8 100%);
+  --section-alt-bg: linear-gradient(180deg, rgba(79, 70, 229, 0.05) 0%, rgba(248, 249, 250, 0.3) 100%);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -33,10 +33,10 @@
   --limitation-color: #7f1d1d;
   --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
   --chip-bg: #eaeef2;
-  --chip-active-bg: #0969da;
+  --chip-active-bg: #4f46e5;
   --chip-active-color: #ffffff;
-  --glow: 0 0 24px rgba(9, 105, 218, 0.12);
-  --card-border: rgba(0, 0, 0, 0.06);
+  --glow: 0 0 24px rgba(79, 70, 229, 0.15);
+  --card-border: rgba(79, 70, 229, 0.08);
 }
 
 /* ===== Dark Theme ===== */
@@ -53,11 +53,11 @@
   --card-bg: #0d1117;
   --card-hover: #161b22;
   --hover-bg: #1c2128;
-  --accent: #58a6ff;
-  --accent-hover: #79c0ff;
-  --accent-light: rgba(88, 166, 255, 0.15);
-  --accent-text: #79c0ff;
-  --accent-gradient: linear-gradient(130deg, #58a6ff 0%, #79c0ff 45%, #3b82f6 100%);
+  --accent: #818cf8;
+  --accent-hover: #a5b4fc;
+  --accent-light: rgba(129, 140, 248, 0.15);
+  --accent-text: #a5b4fc;
+  --accent-gradient: linear-gradient(130deg, #818cf8 0%, #a5b4fc 45%, #c4b5fd 100%);
   --section-alt-bg: linear-gradient(180deg, rgba(22, 27, 34, 0.9) 0%, rgba(13, 17, 23, 0.95) 100%);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -72,10 +72,10 @@
   --limitation-bg: rgba(248, 81, 73, 0.1);
   --limitation-color: #f85149;
   --chip-bg: #21262d;
-  --chip-active-bg: #58a6ff;
+  --chip-active-bg: #818cf8;
   --chip-active-color: #0d1117;
-  --glow: 0 0 24px rgba(88, 166, 255, 0.18);
-  --card-border: rgba(88, 166, 255, 0.1);
+  --glow: 0 0 24px rgba(129, 140, 248, 0.2);
+  --card-border: rgba(129, 140, 248, 0.12);
 }
 
 /* ===== Reset ===== */
@@ -105,8 +105,8 @@ body {
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg);
   background-image:
-    radial-gradient(1200px circle at 8% -8%, rgba(91, 99, 255, 0.12), transparent 55%),
-    radial-gradient(900px circle at 95% 0%, rgba(186, 84, 245, 0.1), transparent 60%);
+    radial-gradient(1200px circle at 8% -8%, rgba(79, 70, 229, 0.1), transparent 55%),
+    radial-gradient(900px circle at 95% 0%, rgba(129, 140, 248, 0.1), transparent 60%);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;

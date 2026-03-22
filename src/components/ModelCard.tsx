@@ -108,12 +108,12 @@ export default function ModelCard({
           ))}
         </div>
 
-        <div className="card-meta">
-          <div className="meta-item">
-            <span className="meta-label">Context</span>
+        <div className="card-meta card-meta-enhanced">
+          <div className="meta-item meta-item-large">
+            <span className="meta-label">Context Window</span>
             <span className="meta-value">{model.contextWindow}</span>
           </div>
-          <div className="meta-item">
+          <div className="meta-item meta-item-large">
             <span className="meta-label">Pricing</span>
             <span className="meta-value card-pricing-pill">
               {model.pricing.free ? 'Free' : model.pricingTier}
