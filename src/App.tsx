@@ -113,14 +113,6 @@ function HomePage({
   const [searchParams, setSearchParams] = useSearchParams()
   const [showFilters, setShowFilters] = useState(false)
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
-  const [layoutDensity, setLayoutDensity] = useState<'comfortable' | 'compact'>(() => {
-    try {
-      const stored = localStorage.getItem('neural-atlas-density')
-      return stored === 'compact' ? 'compact' : 'comfortable'
-    } catch {
-      return 'comfortable'
-    }
-  })
   const gridRef = useRef<HTMLDivElement>(null)
   const resultsTopbarRef = useRef<HTMLDivElement>(null)
   const [focusIdx, setFocusIdx] = useState(-1)
@@ -131,14 +123,6 @@ function HomePage({
   usePageTitle('')
 
   const { toggle: toggleFav, isFav } = useFavorites()
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('neural-atlas-density', layoutDensity)
-    } catch {
-      // Ignore storage failures.
-    }
-  }, [layoutDensity])
 
   const updateFilters = useCallback((newFilters: FilterState) => {
     setSearchParams(filtersToParams(newFilters, 1), { replace: true })
@@ -247,20 +231,6 @@ function HomePage({
             {filters.search && <span className="results-query">for "{filters.search}"</span>}
           </div>
           <div className="results-status">
-            <div className="density-toggle" role="group" aria-label="Card density">
-              <button
-                className={`density-btn ${layoutDensity === 'comfortable' ? 'active' : ''}`}
-                onClick={() => setLayoutDensity('comfortable')}
-              >
-                Comfortable
-              </button>
-              <button
-                className={`density-btn ${layoutDensity === 'compact' ? 'active' : ''}`}
-                onClick={() => setLayoutDensity('compact')}
-              >
-                Compact
-              </button>
-            </div>
             {compareSet.size > 0 && <span className="results-pill">Comparing {compareSet.size}</span>}
             {showFavOnly && <span className="results-pill">Favorites only</span>}
           </div>
@@ -270,7 +240,7 @@ function HomePage({
           <div className="mobile-filter-backdrop" onClick={() => setShowFilters(false)} />
         )}
 
-        <div className={`content-layout density-${layoutDensity}`}>
+        <div className="content-layout">
           <div className={`filters-container ${showFilters ? 'show' : ''}`}>
             <button className="mobile-filter-close" onClick={() => setShowFilters(false)}><X size={14} aria-hidden="true" /> Close</button>
             <Filters
@@ -290,7 +260,7 @@ function HomePage({
             <>
               <div>
                 <div
-                  className={`model-grid density-${layoutDensity}`}
+                  className="model-grid"
                   ref={gridRef}
                   tabIndex={0}
                   onKeyDown={handleGridKeyDown}

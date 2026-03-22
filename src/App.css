@@ -223,7 +223,7 @@
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 30%, #a855f7 60%, #ec4899 100%);
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 30%, #818cf8 60%, #a5b4fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -693,7 +693,16 @@
   border-top: 1px solid var(--border);
 }
 
+.card-meta-enhanced {
+  gap: 1rem;
+  padding-top: 0.8rem;
+}
+
 .meta-item { display: flex; flex-direction: column; }
+
+.meta-item-large {
+  flex: 1;
+}
 
 .meta-label {
   font-size: 0.65rem;
@@ -701,9 +710,22 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.meta-item-large .meta-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-secondary);
 }
 
 .meta-value { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); text-transform: capitalize; }
+
+.meta-item-large .meta-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
 
 /* ===== Table View ===== */
 .table-wrapper {
@@ -3268,26 +3290,7 @@ a.guide-card {
   border-radius: 999px;
 }
 
-.density-toggle {
-  display: inline-flex;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  overflow: hidden;
-  background: var(--surface);
-}
 
-.density-btn {
-  border: none;
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 0.24rem 0.6rem;
-  cursor: pointer;
-}
-
-.density-btn:hover { background: var(--hover-bg); }
-.density-btn.active { background: var(--accent-light); color: var(--accent); }
 
 .header::after {
   content: '';
@@ -3371,30 +3374,7 @@ a.guide-card {
   box-shadow: 1px 0 0 0 var(--border);
 }
 
-.density-compact .model-grid {
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 0.7rem;
-}
 
-.density-compact .card-toolbar { padding: 0.45rem 0.65rem 0; }
-.density-compact .card-body { padding: 0.45rem 0.8rem 0.8rem; }
-.density-compact .card-title { font-size: 1rem; }
-
-.density-compact .card-description {
-  font-size: 0.76rem;
-  -webkit-line-clamp: 2;
-}
-
-.density-compact .category-tag {
-  font-size: 0.62rem;
-  padding: 0.14rem 0.35rem;
-}
-
-.density-compact .meta-label { font-size: 0.6rem; }
-.density-compact .meta-value { font-size: 0.75rem; }
-.density-compact .model-table th { font-size: 0.68rem; padding: 0.55rem 0.62rem; }
-.density-compact .model-table td { padding: 0.45rem 0.62rem; font-size: 0.8rem; }
-.density-compact .table-model-name { font-size: 0.82rem; }
 
 .chip:focus-visible,
 .header-btn:focus-visible,
@@ -3426,11 +3406,6 @@ a.guide-card {
 
   .results-summary {
     font-size: 0.8rem;
-  }
-
-  .density-btn {
-    font-size: 0.68rem;
-    padding: 0.2rem 0.5rem;
   }
 
   .model-table .th-check,
@@ -3547,9 +3522,6 @@ a.guide-card {
     width: 100%;
   }
 
-  .density-toggle {
-    margin-right: auto;
-  }
 }
 
 @media (max-width: 560px) {
