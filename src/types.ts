@@ -99,3 +99,21 @@ export interface FilterState {
   maxContext?: number
   minMmlu?: number
 }
+
+export interface RecommendationRequest {
+  useCase: ModelCategory | 'custom'
+  performanceLevel: 'cost-optimized' | 'balanced' | 'high-performance'
+  minContextTokens?: number
+  speedRequired: 'flexible' | 'moderate' | 'critical'
+  modalitiesNeeded: Modality[]
+  licensePreference: 'any' | 'open-source' | 'open-weights'
+  budgetRange: 'free' | 'low' | 'medium' | 'high' | 'premium'
+  estimatedMonthlyTokens?: number
+}
+
+export interface RecommendationResult {
+  model: AIModel
+  score: number
+  reasons: string[]
+  estimatedMonthlyCost?: number
+}
