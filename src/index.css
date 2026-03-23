@@ -111,7 +111,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background 0.35s ease, color 0.35s ease;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-image 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   text-rendering: optimizeLegibility;
 }
@@ -148,10 +148,11 @@ textarea {
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: content-box;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in oklab, var(--accent) 35%, var(--border-hover));
+  background: color-mix(in oklab, var(--accent) 40%, var(--border-hover));
   background-clip: content-box;
 }
 
