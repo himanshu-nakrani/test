@@ -18,6 +18,7 @@ import NotFound from './components/NotFound'
 import BackToTop from './components/BackToTop'
 import LoadingSpinner from './components/LoadingSpinner'
 import JsonLd from './components/JsonLd'
+import ComparisonTray from './components/ComparisonTray'
 import './App.css'
 
 const Leaderboard = lazy(() => import('./components/Leaderboard'))
@@ -28,6 +29,7 @@ const Analytics = lazy(() => import('./components/Analytics'))
 const Workspace = lazy(() => import('./components/Workspace'))
 const Privacy = lazy(() => import('./components/Privacy'))
 const Terms = lazy(() => import('./components/Terms'))
+const RecommendationWizardPage = lazy(() => import('./components/RecommendationWizardPage'))
 
 const ITEMS_PER_PAGE = 12
 
@@ -491,6 +493,11 @@ function App() {
         compareCount={compareSet.size} onCompareClick={handleCompareClick} favCount={favCount}
         showFavOnly={showFavOnly} onToggleFav={() => setShowFavOnly(!showFavOnly)}
       />
+      <ComparisonTray 
+        compareCount={compareSet.size} 
+        onCompareClick={handleCompareClick}
+        onClear={() => setCompareSet(new Set())}
+      />
       <div id="main-content">
         <Routes>
           <Route path="/" element={
@@ -537,6 +544,11 @@ function App() {
                 <ComparisonGuides />
               </Suspense>
             </motion.main>
+          } />
+          <Route path="/find-model" element={
+            <Suspense fallback={<LoadingSpinner />}>
+              <RecommendationWizardPage />
+            </Suspense>
           } />
           <Route path="/analytics" element={
             <motion.main className="main" role="main" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
