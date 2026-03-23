@@ -6,14 +6,14 @@ import type { AIModel } from '../types'
 import { models, allProviders } from '../data/models'
 
 const categoryPills = [
-  { key: 'chat', label: 'Chat', icon: <MessageSquare size={14} aria-hidden="true" /> },
-  { key: 'code', label: 'Code', icon: <Code size={14} aria-hidden="true" /> },
-  { key: 'reasoning', label: 'Reasoning', icon: <Brain size={14} aria-hidden="true" /> },
-  { key: 'vision', label: 'Vision', icon: <Eye size={14} aria-hidden="true" /> },
-  { key: 'image', label: 'Image', icon: <Image size={14} aria-hidden="true" /> },
-  { key: 'audio', label: 'Audio', icon: <Music size={14} aria-hidden="true" /> },
-  { key: 'embedding', label: 'Embedding', icon: <Layers size={14} aria-hidden="true" /> },
-  { key: 'video', label: 'Video', icon: <Video size={14} aria-hidden="true" /> },
+  { key: 'chat', label: 'Chat', icon: <MessageSquare size={14} aria-hidden="true" />, description: 'Conversational AI assistants' },
+  { key: 'code', label: 'Code', icon: <Code size={14} aria-hidden="true" />, description: 'Code generation & analysis' },
+  { key: 'reasoning', label: 'Reasoning', icon: <Brain size={14} aria-hidden="true" />, description: 'Complex reasoning tasks' },
+  { key: 'vision', label: 'Vision', icon: <Eye size={14} aria-hidden="true" />, description: 'Image & vision understanding' },
+  { key: 'image', label: 'Image', icon: <Image size={14} aria-hidden="true" />, description: 'Image generation' },
+  { key: 'audio', label: 'Audio', icon: <Music size={14} aria-hidden="true" />, description: 'Audio processing' },
+  { key: 'embedding', label: 'Embedding', icon: <Layers size={14} aria-hidden="true" />, description: 'Embeddings & retrieval' },
+  { key: 'video', label: 'Video', icon: <Video size={14} aria-hidden="true" />, description: 'Video understanding' },
 ] as const
 
 function AnimatedNumber({ target }: { target: number }) {
@@ -97,14 +97,15 @@ export default function Hero({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
           role="group"
-          aria-label="Quick filter by category"
+          aria-label="Quick filter by use case"
         >
           {categoryPills.map((c) => (
             <button
               key={c.key}
               className="hero-category-pill"
               onClick={() => navigate(`/?categories=${c.key}`)}
-              aria-label={`Filter models by ${c.label} category`}
+              aria-label={`${c.label}: ${c.description}`}
+              title={c.description}
             >
               {c.icon} {c.label}
             </button>
@@ -117,6 +118,7 @@ export default function Hero({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
+          <Link to="/find-model" className="hero-link hero-cta-primary"><Sparkles size={16} aria-hidden="true" /> Find Best Model</Link>
           <Link to="/leaderboard" className="hero-link"><Trophy size={16} aria-hidden="true" /> Leaderboard</Link>
           <Link to="/calculator" className="hero-link"><DollarSign size={16} aria-hidden="true" /> Cost Calculator</Link>
         </motion.div>
