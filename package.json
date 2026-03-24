@@ -14,6 +14,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "bootstrap": "^5.3.8",
     "framer-motion": "^12.37.0",
     "lucide-react": "^0.577.0",
