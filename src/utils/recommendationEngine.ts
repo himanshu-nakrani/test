@@ -162,7 +162,7 @@ function calculateTechScore(model: AIModel, request: RecommendationRequest): num
   }
 
   // Check license preference
-  if (request.licensePreference !== 'any') {
+  if (request.licensePreference && request.licensePreference !== 'any') {
     if (
       request.licensePreference === 'open-source' &&
       model.license === 'open-source'
@@ -173,7 +173,7 @@ function calculateTechScore(model: AIModel, request: RecommendationRequest): num
       (model.license === 'open-source' || model.license === 'open-weights')
     ) {
       score += 0.1
-    } else if (request.licensePreference !== 'any' && model.license === 'proprietary') {
+    } else if (model.license === 'proprietary') {
       score -= 0.15
     }
   }
