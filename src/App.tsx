@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback, useRef, lazy, Suspense } fro
 import { motion } from 'framer-motion'
 import { Routes, Route, useNavigate, useParams, useSearchParams, Link } from 'react-router-dom'
 import { X, Menu, Search, Scale, ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react'
 import type { AIModel, FilterState, ViewMode, ModelCategory, PricingTier, LicenseType } from './types'
 import { models } from './data/models'
 import { useFavorites } from './hooks/useFavorites'
@@ -591,6 +592,7 @@ function App() {
         <p>NeuralAtlas — Explore {models.length} models from top AI providers &middot; {new Date().getFullYear()} &middot; <Link to="/privacy">Privacy</Link> &middot; <Link to="/terms">Terms</Link></p>
       </footer>
       <BackToTop />
+      <VercelAnalytics />
     </div>
     </AuthProvider>
     </ErrorBoundary>
