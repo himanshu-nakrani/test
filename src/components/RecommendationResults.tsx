@@ -1,18 +1,16 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowRight, Check, AlertCircle, TrendingUp } from 'lucide-react'
+import { ArrowRight, Check, TrendingUp } from 'lucide-react'
 import type { RecommendationResult } from '../types'
 
 interface RecommendationResultsProps {
   results: RecommendationResult[]
-  onCompare: (modelIds: string[]) => void
   onViewDetails: (modelId: string) => void
 }
 
 export default function RecommendationResults({
   results,
-  onCompare,
   onViewDetails,
 }: RecommendationResultsProps) {
   const [selectedForCompare, setSelectedForCompare] = useState<Set<string>>(new Set())

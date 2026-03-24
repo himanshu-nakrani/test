@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { models } from '../data/models'
-import { getRecommendations } from '../utils/recommendationEngine'
-import type { RecommendationRequest, RecommendationResult } from '../types'
+import type { RecommendationResult } from '../types'
 import RecommendationWizard from './RecommendationWizard'
 import RecommendationResults from './RecommendationResults'
 
@@ -14,18 +13,13 @@ export default function RecommendationWizardPage() {
   const [results, setResults] = useState<RecommendationResult[]>([])
   const navigate = useNavigate()
 
-  const handleWizardComplete = (request: RecommendationRequest) => {
-    const recommendations = getRecommendations(request, models)
+  const handleResultsReady = (recommendations: RecommendationResult[]) => {
     setResults(recommendations)
     setPageState('results')
   }
 
   const handleViewDetails = (modelId: string) => {
     navigate(`/models/${modelId}`)
-  }
-
-  const handleCompare = () => {
-    // The comparison is handled by RecommendationResults component
   }
 
   return (
@@ -39,11 +33,10 @@ export default function RecommendationWizardPage() {
     >
       <div className="recommendation-container">
         {pageState === 'wizard' ? (
-          <RecommendationWizard onComplete={handleWizardComplete} />
+          <RecommendationWizard models={models} onResultsReady={handleResultsReady} />
         ) : (
           <RecommendationResults
             results={results}
-            onCompare={handleCompare}
             onViewDetails={handleViewDetails}
           />
         )}
