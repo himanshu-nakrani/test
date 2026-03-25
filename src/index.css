@@ -31,7 +31,10 @@
   --strength-color: #0369a1;
   --limitation-bg: #fee2e2;
   --limitation-color: #7f1d1d;
-  --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Lora', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius: 1.4rem;
   --chip-bg: #e8f8f8;
   --chip-active-bg: #7033ff;
   --chip-active-color: #ffffff;
@@ -71,6 +74,10 @@
   --strength-color: #56d364;
   --limitation-bg: rgba(248, 81, 73, 0.1);
   --limitation-color: #f85149;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Lora', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius: 1.4rem;
   --chip-bg: #333333;
   --chip-active-bg: #b88ef7;
   --chip-active-color: #1a1a1a;
@@ -100,15 +107,17 @@ html {
   }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Lora:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   background-color: var(--bg);
   background-image:
     radial-gradient(1200px circle at 8% -8%, rgba(112, 51, 255, 0.08), transparent 55%),
     radial-gradient(900px circle at 95% 0%, rgba(143, 4, 244, 0.08), transparent 60%);
   color: var(--text-primary);
-  line-height: 1.6;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-image 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
